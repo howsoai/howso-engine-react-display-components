@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    font-family: Inter, system-ui, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+
+    --brand-primary: 226 70% 55%;
+    --brand-purple: 252 56% 57%;
+    --brand-blue: 206 100% 50%;
+    --brand-charcoal: 0 0% 13%;
+  }
+  @supports (font-variation-settings: normal) {
+    :root {
+      font-family: "Inter var", system-ui, sans-serif;
+    }
+  }
+}
+
+@layer components {
+}
