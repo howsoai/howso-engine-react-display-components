@@ -1,6 +1,6 @@
 import typescript from "@rollup/plugin-typescript";
-import autoprefixer from 'autoprefixer';
-import postcss from 'rollup-plugin-postcss';
+import autoprefixer from "autoprefixer";
+import postcss from "rollup-plugin-postcss";
 import pkg from "./package.json" with { type: "json" };
 
 /**
@@ -25,6 +25,7 @@ export default {
   ],
   external: [
     "react/jsx-runtime",
+    "react-icons/hi",
     ...Object.keys(pkg.dependencies || {}),
     ...Object.keys(pkg.peerDependencies || {}),
     ...Object.keys(pkg.optionalDependencies || {}),

@@ -13,4 +13,8 @@ module.exports = {
   ],
   coverageReporters: ["text", "cobertura"],
   testEnvironment: "jsdom",
+  setupFiles: [
+    "<rootDir>/../jest/setup/il8n.js",
+    "<rootDir>/../jest/setup/config.js",
+  ],
 };

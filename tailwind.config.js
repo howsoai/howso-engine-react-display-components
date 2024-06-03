@@ -8,6 +8,7 @@ export default {
     "./storybook/**/*.{jsx,tsx,html}",
     "./node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
     "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@howso/react-tailwind-flowbite-components/lib/index.esm.js",
   ],
   plugins: [flowbite({ charts: true })],
   theme: {
