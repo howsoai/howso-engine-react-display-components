@@ -106,5 +106,8 @@
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --write"
     ]
+  },
+  "dependencies": {
+    "@howso/react-tailwind-flowbite-components": "file:../react-tailwind-flowbite-components/howso-react-tailwind-flowbite-components-0.0.0.tgz"
   }
 }
