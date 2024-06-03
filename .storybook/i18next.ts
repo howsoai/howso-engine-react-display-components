@@ -2,8 +2,9 @@ import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { defaultTranslationNamespace } from "../src/hooks/useDefaultTranslation";
 
-const ns = ["common", "engine"];
+const ns = [defaultTranslationNamespace];
 const supportedLngs = ["en"];
 
 i18n
@@ -12,15 +13,15 @@ i18n
   .use(Backend)
   .init({
     //debug: true,
-    lng: "en",
-    fallbackLng: "en",
-    defaultNS: "common",
+    lng: supportedLngs[0],
+    fallbackLng: supportedLngs[0],
+    defaultNS: ns[0],
     ns,
     interpolation: { escapeValue: false },
-    react: { useSuspense: false },
+    react: { useSuspense: true },
     supportedLngs,
     backend: {
-      loadPath: "/locales/{{lng}}/{{ns}}.json",
+      loadPath: "/locales/{{ns}}/{{lng}}.json",
     },
   });
 
