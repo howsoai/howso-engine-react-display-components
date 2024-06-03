@@ -36,6 +36,7 @@
   ],
   "peerDependencies": {
     "@hookform/error-message": "^2.0.1",
+    "@howso/openapi-client": "^1.0.0",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.2",
     "lodash": "^4.17.0",
@@ -50,11 +51,11 @@
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.9.6"
   },
-  "@howso/openapi-client": "^1.0.0",
   "devDependencies": {
     "@chromatic-com/storybook": "^1.5.0",
     "@fontsource/inter": "^5.0.5",
     "@hookform/error-message": "^2.0.1",
+    "@howso/openapi-client": "^1.0.0",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-a11y": "^8.1.5",
     "@storybook/addon-actions": "^8.1.5",

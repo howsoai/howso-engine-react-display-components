@@ -1,5 +1,5 @@
+import { standardFlowbiteTheme } from "@howso/react-tailwind-flowbite-components";
 import flowbite from "flowbite/plugin";
-import { standardTailwindConfigThemeExtend } from "./src/themes";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -12,6 +12,6 @@ export default {
   ],
   plugins: [flowbite({ charts: true })],
   theme: {
-    extend: standardTailwindConfigThemeExtend,
+    extend: standardFlowbiteTheme,
   },
 };
