@@ -16,6 +16,11 @@ const config: StorybookConfig = {
   },
   staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
   refs: {
+    "react-tailwind-flowbite-components": {
+      title: "Howso components",
+      url: "https://main--65e891231e1f8c382a2b9636.chromatic.com",
+      expanded: false, // Optional, true by default
+    },
     flowbite: {
       title: "Flowbite",
       url: "https://storybook.flowbite-react.com/",
