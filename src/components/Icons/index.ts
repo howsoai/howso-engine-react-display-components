@@ -1,1 +1,1 @@
-export * from "./MapDependentsIcon";
+export * from "./MapDependentFeatureAttributesIcon";
