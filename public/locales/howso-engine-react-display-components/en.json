@@ -1,0 +1,19 @@
+{
+  "FeatureAttributes": {
+    "FeatureAttributesBoundsGroup": {
+      "title": "Bounds"
+    },
+    "FeatureAttributesContinuousNumbersGroup": {
+      "title": "Continuous Numbers"
+    },
+    "FeatureAttributesGroupBase": {
+      "expandControl": "Advanced options"
+    },
+    "FeatureAttributesProgrammableGroup": {
+      "title": "Programmatic Features"
+    },
+    "FeatureAttributesTemporalityGroup": {
+      "title": "Temporality"
+    }
+  }
+}
