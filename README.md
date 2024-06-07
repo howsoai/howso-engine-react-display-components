@@ -40,6 +40,22 @@ module.exports = {
 };
 ```
 
+Translation files from this package must be installed into your public directory.
+The suggested integration is trough setting up React I8ln's using `backend`:
+
+```ts
+{
+  backend: {
+    loadPath: "/locales/{{ns}}/{{lng}}.json",
+  }
+}
+```
+
+You will need the translation files from:
+
+- This package
+- `@howso/react-tailwind-flowbite-components`
+
 ## Contributing
 
 Development is done through [Storybook](https://storybook.js.org/).
@@ -48,6 +64,15 @@ You may start the UI for inspection with hot reloading using:
 ```bash
 npm run storybook
 ```
+
+### Translations
+
+This package produces a number of components that expose translations.
+Any usages of translation should use the `useDefaultTranslation` function instead of `useTranslation`.
+This will ensure translations are in the correct namespace for this package to be copied into implementing systems.
+
+Using translations should be done sparingly. Copying the updated translation file is a manual process.
+Translation changes should be considered breaking releases to signal this step and include a note in the [migration](./MIGRATION.md) file.
 
 ## Publishing
 
