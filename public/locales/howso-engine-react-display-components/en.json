@@ -1,5 +1,97 @@
 {
   "FeatureAttributes": {
+    "FeatureAttributeAllowedValuesField": {
+      "help": {
+        "nominal": "Use a new line for each value.",
+        "ordinal": "Use a new line for each value. Order matters."
+      },
+      "label": {
+        "nominal": "Allowed Values in Order",
+        "ordinal": "Allowed Values"
+      }
+    },
+    "FeatureAttributeAllowNullsField": {
+      "label": "Allow Nulls"
+    },
+    "FeatureAttributeCycleLengthField": {
+      "help": "Only required if your feature is cyclical, such as days of the week.",
+      "label": "Cycle Length"
+    },
+    "FeatureAttributeDataTypeField": {
+      "help": {
+        "formattedDateTime": "Formatted Date Time supports string based features such as ISO 8601 or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number."
+      },
+      "label": "Data Type",
+      "options": {
+        "amalgam": "Amalgam",
+        "boolean": "Boolean",
+        "formatted_date_time": "Formatted Date Time",
+        "groups": {
+          "continuous": "Continuous",
+          "nominal": "Nominal"
+        },
+        "json": "JSON",
+        "number": "Number",
+        "string": "String",
+        "string_mixable": "String Mixable",
+        "yaml": "YAML"
+      }
+    },
+    "FeatureAttributeDateTimeFormatField": {
+      "help": "Any valid <1>standard format specification</1> format.",
+      "label": "Date Time Format"
+    },
+    "FeatureAttributeDecimalPlacesField": {
+      "help": "Round to the specified decimal places. An empty value will result in no rounding. If Significant Digits is also specified, the number will be rounded to the specified number of significant digits first, then rounded to the number of decimal points as specified by this parameter.",
+      "label": "Decimal Places"
+    },
+    "FeatureAttributeDerivedFeatureCodeField": {
+      "help": "<0>Amalgam</0> code defining how the value for this feature could be derived if this feature is specified as a `derived_context_feature` or a `derived_action_feature` during `react` flows.",
+      "label": "Derived Feature Code"
+    },
+    "FeatureAttributeIdFeatureField": {
+      "help": "Set to true for nominal features containing nominal IDs, specifying that this feature should be used to compute case weights for id based privacy. For time series, this feature will be used as the id for each time series generation.",
+      "label": "ID Feature"
+    },
+    "FeatureAttributeIsSensitiveField": {
+      "help": "By default, all data is treated as sensitive, you can change data to be non-sensitive, allowing the values to be re-used in the generation of synthetic data.",
+      "label": "Sensitive"
+    },
+    "FeatureAttributeLocaleField": {
+      "help": "The <1>ISO-639 Language Code</1> with optional <3>ISO-3166 Country Code</3>. Locales are used during synthesis. Defaults for the data set will be used if not explicitly defined for this feature. Additional locale options may be specified during synthesis configuration.",
+      "label": "Locale"
+    },
+    "FeatureAttributeMinMaxFields": {
+      "label": {
+        "max": "Max",
+        "min": "Min"
+      }
+    },
+    "FeatureAttributeNullIsDependentField": {
+      "help": {
+        "dependencies": "Dependent Features",
+        "description": "Modify how dependent features with `null`s are treated during a `react`, specifically when they use `null` as a context value. When `false` (default), the feature will be treated as a non-dependent context feature. When `true` for nominal types, treats null as an individual dependent class value, only cases that also have `null`s as this feature's value will be considered. When true for continuous types, only the cases with the same dependent feature values as the cases that also have nulls as this feature's value will be considered."
+      },
+      "label": "Null is Dependent"
+    },
+    "FeatureAttributeObservationalErrorField": {
+      "help": {
+        "default": "Specify the mean absolute error for this feature. Defaults to 0.",
+        "nominal": "Specify known probability (0-1) of misclassification. Defaults to 0.",
+        "ordinal": "Specify known probability of misclassification through one or more adjacent values. Defaults to 0.",
+        "string": "Specify known probability (0-1) of misclassification. Defaults to 0."
+      },
+      "label": "Observational Error"
+    },
+    "FeatureAttributePostProcessField": {
+      "help": "<0>Amalgam</0> code that is called on resulting values of this feature during `react` operations.",
+      "label": "Post Process Code"
+    },
+    "FeatureAttributeSample": {
+      "modal": {
+        "title": "Sample"
+      }
+    },
     "FeatureAttributesBoundsGroup": {
       "title": "Bounds"
     },
@@ -9,11 +101,122 @@
     "FeatureAttributesGroupBase": {
       "expandControl": "Advanced options"
     },
+    "FeatureAttributeSignificantDigitsField": {
+      "help": "Round to the specified significant digits. An empty value will result in no rounding.",
+      "label": "Significant Digits"
+    },
     "FeatureAttributesProgrammableGroup": {
       "title": "Programmatic Features"
     },
     "FeatureAttributesTemporalityGroup": {
       "title": "Temporality"
+    },
+    "FeatureAttributeSubtypeField": {
+      "help": "Your platform supports a default list of options. You may create your own, supplying the name here instead.",
+      "label": "Subtype"
+    },
+    "FeatureAttributeTimeSeriesDeltaMinMaxFields": {
+      "help": "Constraints for the delta of this feature. No value means no boundary. The length of the list must match the number of derivatives as specified by Order.",
+      "label": {
+        "max": "Delta Max",
+        "min": "Delta Min"
+      }
+    },
+    "FeatureAttributeTimeSeriesDerivedOrdersField": {
+      "help": "The number of orders of derivatives that should be derived instead of synthesized. Ignored if Order is not provided.",
+      "label": "Derived Orders"
+    },
+    "FeatureAttributeTimeSeriesHasTerminatorsField": {
+      "help": "Require the model identify and learn values that explicitly denote the end of a series.",
+      "label": "Series has Terminators"
+    },
+    "FeatureAttributeTimeSeriesLagsField": {
+      "help": "If specified, generates lag features containing previous values using the enumerated lag offsets. Takes precedence over Number of Lags. If neither Number of Lags nor Lags is specified for a feature, then a single lag feature is generated.",
+      "label": "Lags"
+    },
+    "FeatureAttributeTimeSeriesNumLagsField": {
+      "help": "If provided, will generate the specified number of derivatives and boundary values.",
+      "label": "Number of Lags"
+    },
+    "FeatureAttributeTimeSeriesOrderField": {
+      "help": "If provided, will generate the specified number of derivatives and boundary values.",
+      "label": "Order"
+    },
+    "FeatureAttributeTimeSeriesRateMinMaxFields": {
+      "help": "Constraints for the rate or delta (the difference quotient, the discrete version of derivative) of this feature. A `null` value means no min boundary. The value must be in epoch format for the time feature. The length of the list must match the number of derivatives as specified by order.",
+      "label": {
+        "max": "Max",
+        "min": "Min"
+      }
+    },
+    "FeatureAttributeTimeSeriesStopOnTerminatorsField": {
+      "help": "Require that a series ends on a terminator value.",
+      "label": "Stop on Terminator"
+    },
+    "FeatureAttributeTimeSeriesTypeField": {
+      "help": "When `rate` is specified, uses the difference of the current value from its previous value divided by the change in time since the previous value. When `delta` is specified, uses the difference of the current value from its previous value regardless of the elapsed time.",
+      "label": "Type",
+      "options": {
+        "delta": "Delta",
+        "rate": "Rate"
+      }
+    },
+    "FeatureAttributeTypeField": {
+      "help": {
+        "continuous": {
+          "description": "A continuous numeric value.",
+          "example": "e.g. Temperature or humidity."
+        },
+        "nominal": {
+          "description": "A value with no ordering.",
+          "example": "e.g. The name of a fruit."
+        },
+        "ordinal": {
+          "description": "A nominal value with specific ordering.",
+          "example": "e.g. Rating scale, 1-5 stars."
+        }
+      },
+      "label": "Type",
+      "options": {
+        "continuous": "Continuous",
+        "nominal": "Nominal",
+        "ordinal": "Ordinal"
+      }
+    },
+    "FeatureAttributeUniqueField": {
+      "label": "Unique"
+    },
+    "FeaturesAttributesDependencies": {
+      "actions": {
+        "update": "Update"
+      },
+      "help": "Select features with inter-dependent relationships. This should be used when there are multi-type features that tightly depend on other multi-type features. Setting `null` values may effect dependencies. `Null`s can be managed through the feature's configurations.",
+      "state": {
+        "empty": "No features were found in the dataset."
+      }
+    },
+    "FeaturesAttributesForms": {
+      "actions": {
+        "configure": "Configure",
+        "configure_{{name}}": "Configure {{name}}",
+        "mapDependents": "Map dependents",
+        "update": "Update",
+        "updateAndGoTo_{{target}}": "Update & go to: {{target}}"
+      },
+      "form": {
+        "label": "Configure feature"
+      },
+      "headings": {
+        "configuration": "Configuration",
+        "feature": "Feature",
+        "sample": "Sample",
+        "timeFeature": "Time feature",
+        "timeSeries": "Time series",
+        "type": "Type"
+      },
+      "state": {
+        "empty": "No features were found in the dataset."
+      }
     }
   }
 }
