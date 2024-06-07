@@ -54,7 +54,7 @@ The suggested integration is trough setting up React I8ln's using `backend`:
 You will need the translation files from:
 
 - This package
-- `@howso/react-tailwind-flowbite-components`
+- [@howso/react-tailwind-flowbite-components](https://github.com/howsoai/react-tailwind-flowbite-components)
 
 ## Contributing
 
@@ -83,7 +83,7 @@ For functional changes, follow [SemVer](https://semver.org/)
 standards updating the `package.json` and `package-lock.json`
 files in your pull request.
 
-When you are ready to publish a new verison, use the Github Release action.
+When you are ready to publish a new version, use the Github Release action.
 
 ### Chromatic
 
