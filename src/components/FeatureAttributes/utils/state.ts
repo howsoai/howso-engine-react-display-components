@@ -5,7 +5,7 @@ import {
 } from "@howso/openapi-client";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
-import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields";
+import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
 import { isEmpty } from "@/utils";
 import { InferFeatureAttributesOptions } from "../types/api";
 import { FieldNamesMarkedBoolean } from "react-hook-form";
