@@ -1,11 +1,6 @@
 import React, { Suspense } from "react";
 import type { Preview, StoryFn } from "@storybook/react";
-import {
-  Await,
-  MemoryRouter,
-  RouterProvider,
-  createMemoryRouter,
-} from "react-router-dom";
+import { Await, RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Flowbite, ThemeMode } from "flowbite-react";
 import i18n from "./i18next";
 // CSS
