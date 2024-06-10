@@ -9,7 +9,6 @@ export type FeatureAttributeSampleProps = {
 export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
   attributes,
 }) => {
-  console.info("attributes", attributes);
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
     setIsOpen(true);
