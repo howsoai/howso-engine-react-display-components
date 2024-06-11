@@ -214,6 +214,9 @@
         "timeSeries": "Time series",
         "type": "Type"
       },
+      "labels": {
+        "invalidConfiguration": "Please adjust this configuration"
+      },
       "state": {
         "empty": "No features were found in the dataset."
       }

@@ -15,7 +15,7 @@ import {
 import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
 import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
 import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
-import { FeaturesAttributesRowsTranslations } from "./constants";
+import { featuresAttributesRowsTranslations } from "./constants";
 import {
   type FeatureAttributesIndex,
   getFeatureAttributesAreDirtyAtom,
@@ -91,7 +91,7 @@ describe("FeaturesAttributesRows", () => {
 
     const configure = within(rows[0]).getByRole("button", {
       name: new RegExp(
-        `.*${FeaturesAttributesRowsTranslations.actions.configure}.*`,
+        `.*${featuresAttributesRowsTranslations.actions.configure}.*`,
       ),
     });
     fireEvent(
@@ -107,7 +107,7 @@ describe("FeaturesAttributesRows", () => {
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(modal).getByRole("button", {
           name: new RegExp(
-            `.*${FeaturesAttributesRowsTranslations.actions.updateAndGoToTarget}.*`,
+            `.*${featuresAttributesRowsTranslations.actions.updateAndGoToTarget}.*`,
           ),
         });
         fireEvent(

@@ -29,7 +29,7 @@ import {
   getFeatureAttributesForType,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
-import { FeaturesAttributesRowsTranslations } from "./constants";
+import { featuresAttributesRowsTranslations } from "./constants";
 import {
   type ActiveFeatureAtom,
   type FeatureAttributesIndexAtom,
@@ -81,12 +81,10 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
           <Table striped>
             <Table.Head>
               <Table.HeadCell className="whitespace-nowrap">
-                {t(
-                  "FeatureAttributes.FeaturesAttributesForms.headings.feature",
-                )}
+                {t(featuresAttributesRowsTranslations.headings.feature)}
               </Table.HeadCell>
               <Table.HeadCell className="whitespace-nowrap">
-                {t("FeatureAttributes.FeaturesAttributesForms.headings.sample")}
+                {t(featuresAttributesRowsTranslations.headings.sample)}
               </Table.HeadCell>
               <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
                 {t(featureAttributeTypeLabel)}
@@ -94,12 +92,8 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
               <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
                 <div className="flex items-center gap-2">
                   {options.time_series
-                    ? t(
-                        "FeatureAttributes.FeaturesAttributesForms.headings.timeFeature",
-                      )
-                    : t(
-                        "FeatureAttributes.FeaturesAttributesForms.headings.timeSeries",
-                      )}
+                    ? t(featuresAttributesRowsTranslations.headings.timeFeature)
+                    : t(featuresAttributesRowsTranslations.headings.timeSeries)}
                   <ToggleInput
                     onChange={onChangeTimeSeries}
                     checked={options.time_series || false}
@@ -107,9 +101,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
                 </div>
               </Table.HeadCell>
               <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                {t(
-                  "FeatureAttributes.FeaturesAttributesForms.headings.configuration",
-                )}
+                {t(featuresAttributesRowsTranslations.headings.configuration)}
               </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -125,7 +117,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
         </div>
         {!features.length && (
           <Alert color="warning" icon={WarningIcon}>
-            {t("FeatureAttributes.FeaturesAttributesForms.state.empty")}
+            {t(featuresAttributesRowsTranslations.state.empty)}
           </Alert>
         )}
         <Controls {...props} containerProps={{ className: "mt-4" }} />
@@ -199,7 +191,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
         <div className="flex items-center">
           <Button color={"light"} onClick={() => setActiveFeature(feature)}>
             <span>
-              {t(FeaturesAttributesRowsTranslations.actions.configure)}
+              {t(featuresAttributesRowsTranslations.actions.configure)}
             </span>
           </Button>
 
@@ -210,10 +202,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
                 theme.label.root.colors.warning,
               )}
               title={t(
-                "FeatureAttributes.FeaturesAttributesForms.labels.invalid_configuration",
-                {
-                  ns: "engine",
-                },
+                featuresAttributesRowsTranslations.labels.invalid_configuration,
               )}
             />
           )}
@@ -355,10 +344,10 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
       <form
         noValidate
         data-feature={activeFeature}
-        aria-label={t(FeaturesAttributesRowsTranslations.form.label)}
+        aria-label={t(featuresAttributesRowsTranslations.form.label)}
       >
         <Modal.Header>
-          {t(FeaturesAttributesRowsTranslations.actions.configureName, {
+          {t(featuresAttributesRowsTranslations.actions.configureName, {
             name: activeFeature,
           })}
         </Modal.Header>
@@ -374,7 +363,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
               <span>
-                {t(FeaturesAttributesRowsTranslations.actions.update)}
+                {t(featuresAttributesRowsTranslations.actions.update)}
               </span>
             </Button>
             {nextFeature && (
@@ -385,7 +374,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
                 <UpdateIcon className="mr-1 h-5 w-5" />
                 <div className="max-w-60 truncate">
                   {t(
-                    FeaturesAttributesRowsTranslations.actions
+                    featuresAttributesRowsTranslations.actions
                       .updateAndGoToTarget,
                     {
                       target: nextFeature,
@@ -437,7 +426,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
     setIsOpen(false);
   };
 
-  const label = t(FeaturesAttributesRowsTranslations.actions.mapDependents);
+  const label = t(featuresAttributesRowsTranslations.actions.mapDependents);
   return (
     <>
       <Button color={"light"} onClick={onOpen}>
