@@ -16,7 +16,10 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import { useDefaultTranslation } from "@/hooks";
-import { FeatureAttributesIndex, FeatureAttributesIndexAtom } from "../utils";
+import {
+  type FeatureAttributesIndexAtom,
+  type FeatureAttributesIndex,
+} from "../hooks";
 
 export type FeaturesAttributesDependenciesProps = {
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;

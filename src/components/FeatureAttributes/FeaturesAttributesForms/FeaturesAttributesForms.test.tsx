@@ -12,19 +12,19 @@ import {
   FeatureAttributeFormValues,
   getFeatureAttributesFromFormData,
 } from "./utils";
-import {
-  FeatureAttributesIndex,
-  getFeaturesDirtyAtom,
-  getFeaturesAttributesIndexAtom,
-  getSetFeatureAttributesAtom,
-  getTimeFeatureAtom,
-  getActiveFeatureAtom,
-  getFeaturesOptionsAtom,
-} from "../utils";
 import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
 import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
 import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
 import { featuresAttributesFormsTranslations } from "./constants";
+import {
+  type FeatureAttributesIndex,
+  getFeatureAttributesAreDirtyAtom,
+  getFeatureAttributesIndexAtom,
+  getFeatureAttributesSetAttributesAtom,
+  getFeatureAttributesTimeFeatureAtom,
+  getFeatureAttributesActiveFeatureAtom,
+  getFeatureAttributesOptionsAtom,
+} from "../hooks";
 
 describe("FeaturesFields", () => {
   it("should open a configuration modal, save, and load the next", async () => {
@@ -64,23 +64,23 @@ describe("FeaturesFields", () => {
     };
     const featureEntries = Object.entries(featuresAttributes);
 
-    const featuresDirtyAtom = getFeaturesDirtyAtom();
+    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
     const featureAttributesIndexAtom =
-      getFeaturesAttributesIndexAtom(featuresAttributes);
-    const setFeatureAttributesAtom = getSetFeatureAttributesAtom({
+      getFeatureAttributesIndexAtom(featuresAttributes);
+    const setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
       featureAttributesIndexAtom,
       featuresDirtyAtom,
     });
-    const timeFeatureAtom = getTimeFeatureAtom({
+    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
       featureAttributesIndexAtom,
       featuresDirtyAtom,
     });
 
     render(
       <FeaturesAttributesForms
-        activeFeatureAtom={getActiveFeatureAtom()}
+        activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
-        optionsAtom={getFeaturesOptionsAtom({})}
+        optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,

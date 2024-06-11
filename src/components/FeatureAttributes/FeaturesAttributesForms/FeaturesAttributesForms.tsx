@@ -25,16 +25,18 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  ActiveFeatureAtom,
-  FeatureAttributesIndexAtom,
-  SetFeatureAttributesAtom,
-  FeatureOptionsAtom,
-  TimeFeatureAtom,
   areFeatureAttributesValid,
   getFeatureAttributesForType,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { featuresAttributesFormsTranslations } from "./constants";
+import {
+  type ActiveFeatureAtom,
+  type FeatureAttributesIndexAtom,
+  type SetFeatureAttributesAtom,
+  type FeatureOptionsAtom,
+  type TimeFeatureAtom,
+} from "../hooks";
 
 export type FeaturesAttributesFormsProps = {
   activeFeatureAtom: ActiveFeatureAtom;

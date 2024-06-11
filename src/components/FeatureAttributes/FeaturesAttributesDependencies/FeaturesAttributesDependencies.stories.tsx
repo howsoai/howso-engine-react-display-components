@@ -3,8 +3,8 @@ import { fn } from "@storybook/test";
 import { FeaturesAttributesDependencies } from "./FeaturesAttributesDependencies";
 import {
   FeatureAttributesIndex,
-  getFeaturesAttributesIndexAtom,
-} from "../utils";
+  getFeatureAttributesIndexAtom,
+} from "../hooks";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesDependencies> = {
@@ -138,7 +138,7 @@ type Story = StoryObj<typeof FeaturesAttributesDependencies>;
 export const Default: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom(
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
       sampleFeaturesAttributes,
     ),
   },
@@ -146,6 +146,6 @@ export const Default: Story = {
 
 export const NoFeatures: Story = {
   args: {
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom({}),
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom({}),
   },
 };

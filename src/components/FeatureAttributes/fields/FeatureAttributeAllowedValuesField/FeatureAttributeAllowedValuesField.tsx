@@ -9,7 +9,6 @@ import {
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
 import { FieldTextAreaList } from "@howso/react-tailwind-flowbite-components";
 import { Textarea, TextareaProps } from "flowbite-react";
-import { useFormContext } from "react-hook-form";
 
 export type FeatureAttributeAllowedValuesFieldProps = {
   featureType: FeatureAttributes["type"];
@@ -29,7 +28,6 @@ export const FeatureAttributeAllowedValuesField: FC<
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
 }) => {
   const { t } = useDefaultTranslation();
-  const { control } = useFormContext();
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
     "nominal",
     "ordinal",
@@ -58,43 +56,16 @@ export const FeatureAttributeAllowedValuesField: FC<
   const placeholder = getPlaceholder({ featureType, dataType, dateTimeFormat });
 
   return (
-    <>
-      <FieldTextAreaList
-        name={featureAttributeAllowedValuesFieldName}
-        label={label}
-        labelProps={{
-          required,
-        }}
-        placeholder={placeholder}
-        helperText={helperText}
-        rows={4}
-      />
-      {/* <FieldContainer>
-        <FieldLabel
-          htmlFor={featureAttributeAllowedValuesFieldName}
-          required={required}
-        >
-          {label}
-        </FieldLabel>
-        <Controller
-          name={featureAttributeAllowedValuesFieldName}
-          rules={{ required }}
-          control={control}
-          render={({ field }) => (
-            <TextareaList
-              id={featureAttributeAllowedValuesFieldName}
-              {...field}
-              placeholder={placeholder}
-              rows={4}
-              className="min-h-16"
-            />
-          )}
-        />
-        <HelperText color={color}>
-        {hasError ? translatedErrorMessage || <ErrorMessage name={featureAttributeAllowedValuesFieldName} /> : helperText}
-      </HelperText>
-      </FieldContainer> */}
-    </>
+    <FieldTextAreaList
+      name={featureAttributeAllowedValuesFieldName}
+      label={label}
+      labelProps={{
+        required,
+      }}
+      placeholder={placeholder}
+      helperText={helperText}
+      rows={4}
+    />
   );
 };
 

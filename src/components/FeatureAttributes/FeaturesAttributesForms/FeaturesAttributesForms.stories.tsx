@@ -2,14 +2,14 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FeaturesAttributesForms } from "./FeaturesAttributesForms";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
-  FeatureAttributesIndex,
-  getFeaturesDirtyAtom,
-  getActiveFeatureAtom,
-  getFeaturesAttributesIndexAtom,
-  getFeaturesOptionsAtom,
-  getSetFeatureAttributesAtom,
-  getTimeFeatureAtom,
-} from "../utils";
+  type FeatureAttributesIndex,
+  getFeatureAttributesAreDirtyAtom,
+  getFeatureAttributesActiveFeatureAtom,
+  getFeatureAttributesIndexAtom,
+  getFeatureAttributesOptionsAtom,
+  getFeatureAttributesSetAttributesAtom,
+  getFeatureAttributesTimeFeatureAtom,
+} from "../hooks";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesForms> = {
@@ -25,7 +25,7 @@ const meta: Meta<typeof FeaturesAttributesForms> = {
   args: {},
 };
 
-const sampleFeaturesAttributes: FeatureAttributesIndex = {
+const sampleFeatureAttributesIndex: FeatureAttributesIndex = {
   age: {
     type: "continuous",
     data_type: "number",
@@ -148,104 +148,108 @@ export default meta;
 type Story = StoryObj<typeof FeaturesAttributesForms>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const defaultDirtyAtom = getFeaturesDirtyAtom();
+const defaultAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const Default: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {
-    activeFeatureAtom: getActiveFeatureAtom(),
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom(
-      sampleFeaturesAttributes,
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
+      sampleFeatureAttributesIndex,
     ),
-    optionsAtom: getFeaturesOptionsAtom({}),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-Default.args!.setFeatureAttributesAtom = getSetFeatureAttributesAtom({
+Default.args!.setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
   featureAttributesIndexAtom: Default.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: defaultDirtyAtom,
+  featuresDirtyAtom: defaultAreDirtyAtom,
 });
-Default.args!.timeFeatureAtom = getTimeFeatureAtom({
+Default.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
   featureAttributesIndexAtom: Default.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: defaultDirtyAtom,
+  featuresDirtyAtom: defaultAreDirtyAtom,
 });
 
-const noFeaturesDirtyAtom = getFeaturesDirtyAtom();
+const noFeaturesAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const NoFeatures: Story = {
   args: {
-    activeFeatureAtom: getActiveFeatureAtom(),
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom({}),
-    optionsAtom: getFeaturesOptionsAtom({}),
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom({}),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-NoFeatures.args!.setFeatureAttributesAtom = getSetFeatureAttributesAtom({
+NoFeatures.args!.setFeatureAttributesAtom =
+  getFeatureAttributesSetAttributesAtom({
+    featureAttributesIndexAtom: NoFeatures.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: noFeaturesAreDirtyAtom,
+  });
+NoFeatures.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
   featureAttributesIndexAtom: NoFeatures.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: noFeaturesDirtyAtom,
-});
-NoFeatures.args!.timeFeatureAtom = getTimeFeatureAtom({
-  featureAttributesIndexAtom: NoFeatures.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: noFeaturesDirtyAtom,
+  featuresDirtyAtom: noFeaturesAreDirtyAtom,
 });
 
-const configurationDirtyAtom = getFeaturesDirtyAtom();
+const configurationAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const Configuration: Story = {
   args: {
-    activeFeatureAtom: getActiveFeatureAtom(
-      Object.keys(sampleFeaturesAttributes).shift(),
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(
+      Object.keys(sampleFeatureAttributesIndex).shift(),
     ),
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom(
-      sampleFeaturesAttributes,
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
+      sampleFeatureAttributesIndex,
     ),
-    optionsAtom: getFeaturesOptionsAtom({}),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-Configuration.args!.setFeatureAttributesAtom = getSetFeatureAttributesAtom({
+Configuration.args!.setFeatureAttributesAtom =
+  getFeatureAttributesSetAttributesAtom({
+    featureAttributesIndexAtom: Configuration.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: configurationAreDirtyAtom,
+  });
+Configuration.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
   featureAttributesIndexAtom: Configuration.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: configurationDirtyAtom,
-});
-Configuration.args!.timeFeatureAtom = getTimeFeatureAtom({
-  featureAttributesIndexAtom: Configuration.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: configurationDirtyAtom,
+  featuresDirtyAtom: configurationAreDirtyAtom,
 });
 
-const configurationLastItemDirtyAtom = getFeaturesDirtyAtom();
+const configurationLastItemAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const ConfigurationLastItem: Story = {
   args: {
-    activeFeatureAtom: getActiveFeatureAtom(
-      Object.keys(sampleFeaturesAttributes).pop(),
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(
+      Object.keys(sampleFeatureAttributesIndex).pop(),
     ),
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom(
-      sampleFeaturesAttributes,
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
+      sampleFeatureAttributesIndex,
     ),
-    optionsAtom: getFeaturesOptionsAtom({}),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
 ConfigurationLastItem.args!.setFeatureAttributesAtom =
-  getSetFeatureAttributesAtom({
+  getFeatureAttributesSetAttributesAtom({
     featureAttributesIndexAtom:
       ConfigurationLastItem.args!.featureAttributesIndexAtom!,
-    featuresDirtyAtom: configurationLastItemDirtyAtom,
+    featuresDirtyAtom: configurationLastItemAreDirtyAtom,
   });
-ConfigurationLastItem.args!.timeFeatureAtom = getTimeFeatureAtom({
-  featureAttributesIndexAtom:
-    ConfigurationLastItem.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: configurationLastItemDirtyAtom,
-});
+ConfigurationLastItem.args!.timeFeatureAtom =
+  getFeatureAttributesTimeFeatureAtom({
+    featureAttributesIndexAtom:
+      ConfigurationLastItem.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: configurationLastItemAreDirtyAtom,
+  });
 
-const timeSeriesDirtyAtom = getFeaturesDirtyAtom();
+const timeSeriesAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const TimeSeries: Story = {
   args: {
-    activeFeatureAtom: getActiveFeatureAtom(),
-    featureAttributesIndexAtom: getFeaturesAttributesIndexAtom({
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    featureAttributesIndexAtom: getFeatureAttributesIndexAtom({
       timeFeature,
-      ...sampleFeaturesAttributes,
+      ...sampleFeatureAttributesIndex,
     }),
-    optionsAtom: getFeaturesOptionsAtom({ time_series: true }),
+    optionsAtom: getFeatureAttributesOptionsAtom({ time_series: true }),
   },
 };
-TimeSeries.args!.setFeatureAttributesAtom = getSetFeatureAttributesAtom({
+TimeSeries.args!.setFeatureAttributesAtom =
+  getFeatureAttributesSetAttributesAtom({
+    featureAttributesIndexAtom: TimeSeries.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: timeSeriesAreDirtyAtom,
+  });
+TimeSeries.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
   featureAttributesIndexAtom: TimeSeries.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: timeSeriesDirtyAtom,
-});
-TimeSeries.args!.timeFeatureAtom = getTimeFeatureAtom({
-  featureAttributesIndexAtom: TimeSeries.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: timeSeriesDirtyAtom,
+  featuresDirtyAtom: timeSeriesAreDirtyAtom,
 });
