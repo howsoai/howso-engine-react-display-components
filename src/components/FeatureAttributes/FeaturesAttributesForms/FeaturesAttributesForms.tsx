@@ -45,6 +45,12 @@ export type FeaturesAttributesFormsProps = {
   optionsAtom: FeatureOptionsAtom;
   timeFeatureAtom: TimeFeatureAtom;
 };
+/**
+ * A specialized view of all feature attributes at once.
+ * Controls exist to expose a time feature, configuration errors, type, and samples simultaneously.
+ *
+ * ⚠️ This component relies heavily on Modal components, and is unsuited to Jupyter Notebook integrations.
+ **/
 export const FeaturesAttributesForms: FC<FeaturesAttributesFormsProps> = (
   props,
 ) => {
