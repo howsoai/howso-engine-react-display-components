@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FeaturesAttributesForms } from "./FeaturesAttributesForms";
+import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   type FeatureAttributesIndex,
@@ -12,8 +12,8 @@ import {
 } from "../hooks";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta: Meta<typeof FeaturesAttributesForms> = {
-  component: FeaturesAttributesForms,
+const meta: Meta<typeof FeaturesAttributesRows> = {
+  component: FeaturesAttributesRows,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
   // tags: ["autodocs"],
   parameters: {
@@ -145,7 +145,7 @@ const timeFeature: FeatureAttributes = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FeaturesAttributesForms>;
+type Story = StoryObj<typeof FeaturesAttributesRows>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const defaultAreDirtyAtom = getFeatureAttributesAreDirtyAtom();

@@ -29,7 +29,7 @@ import {
   getFeatureAttributesForType,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
-import { featuresAttributesFormsTranslations } from "./constants";
+import { FeaturesAttributesRowsTranslations } from "./constants";
 import {
   type ActiveFeatureAtom,
   type FeatureAttributesIndexAtom,
@@ -38,7 +38,7 @@ import {
   type TimeFeatureAtom,
 } from "../hooks";
 
-export type FeaturesAttributesFormsProps = {
+export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: ActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
   setFeatureAttributesAtom: SetFeatureAttributesAtom;
@@ -51,7 +51,7 @@ export type FeaturesAttributesFormsProps = {
  *
  * ⚠️ This component relies heavily on Modal components, and is unsuited to Jupyter Notebook integrations.
  **/
-export const FeaturesAttributesForms: FC<FeaturesAttributesFormsProps> = (
+export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   props,
 ) => {
   const { t } = useDefaultTranslation();
@@ -138,7 +138,7 @@ export const FeaturesAttributesForms: FC<FeaturesAttributesFormsProps> = (
 type FeatureFieldsProps = {
   feature: string;
 } & Pick<
-  FeaturesAttributesFormsProps,
+  FeaturesAttributesRowsProps,
   | "activeFeatureAtom"
   | "featureAttributesIndexAtom"
   | "setFeatureAttributesAtom"
@@ -199,7 +199,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
         <div className="flex items-center">
           <Button color={"light"} onClick={() => setActiveFeature(feature)}>
             <span>
-              {t(featuresAttributesFormsTranslations.actions.configure)}
+              {t(FeaturesAttributesRowsTranslations.actions.configure)}
             </span>
           </Button>
 
@@ -257,7 +257,7 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
 
 // Table row time feature radio
 type TimeFeatureControlProps = InlineInputProps &
-  Pick<FeaturesAttributesFormsProps, "timeFeatureAtom"> &
+  Pick<FeaturesAttributesRowsProps, "timeFeatureAtom"> &
   Pick<AttributeProps, "attributes"> & { disabled?: boolean };
 const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
   attributes,
@@ -287,7 +287,7 @@ const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
 };
 
 type ConfigureModalProps = Pick<
-  FeaturesAttributesFormsProps,
+  FeaturesAttributesRowsProps,
   | "activeFeatureAtom"
   | "featureAttributesIndexAtom"
   | "setFeatureAttributesAtom"
@@ -355,10 +355,10 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
       <form
         noValidate
         data-feature={activeFeature}
-        aria-label={t(featuresAttributesFormsTranslations.form.label)}
+        aria-label={t(FeaturesAttributesRowsTranslations.form.label)}
       >
         <Modal.Header>
-          {t(featuresAttributesFormsTranslations.actions.configureName, {
+          {t(FeaturesAttributesRowsTranslations.actions.configureName, {
             name: activeFeature,
           })}
         </Modal.Header>
@@ -374,7 +374,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
               <span>
-                {t(featuresAttributesFormsTranslations.actions.update)}
+                {t(FeaturesAttributesRowsTranslations.actions.update)}
               </span>
             </Button>
             {nextFeature && (
@@ -385,7 +385,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
                 <UpdateIcon className="mr-1 h-5 w-5" />
                 <div className="max-w-60 truncate">
                   {t(
-                    featuresAttributesFormsTranslations.actions
+                    FeaturesAttributesRowsTranslations.actions
                       .updateAndGoToTarget,
                     {
                       target: nextFeature,
@@ -402,7 +402,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
 };
 
 type ControlsProps = Pick<
-  FeaturesAttributesFormsProps,
+  FeaturesAttributesRowsProps,
   "featureAttributesIndexAtom"
 > & {
   containerProps: React.HTMLProps<HTMLDivElement>;
@@ -424,7 +424,7 @@ const Controls: FC<ControlsProps> = ({
 };
 
 type MapDependenciesControlProps = Pick<
-  FeaturesAttributesFormsProps,
+  FeaturesAttributesRowsProps,
   "featureAttributesIndexAtom"
 >;
 const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
@@ -437,7 +437,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
     setIsOpen(false);
   };
 
-  const label = t(featuresAttributesFormsTranslations.actions.mapDependents);
+  const label = t(FeaturesAttributesRowsTranslations.actions.mapDependents);
   return (
     <>
       <Button color={"light"} onClick={onOpen}>

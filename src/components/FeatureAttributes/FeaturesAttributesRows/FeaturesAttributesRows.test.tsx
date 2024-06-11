@@ -6,7 +6,7 @@ import {
   within,
 } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { FeaturesAttributesForms } from "./FeaturesAttributesForms";
+import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   FeatureAttributeFormValues,
@@ -15,7 +15,7 @@ import {
 import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
 import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
 import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
-import { featuresAttributesFormsTranslations } from "./constants";
+import { FeaturesAttributesRowsTranslations } from "./constants";
 import {
   type FeatureAttributesIndex,
   getFeatureAttributesAreDirtyAtom,
@@ -26,7 +26,7 @@ import {
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
 
-describe("FeaturesFields", () => {
+describe("FeaturesAttributesRows", () => {
   it("should open a configuration modal, save, and load the next", async () => {
     const featuresAttributes: FeatureAttributesIndex = {
       age: {
@@ -77,7 +77,7 @@ describe("FeaturesFields", () => {
     });
 
     render(
-      <FeaturesAttributesForms
+      <FeaturesAttributesRows
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
@@ -91,7 +91,7 @@ describe("FeaturesFields", () => {
 
     const configure = within(rows[0]).getByRole("button", {
       name: new RegExp(
-        `.*${featuresAttributesFormsTranslations.actions.configure}.*`,
+        `.*${FeaturesAttributesRowsTranslations.actions.configure}.*`,
       ),
     });
     fireEvent(
@@ -107,7 +107,7 @@ describe("FeaturesFields", () => {
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(modal).getByRole("button", {
           name: new RegExp(
-            `.*${featuresAttributesFormsTranslations.actions.updateAndGoToTarget}.*`,
+            `.*${FeaturesAttributesRowsTranslations.actions.updateAndGoToTarget}.*`,
           ),
         });
         fireEvent(
