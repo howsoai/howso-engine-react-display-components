@@ -16,8 +16,8 @@ import {
   FeatureAttributesContinuousNumbersGroup,
   FeatureAttributesBoundsGroup,
   FeatureAttributesProgrammableGroup,
+  FeatureAttributesTemporalityGroup,
 } from "../groups";
-import { FeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup";
 import { useFormValues } from "@/hooks/useFormValues";
 import { type FeatureAttributesFieldsValues } from "./constants";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
