@@ -3,13 +3,14 @@ import type { Preview, StoryFn } from "@storybook/react";
 import { Await, RouterProvider, createMemoryRouter } from "react-router-dom";
 import { Flowbite, ThemeMode } from "flowbite-react";
 import i18n from "./i18next";
+import { useTranslation } from "react-i18next";
+import { standardFlowbiteTheme } from "@howso/react-tailwind-flowbite-components";
 // CSS
 // import "@fontsource/inter";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/700.css";
+import "@howso/react-tailwind-flowbite-components/lib/styles.css";
 import "./tailwind.css";
-import { useTranslation } from "react-i18next";
-import { standardFlowbiteTheme } from "@howso/react-tailwind-flowbite-components";
 
 const light = {
   name: "Light",
