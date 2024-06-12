@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 import { Button, Alert, getTheme } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
@@ -53,39 +53,33 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
-  const [options, setOptions] = useAtom(optionsAtom);
-  const setTimeFeature = useSetAtom(timeFeatureAtom);
-
   const features = Object.keys(featuresAttributes);
 
-  // Toggle time series
-  const onChangeTimeSeries = (evt: ChangeEvent<HTMLInputElement>) => {
-    setOptions({ ...options, time_series: evt.currentTarget.checked });
-    if (!evt.currentTarget.checked) setTimeFeature(null);
-  };
-
   return (
-    <>
-      <ErrorBoundary>
-        <Header
-          activeFeatureAtom={activeFeatureAtom}
-          featureAttributesIndexAtom={featureAttributesIndexAtom}
-          timeFeatureAtom={timeFeatureAtom}
-        />
-        {!features.length && (
-          <Alert color="warning" icon={WarningIcon}>
-            {t(translations.state.empty)}
-          </Alert>
-        )}
-      </ErrorBoundary>
-      {activeFeature && <Configuration {...props} />}
-    </>
+    <ErrorBoundary>
+      <Header
+        activeFeatureAtom={activeFeatureAtom}
+        featureAttributesIndexAtom={featureAttributesIndexAtom}
+        optionsAtom={optionsAtom}
+        timeFeatureAtom={timeFeatureAtom}
+      />
+      {!features.length ? (
+        <Alert color="warning" icon={WarningIcon}>
+          {t(translations.state.empty)}
+        </Alert>
+      ) : !activeFeature ? (
+        <Alert color="info">{t(translations.state.unselected)}</Alert>
+      ) : (
+        <Configuration {...props} />
+      )}
+    </ErrorBoundary>
   );
 };
 
 type HeaderProps = {
   activeFeatureAtom: ActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  optionsAtom: FeatureOptionsAtom;
   timeFeatureAtom: TimeFeatureAtom;
 };
 type HeaderFormValues = {
@@ -95,6 +89,7 @@ type HeaderFormValues = {
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   featureAttributesIndexAtom,
+  optionsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
@@ -103,6 +98,7 @@ const Header: FC<HeaderProps> = ({
 
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   const [timeFeature, setTimeFeature] = useAtom(timeFeatureAtom);
+  const [options, setOptions] = useAtom(optionsAtom);
 
   const form = useForm<HeaderFormValues>({
     defaultValues: { feature: features.at(0) },
@@ -126,11 +122,14 @@ const Header: FC<HeaderProps> = ({
             </option>
           ))}
         </FieldSelect>
+
         <FieldSelect
           label={t(translations.header.fields.timeFeature.label)}
           name="timeFeature"
           onChange={async (event) => {
-            setTimeFeature(event.target.value);
+            const time_series = !!event.target.value;
+            setOptions({ ...options, time_series: time_series });
+            if (!time_series) setTimeFeature(event.target.value);
           }}
           defaultValue={timeFeature?.name}
         >
@@ -142,6 +141,7 @@ const Header: FC<HeaderProps> = ({
           ))}
         </FieldSelect>
       </FormProvider>
+
       <Button color={"light"} disabled>
         <MapDependentFeatureAttributesIcon className={"mr-1"} />
         {t(translations.actions.mapDependents)}
@@ -167,39 +167,36 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   const attributes = activeFeature
     ? featuresAttributes[activeFeature]
     : undefined;
-  const isValid = attributes ? areFeatureAttributesValid(attributes) : true;
+  if (!attributes) {
+    throw new Error(`attributes are not defined for ${activeFeature}`);
+  }
+  const isValid = areFeatureAttributesValid(attributes);
 
   return (
     <section>
-      {!activeFeature || !attributes ? (
-        <Alert color="info">{t(translations.state.unselected)}</Alert>
-      ) : (
-        <>
-          <header className="mb-2 flex gap-4 items-baseline justify-between">
-            <div className="flex gap-1 items-center">
-              <h3 className="text-xl">
-                {t(translations.actions.configureName, {
-                  name: activeFeature,
-                })}
-              </h3>
-              {!isValid && (
-                <WarningIcon
-                  className={twMerge(
-                    "ml-1 text-lg",
-                    theme.label.root.colors.warning,
-                  )}
-                  title={t(translations.labels.invalidConfiguration)}
-                />
+      <header className="mb-2 flex gap-4 items-baseline justify-between">
+        <div className="flex gap-1 items-center">
+          <h3 className="text-xl">
+            {t(translations.actions.configureName, {
+              name: activeFeature,
+            })}
+          </h3>
+          {!isValid && (
+            <WarningIcon
+              className={twMerge(
+                "ml-1 text-lg",
+                theme.label.root.colors.warning,
               )}
-            </div>
-            <div>
-              {t(translations.labels.sample)}:{" "}
-              <FeatureAttributeSample attributes={attributes} disableModal />
-            </div>
-          </header>
-          <Form {...props} />
-        </>
-      )}
+              title={t(translations.labels.invalidConfiguration)}
+            />
+          )}
+        </div>
+        <div>
+          {t(translations.labels.sample)}:{" "}
+          <FeatureAttributeSample attributes={attributes} disableModal />
+        </div>
+      </header>
+      <Form {...props} />
     </section>
   );
 };
