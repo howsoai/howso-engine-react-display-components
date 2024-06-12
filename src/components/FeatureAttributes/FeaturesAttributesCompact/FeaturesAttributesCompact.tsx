@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Alert, getTheme } from "flowbite-react";
+import { Button, Alert, getTheme, Checkbox } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
@@ -8,6 +8,7 @@ import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguratio
 import { useDefaultTranslation } from "@/hooks";
 import {
   ErrorBoundary,
+  FieldLabel,
   FieldSelect,
   UpdateIcon,
   WarningIcon,
@@ -62,7 +63,6 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       <Header
         activeFeatureAtom={activeFeatureAtom}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
-        isMappingOpen={isMappingOpen}
         toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
         optionsAtom={optionsAtom}
         timeFeatureAtom={timeFeatureAtom}
@@ -90,7 +90,6 @@ type HeaderProps = {
   activeFeatureAtom: ActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
   // isMappingOpen
-  isMappingOpen: boolean;
   toggleIsMappingOpen: () => void;
   optionsAtom: FeatureOptionsAtom;
   timeFeatureAtom: TimeFeatureAtom;
@@ -102,7 +101,6 @@ type HeaderFormValues = {
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   featureAttributesIndexAtom,
-  isMappingOpen,
   toggleIsMappingOpen,
   optionsAtom,
   timeFeatureAtom,
@@ -120,11 +118,13 @@ const Header: FC<HeaderProps> = ({
   });
 
   return (
-    <header className="flex flow-row gap-2 justify-between items-end">
-      <div className="flex gap-2 items-end">
+    <header className="flex flow-row gap-4 justify-between items-end">
+      <div className="flex gap-4 items-center">
         <FormProvider {...form}>
           <FieldSelect
+            required
             label={t(translations.header.fields.feature.label)}
+            labelInline
             name="feature"
             onChange={async (event) => {
               setActiveFeature(event.target.value);
@@ -139,23 +139,17 @@ const Header: FC<HeaderProps> = ({
             ))}
           </FieldSelect>
 
-          <FieldSelect
-            label={t(translations.header.fields.timeFeature.label)}
-            name="timeFeature"
-            onChange={async (event) => {
-              const time_series = !!event.target.value;
-              setOptions({ ...options, time_series: time_series });
-              if (!time_series) setTimeFeature(event.target.value);
-            }}
-            defaultValue={timeFeature?.name}
-          >
-            <option value=""></option>
-            {features.map((feature) => (
-              <option key={feature} value={feature}>
-                {feature}
-              </option>
-            ))}
-          </FieldSelect>
+          <FieldLabel>
+            <Checkbox
+              color={"blue"}
+              onChange={async (event) => {
+                setOptions({ ...options, time_series: event.target.checked });
+                if (event.target.checked) setTimeFeature(activeFeature);
+              }}
+              checked={activeFeature === timeFeature?.name}
+            />{" "}
+            {t(translations.header.fields.timeFeature.label)}
+          </FieldLabel>
         </FormProvider>
       </div>
 
