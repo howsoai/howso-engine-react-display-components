@@ -2,15 +2,21 @@ import { FeatureAttributes } from "@howso/openapi-client";
 import { useDefaultTranslation } from "@/hooks/useDefaultTranslation";
 import { Modal } from "flowbite-react";
 import { FC, useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 export type FeatureAttributeSampleProps = {
   attributes: Pick<FeatureAttributes, "data_type" | "sample">;
+  disableModal?: boolean;
 };
 export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
   attributes,
+  disableModal,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const openModal = () => {
+    if (disableModal) {
+      return;
+    }
     setIsOpen(true);
   };
   const closeModal = () => {
@@ -22,7 +28,14 @@ export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
     case attributes.data_type === "yaml":
       return (
         <>
-          <button onClick={openModal} className="max-w-full">
+          <button
+            onClick={openModal}
+            className={twMerge(
+              "max-w-full",
+              disableModal && "pointer-events-none",
+            )}
+            disabled={disableModal}
+          >
             <code>
               {typeof attributes.sample === "string"
                 ? // CSS will handle the dynamic truncation, this is just DOM length protection

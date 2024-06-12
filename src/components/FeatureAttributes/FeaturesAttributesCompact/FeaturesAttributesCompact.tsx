@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from "react";
-import { Button, Alert } from "flowbite-react";
+import { Button, Alert, getTheme } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
@@ -13,6 +13,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
+  areFeatureAttributesValid,
   getFeatureAttributesForType,
   getFeatureAttributesFromFormData,
 } from "../utils";
@@ -25,6 +26,7 @@ import {
   type FeatureOptionsAtom,
   type TimeFeatureAtom,
 } from "../hooks";
+import { twMerge } from "tailwind-merge";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: ActiveFeatureAtom;
@@ -159,11 +161,13 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   const { activeFeatureAtom, featureAttributesIndexAtom } = props;
 
   const { t } = useDefaultTranslation();
+  const theme = getTheme();
   const activeFeature = useAtomValue(activeFeatureAtom);
   const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
   const attributes = activeFeature
     ? featuresAttributes[activeFeature]
     : undefined;
+  const isValid = attributes ? areFeatureAttributesValid(attributes) : true;
 
   return (
     <section>
@@ -171,16 +175,26 @@ const Configuration: FC<ConfigurationProps> = (props) => {
         <Alert color="info">{t(translations.state.unselected)}</Alert>
       ) : (
         <>
-          <header className="mb-2">
-            <h3 className="text-xl">
-              {t(translations.actions.configureName, {
-                name: activeFeature,
-              })}
-            </h3>
-            {/* // TODO I might have to disable the modal output in FeatureAttributeSample */}
+          <header className="mb-2 flex gap-4 items-baseline justify-between">
+            <div className="flex gap-1 items-center">
+              <h3 className="text-xl">
+                {t(translations.actions.configureName, {
+                  name: activeFeature,
+                })}
+              </h3>
+              {!isValid && (
+                <WarningIcon
+                  className={twMerge(
+                    "ml-1 text-lg",
+                    theme.label.root.colors.warning,
+                  )}
+                  title={t(translations.labels.invalidConfiguration)}
+                />
+              )}
+            </div>
             <div>
               {t(translations.labels.sample)}:{" "}
-              <FeatureAttributeSample attributes={attributes} />
+              <FeatureAttributeSample attributes={attributes} disableModal />
             </div>
           </header>
           <Form {...props} />
