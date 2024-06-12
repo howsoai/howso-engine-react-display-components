@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
+import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   type FeatureAttributesIndex,
@@ -13,8 +13,8 @@ import {
 import { withPadding } from "@/storybook";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
-const meta: Meta<typeof FeaturesAttributesRows> = {
-  component: FeaturesAttributesRows,
+const meta: Meta<typeof FeaturesAttributesCompact> = {
+  component: FeaturesAttributesCompact,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
   // tags: ["autodocs"],
   parameters: {
@@ -104,7 +104,6 @@ const sampleFeatureAttributesIndex: FeatureAttributesIndex = {
       allow_null: false,
     },
   },
-
   ca: {
     type: "continuous",
     data_type: "number",
@@ -145,16 +144,19 @@ const timeFeature: FeatureAttributes = {
     type: "rate",
   },
 };
+const defaultActiveFeature = Object.keys(sampleFeatureAttributesIndex).at(0);
+const lastActiveFeature = Object.keys(sampleFeatureAttributesIndex).at(-1);
 
 export default meta;
-type Story = StoryObj<typeof FeaturesAttributesRows>;
+type Story = StoryObj<typeof FeaturesAttributesCompact>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const defaultAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const Default: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {
-    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    activeFeatureAtom:
+      getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
     featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
       sampleFeatureAttributesIndex,
     ),
@@ -188,57 +190,52 @@ NoFeatures.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
   featuresDirtyAtom: noFeaturesAreDirtyAtom,
 });
 
-const configurationAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
-export const Configuration: Story = {
+const noSelectionAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
+export const NoSelection: Story = {
   args: {
-    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(
-      Object.keys(sampleFeatureAttributesIndex).shift(),
-    ),
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
     featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
       sampleFeatureAttributesIndex,
     ),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-Configuration.args!.setFeatureAttributesAtom =
+NoSelection.args!.setFeatureAttributesAtom =
   getFeatureAttributesSetAttributesAtom({
-    featureAttributesIndexAtom: Configuration.args!.featureAttributesIndexAtom!,
-    featuresDirtyAtom: configurationAreDirtyAtom,
+    featureAttributesIndexAtom: NoSelection.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: noSelectionAreDirtyAtom,
   });
-Configuration.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: Configuration.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: configurationAreDirtyAtom,
+NoSelection.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+  featureAttributesIndexAtom: NoSelection.args!.featureAttributesIndexAtom!,
+  featuresDirtyAtom: noSelectionAreDirtyAtom,
 });
 
-const configurationLastItemAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
-export const ConfigurationLastItem: Story = {
+const lastItemAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
+export const LastItem: Story = {
   args: {
-    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(
-      Object.keys(sampleFeatureAttributesIndex).pop(),
-    ),
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(lastActiveFeature),
     featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
       sampleFeatureAttributesIndex,
     ),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-ConfigurationLastItem.args!.setFeatureAttributesAtom =
-  getFeatureAttributesSetAttributesAtom({
-    featureAttributesIndexAtom:
-      ConfigurationLastItem.args!.featureAttributesIndexAtom!,
-    featuresDirtyAtom: configurationLastItemAreDirtyAtom,
-  });
-ConfigurationLastItem.args!.timeFeatureAtom =
-  getFeatureAttributesTimeFeatureAtom({
-    featureAttributesIndexAtom:
-      ConfigurationLastItem.args!.featureAttributesIndexAtom!,
-    featuresDirtyAtom: configurationLastItemAreDirtyAtom,
-  });
+LastItem.args!.setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom(
+  {
+    featureAttributesIndexAtom: LastItem.args!.featureAttributesIndexAtom!,
+    featuresDirtyAtom: lastItemAreDirtyAtom,
+  },
+);
+LastItem.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+  featureAttributesIndexAtom: LastItem.args!.featureAttributesIndexAtom!,
+  featuresDirtyAtom: lastItemAreDirtyAtom,
+});
 
 const timeSeriesAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const TimeSeries: Story = {
   args: {
-    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    activeFeatureAtom:
+      getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
     featureAttributesIndexAtom: getFeatureAttributesIndexAtom({
       timeFeature,
       ...sampleFeatureAttributesIndex,

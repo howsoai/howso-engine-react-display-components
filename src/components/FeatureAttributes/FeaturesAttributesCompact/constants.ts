@@ -1,5 +1,15 @@
-const base = "FeatureAttributes.FeaturesAttributesRows";
+const base = "FeatureAttributes.FeaturesAttributesCompact";
 export const translations = {
+  header: {
+    fields: {
+      feature: {
+        label: "Feature",
+      },
+      timeFeature: {
+        label: "Time Feature",
+      },
+    },
+  },
   actions: {
     configure: `${base}.actions.configure`,
     configureName: `${base}.actions.configure_{{name}}`,
@@ -7,20 +17,15 @@ export const translations = {
     update: `${base}.actions.update`,
     updateAndGoToTarget: `${base}.actions.updateAndGoTo_{{target}}`,
   },
-  headings: {
-    configuration: `${base}.headings.configuration`,
-    feature: `${base}.headings.feature`,
-    sample: `${base}.headings.sample`,
-    timeFeature: `${base}.headings.timeFeature`,
-    timeSeries: `${base}.headings.timeSeries`,
-  },
   form: {
     label: `${base}.form.label`,
   },
   labels: {
     invalid_configuration: `${base}.labels.invalidConfiguration`,
+    sample: `${base}.labels.sample`,
   },
   state: {
     empty: `${base}.state.empty`,
+    unselected: `${base}.state.unselected`,
   },
 };

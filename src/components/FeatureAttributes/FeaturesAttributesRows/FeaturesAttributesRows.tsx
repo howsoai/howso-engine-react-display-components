@@ -2,7 +2,6 @@ import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { Table, Button, Radio, Modal, Alert, getTheme } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useTranslation } from "react-i18next";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
 import {
@@ -11,10 +10,6 @@ import {
 } from "../fields";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
-import {
-  FeatureAttributeFormValues,
-  getFeatureAttributesFromFormData,
-} from "./utils";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import { useDefaultTranslation } from "@/hooks";
 import {
@@ -25,11 +20,13 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
+  FeatureAttributeFormValues,
   areFeatureAttributesValid,
   getFeatureAttributesForType,
+  getFeatureAttributesFromFormData,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
-import { featuresAttributesRowsTranslations } from "./constants";
+import { translations } from "./constants";
 import {
   type ActiveFeatureAtom,
   type FeatureAttributesIndexAtom,
@@ -81,10 +78,10 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
           <Table striped>
             <Table.Head>
               <Table.HeadCell className="whitespace-nowrap">
-                {t(featuresAttributesRowsTranslations.headings.feature)}
+                {t(translations.headings.feature)}
               </Table.HeadCell>
               <Table.HeadCell className="whitespace-nowrap">
-                {t(featuresAttributesRowsTranslations.headings.sample)}
+                {t(translations.headings.sample)}
               </Table.HeadCell>
               <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
                 {t(featureAttributeTypeLabel)}
@@ -92,8 +89,8 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
               <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
                 <div className="flex items-center gap-2">
                   {options.time_series
-                    ? t(featuresAttributesRowsTranslations.headings.timeFeature)
-                    : t(featuresAttributesRowsTranslations.headings.timeSeries)}
+                    ? t(translations.headings.timeFeature)
+                    : t(translations.headings.timeSeries)}
                   <ToggleInput
                     onChange={onChangeTimeSeries}
                     checked={options.time_series || false}
@@ -101,7 +98,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
                 </div>
               </Table.HeadCell>
               <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                {t(featuresAttributesRowsTranslations.headings.configuration)}
+                {t(translations.headings.configuration)}
               </Table.HeadCell>
             </Table.Head>
             <Table.Body className="divide-y">
@@ -117,7 +114,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
         </div>
         {!features.length && (
           <Alert color="warning" icon={WarningIcon}>
-            {t(featuresAttributesRowsTranslations.state.empty)}
+            {t(translations.state.empty)}
           </Alert>
         )}
         <Controls {...props} containerProps={{ className: "mt-4" }} />
@@ -190,9 +187,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
       <Table.Cell className="w-[1%] whitespace-nowrap text-center">
         <div className="flex items-center">
           <Button color={"light"} onClick={() => setActiveFeature(feature)}>
-            <span>
-              {t(featuresAttributesRowsTranslations.actions.configure)}
-            </span>
+            <span>{t(translations.actions.configure)}</span>
           </Button>
 
           {!isValid && (
@@ -201,9 +196,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
                 "ml-1 text-lg",
                 theme.label.root.colors.warning,
               )}
-              title={t(
-                featuresAttributesRowsTranslations.labels.invalid_configuration,
-              )}
+              title={t(translations.labels.invalid_configuration)}
             />
           )}
         </div>
@@ -301,7 +294,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   timeFeatureAtom,
   onClose,
 }) => {
-  const { t } = useTranslation();
+  const { t } = useDefaultTranslation();
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
@@ -344,10 +337,10 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
       <form
         noValidate
         data-feature={activeFeature}
-        aria-label={t(featuresAttributesRowsTranslations.form.label)}
+        aria-label={t(translations.form.label)}
       >
         <Modal.Header>
-          {t(featuresAttributesRowsTranslations.actions.configureName, {
+          {t(translations.actions.configureName, {
             name: activeFeature,
           })}
         </Modal.Header>
@@ -362,9 +355,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
           <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
-              <span>
-                {t(featuresAttributesRowsTranslations.actions.update)}
-              </span>
+              <span>{t(translations.actions.update)}</span>
             </Button>
             {nextFeature && (
               <Button
@@ -373,13 +364,9 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
               >
                 <UpdateIcon className="mr-1 h-5 w-5" />
                 <div className="max-w-60 truncate">
-                  {t(
-                    featuresAttributesRowsTranslations.actions
-                      .updateAndGoToTarget,
-                    {
-                      target: nextFeature,
-                    },
-                  )}
+                  {t(translations.actions.updateAndGoToTarget, {
+                    target: nextFeature,
+                  })}
                 </div>
               </Button>
             )}
@@ -426,7 +413,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
     setIsOpen(false);
   };
 
-  const label = t(featuresAttributesRowsTranslations.actions.mapDependents);
+  const label = t(translations.actions.mapDependents);
   return (
     <>
       <Button color={"light"} onClick={onOpen}>

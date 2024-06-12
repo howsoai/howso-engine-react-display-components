@@ -8,14 +8,10 @@ import {
 import "@testing-library/jest-dom";
 import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 import { FeatureAttributes } from "@howso/openapi-client";
-import {
-  FeatureAttributeFormValues,
-  getFeatureAttributesFromFormData,
-} from "./utils";
 import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
 import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
 import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
-import { featuresAttributesRowsTranslations } from "./constants";
+import { translations } from "./constants";
 import {
   type FeatureAttributesIndex,
   getFeatureAttributesAreDirtyAtom,
@@ -25,6 +21,10 @@ import {
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
+import {
+  FeatureAttributeFormValues,
+  getFeatureAttributesFromFormData,
+} from "../utils";
 
 describe("FeaturesAttributesRows", () => {
   it("should open a configuration modal, save, and load the next", async () => {
@@ -90,9 +90,7 @@ describe("FeaturesAttributesRows", () => {
     expect(rows.length).toBe(featureEntries.length);
 
     const configure = within(rows[0]).getByRole("button", {
-      name: new RegExp(
-        `.*${featuresAttributesRowsTranslations.actions.configure}.*`,
-      ),
+      name: new RegExp(`.*${translations.actions.configure}.*`),
     });
     fireEvent(
       configure,
@@ -106,9 +104,7 @@ describe("FeaturesAttributesRows", () => {
       await expectFeatureAttributesInDialog(modal, feature, attributes);
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(modal).getByRole("button", {
-          name: new RegExp(
-            `.*${featuresAttributesRowsTranslations.actions.updateAndGoToTarget}.*`,
-          ),
+          name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
         });
         fireEvent(
           updateAndNext,

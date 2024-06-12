@@ -1,4 +1,4 @@
-import { isNull } from "@/utils";
+import { isFormDataEmpty } from "@/utils/forms";
 import { FeatureAttributes } from "@howso/openapi-client";
 
 export type FeatureAttributeFormValues = FeatureAttributes & {
@@ -62,22 +62,6 @@ export const getFeatureAttributesFromFormData = (
   if (!attributes.id_feature || attributes.type === "continuous")
     attributes.id_feature = undefined;
   return attributes;
-};
-
-const isFormDataEmpty = (value: unknown): boolean => {
-  if (value === "") {
-    return true;
-  }
-
-  if (isNull(value)) {
-    return true;
-  }
-
-  if (Array.isArray(value) && !value.length) {
-    return true;
-  }
-
-  return false;
 };
 
 const sanitizeFeatureAttributeValue = (value: unknown): unknown => {
