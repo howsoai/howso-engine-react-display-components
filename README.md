@@ -87,5 +87,5 @@ When you are ready to publish a new version, use the Github Release action.
 
 ### Chromatic
 
-[Chromatic]() is used to review changes on this project.
-You may [invite yourself]() to the project.
+[Chromatic](https://www.chromatic.com/builds?appId=6669ba40186e19f7f7c0af22) is used to review changes on this project.
+You may [invite yourself](https://www.chromatic.com/start?inviteToken=chpi_1165ed0ce0ed4451bd5598cb035744ba&appId=6669ba40186e19f7f7c0af22) to the project.

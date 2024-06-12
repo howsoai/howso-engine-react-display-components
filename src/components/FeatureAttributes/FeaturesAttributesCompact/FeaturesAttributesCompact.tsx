@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Button, Alert, getTheme } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
+import { twMerge } from "tailwind-merge";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
-import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { useDefaultTranslation } from "@/hooks";
 import {
   ErrorBoundary,
@@ -26,7 +27,7 @@ import {
   type FeatureOptionsAtom,
   type TimeFeatureAtom,
 } from "../hooks";
-import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: ActiveFeatureAtom;
@@ -54,19 +55,28 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const activeFeature = useAtomValue(activeFeatureAtom);
   const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
   const features = Object.keys(featuresAttributes);
+  const [isMappingOpen, setIsMappingOpen] = useState(false);
 
   return (
     <ErrorBoundary>
       <Header
         activeFeatureAtom={activeFeatureAtom}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
+        isMappingOpen={isMappingOpen}
+        toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
         optionsAtom={optionsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />
+      <hr className="my-4" />
       {!features.length ? (
         <Alert color="warning" icon={WarningIcon}>
           {t(translations.state.empty)}
         </Alert>
+      ) : isMappingOpen ? (
+        <FeaturesAttributesDependencies
+          {...props}
+          onUpdate={() => setIsMappingOpen(false)}
+        />
       ) : !activeFeature ? (
         <Alert color="info">{t(translations.state.unselected)}</Alert>
       ) : (
@@ -79,6 +89,9 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
 type HeaderProps = {
   activeFeatureAtom: ActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  // isMappingOpen
+  isMappingOpen: boolean;
+  toggleIsMappingOpen: () => void;
   optionsAtom: FeatureOptionsAtom;
   timeFeatureAtom: TimeFeatureAtom;
 };
@@ -89,6 +102,8 @@ type HeaderFormValues = {
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   featureAttributesIndexAtom,
+  isMappingOpen,
+  toggleIsMappingOpen,
   optionsAtom,
   timeFeatureAtom,
 }) => {
@@ -105,47 +120,51 @@ const Header: FC<HeaderProps> = ({
   });
 
   return (
-    <header className="flex flow-row gap-2 mb-4">
-      <FormProvider {...form}>
-        <FieldSelect
-          label={t(translations.header.fields.feature.label)}
-          name="feature"
-          onChange={async (event) => {
-            setActiveFeature(event.target.value);
-          }}
-          defaultValue={activeFeature || undefined}
-        >
-          <option value=""></option>
-          {features.map((feature) => (
-            <option key={feature} value={feature}>
-              {feature}
-            </option>
-          ))}
-        </FieldSelect>
+    <header className="flex flow-row gap-2 justify-between items-end">
+      <div className="flex gap-2 items-end">
+        <FormProvider {...form}>
+          <FieldSelect
+            label={t(translations.header.fields.feature.label)}
+            name="feature"
+            onChange={async (event) => {
+              setActiveFeature(event.target.value);
+            }}
+            defaultValue={activeFeature || undefined}
+          >
+            <option value=""></option>
+            {features.map((feature) => (
+              <option key={feature} value={feature}>
+                {feature}
+              </option>
+            ))}
+          </FieldSelect>
 
-        <FieldSelect
-          label={t(translations.header.fields.timeFeature.label)}
-          name="timeFeature"
-          onChange={async (event) => {
-            const time_series = !!event.target.value;
-            setOptions({ ...options, time_series: time_series });
-            if (!time_series) setTimeFeature(event.target.value);
-          }}
-          defaultValue={timeFeature?.name}
-        >
-          <option value=""></option>
-          {features.map((feature) => (
-            <option key={feature} value={feature}>
-              {feature}
-            </option>
-          ))}
-        </FieldSelect>
-      </FormProvider>
+          <FieldSelect
+            label={t(translations.header.fields.timeFeature.label)}
+            name="timeFeature"
+            onChange={async (event) => {
+              const time_series = !!event.target.value;
+              setOptions({ ...options, time_series: time_series });
+              if (!time_series) setTimeFeature(event.target.value);
+            }}
+            defaultValue={timeFeature?.name}
+          >
+            <option value=""></option>
+            {features.map((feature) => (
+              <option key={feature} value={feature}>
+                {feature}
+              </option>
+            ))}
+          </FieldSelect>
+        </FormProvider>
+      </div>
 
-      <Button color={"light"} disabled>
-        <MapDependentFeatureAttributesIcon className={"mr-1"} />
-        {t(translations.actions.mapDependents)}
-      </Button>
+      <div className="flex items-end">
+        <Button color={"light"} onClick={toggleIsMappingOpen}>
+          <MapDependentFeatureAttributesIcon className={"mr-1"} />
+          {t(translations.actions.mapDependents)}
+        </Button>
+      </div>
     </header>
   );
 };
@@ -279,40 +298,3 @@ const Form: FC<ConfigurationProps> = ({
     </FormProvider>
   );
 };
-
-// type MapDependenciesControlProps = Pick<
-//   FeaturesAttributesRowsProps,
-//   "featureAttributesIndexAtom"
-// >;
-// const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
-//   const { t } = useDefaultTranslation();
-//   const [isOpen, setIsOpen] = useState(false);
-//   const onOpen = () => {
-//     setIsOpen(true);
-//   };
-//   const onClose = () => {
-//     setIsOpen(false);
-//   };
-
-//   const label = ;
-//   return (
-//     <>
-//       <Button color={"light"} onClick={onOpen}>
-//         <MapDependentFeatureAttributesIcon className={"mr-1"} />
-//         {label}
-//       </Button>
-//       {isOpen && (
-//         <FormModal dismissible show size={"3xl"} onClose={onClose}>
-//           <form noValidate aria-label={label}>
-//             <Modal.Header>{label}</Modal.Header>
-//             <Modal.Body>
-//               <ErrorBoundary>
-//                 <FeaturesAttributesDependencies {...props} onUpdate={onClose} />
-//               </ErrorBoundary>
-//             </Modal.Body>
-//           </form>
-//         </FormModal>
-//       )}
-//     </>
-//   );
-// };
