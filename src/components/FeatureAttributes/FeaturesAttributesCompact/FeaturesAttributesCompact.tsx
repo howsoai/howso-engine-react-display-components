@@ -22,20 +22,20 @@ import {
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
 import {
-  type ActiveFeatureAtom,
+  type FeatureAttributesActiveFeatureAtom,
   type FeatureAttributesIndexAtom,
-  type SetFeatureAttributesAtom,
-  type FeatureOptionsAtom,
-  type TimeFeatureAtom,
+  type FeatureAttributesSetAttributesAtom,
+  type FeatureAttributesOptionsAtom,
+  type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 
 export type FeaturesAttributesCompactProps = {
-  activeFeatureAtom: ActiveFeatureAtom;
+  activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  setFeatureAttributesAtom: SetFeatureAttributesAtom;
-  optionsAtom: FeatureOptionsAtom;
-  timeFeatureAtom: TimeFeatureAtom;
+  setFeatureAttributesAtom: FeatureAttributesSetAttributesAtom;
+  optionsAtom: FeatureAttributesOptionsAtom;
+  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
 };
 /**
  * A specialized view of all feature attributes at once.
@@ -87,12 +87,12 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
 };
 
 type HeaderProps = {
-  activeFeatureAtom: ActiveFeatureAtom;
+  activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
   // isMappingOpen
   toggleIsMappingOpen: () => void;
-  optionsAtom: FeatureOptionsAtom;
-  timeFeatureAtom: TimeFeatureAtom;
+  optionsAtom: FeatureAttributesOptionsAtom;
+  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
 };
 type HeaderFormValues = {
   feature: string | undefined;

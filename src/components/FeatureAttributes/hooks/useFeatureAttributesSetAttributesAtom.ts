@@ -11,7 +11,7 @@ import { useMemo } from "react";
 export const useFeatureAttributesSetAttributesAtom = ({
   featureAttributesIndexAtom,
   featuresDirtyAtom,
-}: SetFeatureAttributesAtomParams): SetFeatureAttributesAtom =>
+}: SetFeatureAttributesAtomParams): FeatureAttributesSetAttributesAtom =>
   useMemo(
     () =>
       getFeatureAttributesSetAttributesAtom({
@@ -50,6 +50,6 @@ export const getFeatureAttributesSetAttributesAtom = ({
     },
   );
 
-export type SetFeatureAttributesAtom = ReturnType<
+export type FeatureAttributesSetAttributesAtom = ReturnType<
   typeof getFeatureAttributesSetAttributesAtom
 >;

@@ -11,6 +11,6 @@ export const useFeatureAttributesOptionsAtom = (options: FeatureOptions) =>
 
 export const getFeatureAttributesOptionsAtom = (options: FeatureOptions) =>
   atomWithReset<FeatureOptions>(options);
-export type FeatureOptionsAtom = ReturnType<
+export type FeatureAttributesOptionsAtom = ReturnType<
   typeof getFeatureAttributesOptionsAtom
 >;

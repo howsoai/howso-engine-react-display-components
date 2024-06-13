@@ -65,6 +65,6 @@ export const getFeatureAttributesTimeFeatureAtom = ({
       set(featuresDirtyAtom, true);
     },
   );
-export type TimeFeatureAtom = ReturnType<
+export type FeatureAttributesTimeFeatureAtom = ReturnType<
   typeof getFeatureAttributesTimeFeatureAtom
 >;

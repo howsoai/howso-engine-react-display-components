@@ -28,19 +28,19 @@ import {
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
 import {
-  type ActiveFeatureAtom,
+  type FeatureAttributesActiveFeatureAtom,
   type FeatureAttributesIndexAtom,
-  type SetFeatureAttributesAtom,
-  type FeatureOptionsAtom,
-  type TimeFeatureAtom,
+  type FeatureAttributesSetAttributesAtom,
+  type FeatureAttributesOptionsAtom,
+  type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 
 export type FeaturesAttributesRowsProps = {
-  activeFeatureAtom: ActiveFeatureAtom;
+  activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  setFeatureAttributesAtom: SetFeatureAttributesAtom;
-  optionsAtom: FeatureOptionsAtom;
-  timeFeatureAtom: TimeFeatureAtom;
+  setFeatureAttributesAtom: FeatureAttributesSetAttributesAtom;
+  optionsAtom: FeatureAttributesOptionsAtom;
+  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
 };
 /**
  * A specialized view of all feature attributes at once.
