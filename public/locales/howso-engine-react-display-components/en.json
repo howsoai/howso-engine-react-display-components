@@ -186,6 +186,26 @@
     "FeatureAttributeUniqueField": {
       "label": "Unique"
     },
+    "FeaturesAttributesCompact": {
+      "actions": {
+        "configure": "Configure",
+        "configure_{{name}}": "Configure {{name}}",
+        "mapDependents": "Map dependents",
+        "update": "Update",
+        "updateAndGoTo_{{target}}": "Update & go to: {{target}}"
+      },
+      "form": {
+        "label": "Configure feature"
+      },
+      "labels": {
+        "invalidConfiguration": "Please adjust this configuration",
+        "sample": "Sample"
+      },
+      "state": {
+        "empty": "No features were found in the dataset.",
+        "unselected": "Please select a feature to configure its attributes"
+      }
+    },
     "FeaturesAttributesDependencies": {
       "actions": {
         "update": "Update"
@@ -219,26 +239,6 @@
       },
       "state": {
         "empty": "No features were found in the dataset."
-      }
-    },
-    "FeaturesAttributesCompact": {
-      "actions": {
-        "configure": "Configure",
-        "configure_{{name}}": "Configure {{name}}",
-        "mapDependents": "Map dependents",
-        "update": "Update",
-        "updateAndGoTo_{{target}}": "Update & go to: {{target}}"
-      },
-      "form": {
-        "label": "Configure feature"
-      },
-      "labels": {
-        "invalidConfiguration": "Please adjust this configuration",
-        "sample": "Sample"
-      },
-      "state": {
-        "empty": "No features were found in the dataset.",
-        "unselected": "Please select a feature"
       }
     }
   }
