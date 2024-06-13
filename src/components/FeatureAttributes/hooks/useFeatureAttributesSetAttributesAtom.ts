@@ -3,7 +3,7 @@ import { atom } from "jotai";
 import { shouldInferAgain } from "../utils";
 import { FeatureAttributesIndexAtom } from "./useFeatureAttributesIndexAtom";
 import {
-  FeaturesDirtyAtom,
+  FeaturesAttributesAreDirtyAtom,
   DirtyFeatureAttributes,
 } from "./useFeatureAttributesAreDirtyAtom";
 import { useMemo } from "react";
@@ -23,7 +23,7 @@ export const useFeatureAttributesSetAttributesAtom = ({
 
 export type SetFeatureAttributesAtomParams = {
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  featuresDirtyAtom: FeaturesDirtyAtom;
+  featuresDirtyAtom: FeaturesAttributesAreDirtyAtom;
 };
 export const getFeatureAttributesSetAttributesAtom = ({
   featureAttributesIndexAtom,

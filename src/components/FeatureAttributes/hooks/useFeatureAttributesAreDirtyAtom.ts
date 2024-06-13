@@ -9,12 +9,12 @@ export type DirtyFeatureAttributes = Partial<
 /* Memoized boolean atom have been modified and require re-run of infer */
 export const useFeatureAttributesAreDirtyAtom = (
   isDirty: boolean = false,
-): FeaturesDirtyAtom =>
+): FeaturesAttributesAreDirtyAtom =>
   useMemo(() => getFeatureAttributesAreDirtyAtom(isDirty), [isDirty]);
 
 /* Boolean atom have been modified and require re-run of infer */
 export const getFeatureAttributesAreDirtyAtom = (isDirty: boolean = false) =>
   atom(isDirty);
-export type FeaturesDirtyAtom = ReturnType<
+export type FeaturesAttributesAreDirtyAtom = ReturnType<
   typeof getFeatureAttributesAreDirtyAtom
 >;

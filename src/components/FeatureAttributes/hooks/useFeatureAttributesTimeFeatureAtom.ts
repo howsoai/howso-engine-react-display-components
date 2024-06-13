@@ -3,12 +3,12 @@ import { atom } from "jotai";
 import { isEmpty } from "lodash";
 import { ActiveFeature } from "./useFeatureAttributesActiveFeatureAtom";
 import { FeatureAttributesIndexAtom } from "./useFeatureAttributesIndexAtom";
-import { FeaturesDirtyAtom } from "./useFeatureAttributesAreDirtyAtom";
+import { FeaturesAttributesAreDirtyAtom } from "./useFeatureAttributesAreDirtyAtom";
 import { useMemo } from "react";
 
 export type GetTimeFeatureAtomParams = {
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  featuresDirtyAtom: FeaturesDirtyAtom;
+  featuresDirtyAtom: FeaturesAttributesAreDirtyAtom;
 };
 
 /*
