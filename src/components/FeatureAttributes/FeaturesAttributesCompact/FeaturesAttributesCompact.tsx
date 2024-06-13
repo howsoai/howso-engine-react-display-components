@@ -186,7 +186,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   const isValid = areFeatureAttributesValid(attributes);
 
   return (
-    <section>
+    <section data-testid="configuration-container">
       <header className="mb-2 flex gap-4 items-baseline justify-between">
         <div className="flex gap-1 items-center">
           <h3 className="text-xl">
@@ -209,7 +209,8 @@ const Configuration: FC<ConfigurationProps> = (props) => {
           <FeatureAttributeSample attributes={attributes} disableModal />
         </div>
       </header>
-      <Form {...props} />
+      {/* Purpose using `key` here to force the component to load and unload, creating new `useForm` defaults */}
+      <Form key={activeFeature} {...props} />
     </section>
   );
 };
