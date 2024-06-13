@@ -58,6 +58,7 @@ describe("FeaturesAttributesCompact", () => {
     },
   };
   const featureEntries = Object.entries(featuresAttributes);
+  const firstFeature = featureEntries[0][0];
 
   it("should include an alert to select a feature upon load", () => {
     const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
@@ -82,9 +83,64 @@ describe("FeaturesAttributesCompact", () => {
       />,
     );
 
+    const featuresField = getFeatureField();
+    expect(featuresField).toBeEnabled();
+    expect(featuresField.value).toBe("");
+
     expect(screen.getByRole("alert")).toHaveTextContent(
       translations.state.unselected,
     );
+  });
+
+  it("should disable the features field after any changes to attributes until an update is applied", async () => {
+    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
+    const featureAttributesIndexAtom =
+      getFeatureAttributesIndexAtom(featuresAttributes);
+    const setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
+      featureAttributesIndexAtom,
+      featuresDirtyAtom,
+    });
+    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+      featureAttributesIndexAtom,
+      featuresDirtyAtom,
+    });
+
+    render(
+      <FeaturesAttributesCompact
+        activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
+        featureAttributesIndexAtom={featureAttributesIndexAtom}
+        optionsAtom={getFeatureAttributesOptionsAtom({})}
+        setFeatureAttributesAtom={setFeatureAttributesAtom}
+        timeFeatureAtom={timeFeatureAtom}
+      />,
+    );
+
+    const featuresField = getFeatureField();
+    expect(featuresField).toBeEnabled();
+    expect(featuresField.value).toBe("");
+    fireEvent.change(featuresField, { target: { value: firstFeature } });
+    expect(featuresField.value).toBe(firstFeature);
+    const [feature, attributes] = featureEntries[0];
+
+    const container = getConfigurationContainer();
+    await expectFeatureAttributesInContainer(container, feature, attributes);
+
+    // Change a value in the form
+    const typeField = within(container).getByLabelText<HTMLSelectElement>(
+      new RegExp(`^FeatureAttributes.FeatureAttributeTypeField.label\s*\\*?$`),
+    );
+    fireEvent.change(typeField, { target: { value: "continuous" } });
+
+    expect(featuresField).not.toBeEnabled();
+
+    const update = within(container).getByRole("button", {
+      name: new RegExp(`.*${translations.actions.update}$`),
+    });
+    fireEvent(
+      update,
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
+    expect(featuresField).toBeEnabled();
   });
 
   it("should open a configuration container, save, and load the next", async () => {
@@ -112,16 +168,13 @@ describe("FeaturesAttributesCompact", () => {
 
     const featuresField = getFeatureField();
     expect(featuresField).toBeEnabled();
-
-    const firstFeature = featureEntries[0][0];
-    expect(featuresField.value).toBe("");
     fireEvent.change(featuresField, { target: { value: firstFeature } });
     expect(featuresField.value).toBe(firstFeature);
 
     for (let i = 0; i <= featureEntries.length - 1; i++) {
       const [feature, attributes] = featureEntries[i];
 
-      const container = screen.getByTestId("configuration-container");
+      const container = getConfigurationContainer();
       await expectFeatureAttributesInContainer(container, feature, attributes);
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(container).getByRole("button", {
@@ -160,7 +213,11 @@ const expectFeatureAttributesInContainer = async (
     ).toHaveTextContent(element);
   });
 };
+
 const getFeatureField = () =>
-  screen.getByLabelText(
+  screen.getByLabelText<HTMLSelectElement>(
     new RegExp(`^${translations.header.fields.feature.label}\s*\\*?$`),
-  ) as HTMLSelectElement;
+  );
+
+const getConfigurationContainer = () =>
+  screen.getByTestId("configuration-container");
