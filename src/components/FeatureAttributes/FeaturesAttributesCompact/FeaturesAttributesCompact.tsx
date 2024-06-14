@@ -1,4 +1,10 @@
-import { FC, useState } from "react";
+import {
+  type Dispatch,
+  type SetStateAction,
+  FC,
+  useState,
+  useEffect,
+} from "react";
 import { Button, Alert, getTheme, Checkbox } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
@@ -58,10 +64,13 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const features = Object.keys(featuresAttributes);
   const [isMappingOpen, setIsMappingOpen] = useState(false);
 
+  const [areConfigurationsDirty, setAreConfigurationsDirty] = useState(false);
+
   return (
     <ErrorBoundary>
       <Header
         activeFeatureAtom={activeFeatureAtom}
+        areConfigurationsDirty={areConfigurationsDirty}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
         toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
         optionsAtom={optionsAtom}
@@ -80,7 +89,10 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       ) : !activeFeature ? (
         <Alert color="info">{t(translations.state.unselected)}</Alert>
       ) : (
-        <Configuration {...props} />
+        <Configuration
+          {...props}
+          setAreConfigurationsDirty={setAreConfigurationsDirty}
+        />
       )}
     </ErrorBoundary>
   );
@@ -88,6 +100,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
 
 type HeaderProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
+  areConfigurationsDirty: boolean;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
   // isMappingOpen
   toggleIsMappingOpen: () => void;
@@ -100,6 +113,7 @@ type HeaderFormValues = {
 };
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
+  areConfigurationsDirty,
   featureAttributesIndexAtom,
   toggleIsMappingOpen,
   optionsAtom,
@@ -130,6 +144,7 @@ const Header: FC<HeaderProps> = ({
               setActiveFeature(event.target.value);
             }}
             defaultValue={activeFeature || undefined}
+            disabled={areConfigurationsDirty || !features.length}
           >
             <option value=""></option>
             {features.map((feature) => (
@@ -142,6 +157,7 @@ const Header: FC<HeaderProps> = ({
           <FieldLabel>
             <Checkbox
               color={"blue"}
+              disabled={!activeFeature}
               onChange={async (event) => {
                 setOptions({ ...options, time_series: event.target.checked });
                 if (event.target.checked) setTimeFeature(activeFeature);
@@ -154,7 +170,11 @@ const Header: FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-end">
-        <Button color={"light"} onClick={toggleIsMappingOpen}>
+        <Button
+          color={"light"}
+          disabled={!features.length}
+          onClick={toggleIsMappingOpen}
+        >
           <MapDependentFeatureAttributesIcon className={"mr-1"} />
           {t(translations.actions.mapDependents)}
         </Button>
@@ -169,7 +189,9 @@ type ConfigurationProps = Pick<
   | "featureAttributesIndexAtom"
   | "setFeatureAttributesAtom"
   | "timeFeatureAtom"
->;
+> & {
+  setAreConfigurationsDirty: Dispatch<SetStateAction<boolean>>;
+};
 const Configuration: FC<ConfigurationProps> = (props) => {
   const { activeFeatureAtom, featureAttributesIndexAtom } = props;
 
@@ -219,6 +241,7 @@ const Form: FC<ConfigurationProps> = ({
   featureAttributesIndexAtom,
   activeFeatureAtom,
   setFeatureAttributesAtom,
+  setAreConfigurationsDirty,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
@@ -239,7 +262,11 @@ const Form: FC<ConfigurationProps> = ({
     shouldUnregister: true,
   });
 
-  const { dirtyFields } = form.formState;
+  const { dirtyFields, isDirty } = form.formState;
+  useEffect(() => {
+    setAreConfigurationsDirty(isDirty && Object.keys(dirtyFields).length > 0);
+  }, [setAreConfigurationsDirty, isDirty, dirtyFields]);
+
   const features = Object.keys(featuresAttributes);
   const nextFeature = features[features.indexOf(activeFeature) + 1];
 
@@ -256,6 +283,7 @@ const Form: FC<ConfigurationProps> = ({
   const save: SubmitHandler<FeatureAttributeFormValues> = (data) => {
     const attributes = getFeatureAttributesFromFormData(data);
     setFeatureAttributes(activeFeature, attributes, dirtyFields);
+    form.reset(attributes, { keepDirty: false, keepDefaultValues: false });
   };
 
   return (

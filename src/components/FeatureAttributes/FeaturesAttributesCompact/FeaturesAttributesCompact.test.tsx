@@ -5,6 +5,7 @@ import {
   waitFor,
   within,
 } from "@testing-library/react";
+import { act } from "react";
 import "@testing-library/jest-dom";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -21,6 +22,7 @@ import {
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
+import { sleep } from "@/utils";
 
 describe("FeaturesAttributesCompact", () => {
   const featuresAttributes: FeatureAttributesIndex = {
@@ -126,10 +128,12 @@ describe("FeaturesAttributesCompact", () => {
     await expectFeatureAttributesInContainer(container, feature, attributes);
 
     // Change a value in the form
-    const typeField = within(container).getByLabelText<HTMLSelectElement>(
-      new RegExp(`^FeatureAttributes.FeatureAttributeTypeField.label\s*\\*?$`),
+    const allowNullsField = within(container).getByLabelText<HTMLInputElement>(
+      new RegExp(
+        `^FeatureAttributes.FeatureAttributeAllowNullsField.label\\*?$`,
+      ),
     );
-    fireEvent.change(typeField, { target: { value: "continuous" } });
+    fireEvent.click(allowNullsField);
 
     expect(featuresField).not.toBeEnabled();
 
@@ -140,6 +144,9 @@ describe("FeaturesAttributesCompact", () => {
       update,
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
+    await act(async () => {
+      await sleep(300);
+    });
     expect(featuresField).toBeEnabled();
   });
 
@@ -216,7 +223,7 @@ const expectFeatureAttributesInContainer = async (
 
 const getFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(
-    new RegExp(`^${translations.header.fields.feature.label}\s*\\*?$`),
+    new RegExp(`^${translations.header.fields.feature.label}\\*?$`),
   );
 
 const getConfigurationContainer = () =>
