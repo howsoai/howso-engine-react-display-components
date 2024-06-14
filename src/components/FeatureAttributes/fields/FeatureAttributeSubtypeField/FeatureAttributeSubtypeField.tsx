@@ -5,10 +5,13 @@ import {
   FeatureAttributes,
   FeatureAttributesDataTypeEnum,
 } from "@howso/openapi-client";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeSubtypeFieldLabel } from "./constants";
 
-export type FeatureAttributeSubtypeProps = {
+export type FeatureAttributeSubtypeProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
   dataType: FeatureAttributes["data_type"];
   nonSensitive: FeatureAttributes["non_sensitive"];
@@ -34,6 +37,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   featureType,
   dataType,
   nonSensitive,
+  ...props
 }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
@@ -48,6 +52,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
     <FieldText
       required={required}
       label={t(featureAttributeSubtypeFieldLabel)}
+      {...props}
       {...form.register("subtype", { required })}
       options={dataType ? subtypes[dataType] : undefined}
       helperText={t("FeatureAttributes.FeatureAttributeSubtypeField.help")}

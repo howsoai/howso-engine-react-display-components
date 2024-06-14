@@ -3,10 +3,14 @@ import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldText, Link } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+  Link,
+} from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeLocaleFieldLabel } from "./constants";
 
-export type FeatureAttributeLocaleFieldProps = {
+export type FeatureAttributeLocaleFieldProps = Partial<FieldTextProps> & {
   dataType: FeatureAttributes["data_type"];
 };
 /**
@@ -20,7 +24,7 @@ export type FeatureAttributeLocaleFieldProps = {
  */
 export const FeatureAttributeLocaleField: FC<
   FeatureAttributeLocaleFieldProps
-> = ({ dataType }) => {
+> = ({ dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
   const required = false;
@@ -35,6 +39,7 @@ export const FeatureAttributeLocaleField: FC<
       label={t(featureAttributeLocaleFieldLabel)}
       placeholder="en; en_US; zh_CN"
       required={required}
+      {...props}
       {...form.register("locale", { required })}
       helperText={
         <Trans

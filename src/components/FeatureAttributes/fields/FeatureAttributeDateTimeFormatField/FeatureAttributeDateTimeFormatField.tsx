@@ -2,11 +2,15 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
-import { FieldText, Link } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+  Link,
+} from "@howso/react-tailwind-flowbite-components";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "./constants";
 
-export type FeatureAttributeDateTimeFormatProps = {
+export type FeatureAttributeDateTimeFormatProps = Partial<FieldTextProps> & {
   dataType: FeatureAttributes["data_type"];
 };
 /**
@@ -19,7 +23,7 @@ export type FeatureAttributeDateTimeFormatProps = {
  */
 export const FeatureAttributeDateTimeFormatField: FC<
   FeatureAttributeDateTimeFormatProps
-> = ({ dataType }) => {
+> = ({ dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -37,6 +41,7 @@ export const FeatureAttributeDateTimeFormatField: FC<
       label={t("FeatureAttributes.FeatureAttributeDateTimeFormatField.label")}
       placeholder={featureAttributeDateTimeFormatFieldPlaceholder}
       required={required}
+      {...props}
       {...form.register("date_time_format", { required })}
       helperText={
         <Trans

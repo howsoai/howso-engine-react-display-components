@@ -7,14 +7,18 @@ import {
   featureAttributeAllowedValuesFieldOrdinalLabel,
 } from "./constants";
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
-import { FieldTextAreaList } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldTextAreaList,
+  FieldTextAreaProps,
+} from "@howso/react-tailwind-flowbite-components";
 import { Textarea, TextareaProps } from "flowbite-react";
 
-export type FeatureAttributeAllowedValuesFieldProps = {
-  featureType: FeatureAttributes["type"];
-  dataType: FeatureAttributes["data_type"];
-  dateTimeFormat: string | undefined;
-};
+export type FeatureAttributeAllowedValuesFieldProps =
+  Partial<FieldTextAreaProps> & {
+    featureType: FeatureAttributes["type"];
+    dataType: FeatureAttributes["data_type"];
+    dateTimeFormat: string | undefined;
+  };
 /**
  * Explicitly allowed values to be output.
  *
@@ -26,6 +30,7 @@ export const FeatureAttributeAllowedValuesField: FC<
   featureType,
   dataType,
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
+  ...props
 }) => {
   const { t } = useDefaultTranslation();
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
@@ -65,6 +70,7 @@ export const FeatureAttributeAllowedValuesField: FC<
       placeholder={placeholder}
       helperText={helperText}
       rows={4}
+      {...props}
     />
   );
 };

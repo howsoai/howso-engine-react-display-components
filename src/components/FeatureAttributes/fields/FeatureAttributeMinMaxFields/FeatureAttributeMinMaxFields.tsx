@@ -3,9 +3,12 @@ import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeMinMaxFieldsProps = {
+export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
   type: FeatureAttributes["type"];
   dataType: FeatureAttributes["data_type"];
   dateTimeFormat: string | undefined;
@@ -27,6 +30,7 @@ export const FeatureAttributeMinMaxFields: FC<
   type,
   dataType,
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
+  ...props
 }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
@@ -47,6 +51,7 @@ export const FeatureAttributeMinMaxFields: FC<
         label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.min")}
         type={inputType}
         placeholder={isContinuousDateTime ? dateTimeFormat : "-100"}
+        {...props}
         {...form.register("bounds.min", { valueAsNumber: isContinuousNumber })}
       />
 
@@ -55,6 +60,7 @@ export const FeatureAttributeMinMaxFields: FC<
         label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.max")}
         type={inputType}
         placeholder={isContinuousDateTime ? dateTimeFormat : "100"}
+        {...props}
         {...form.register("bounds.max", { valueAsNumber: isContinuousNumber })}
       />
     </div>

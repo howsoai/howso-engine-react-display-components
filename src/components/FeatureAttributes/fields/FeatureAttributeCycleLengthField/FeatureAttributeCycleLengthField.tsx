@@ -2,9 +2,12 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeCycleLengthProps = {
+export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
   dataType: FeatureAttributes["data_type"];
 };
@@ -20,7 +23,7 @@ export type FeatureAttributeCycleLengthProps = {
  */
 export const FeatureAttributeCycleLengthField: FC<
   FeatureAttributeCycleLengthProps
-> = ({ featureType, dataType }) => {
+> = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -39,6 +42,7 @@ export const FeatureAttributeCycleLengthField: FC<
       type="number"
       step="1"
       placeholder="1; 7; 365"
+      {...props}
       {...form.register("cycle_length", { min: 0, valueAsNumber: true })}
       helperText={t("FeatureAttributes.FeatureAttributeCycleLengthField.help")}
     />

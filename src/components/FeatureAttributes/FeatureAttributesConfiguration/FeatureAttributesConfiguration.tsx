@@ -21,9 +21,11 @@ import {
 import { useFormValues } from "@/hooks/useFormValues";
 import { type FeatureAttributesFieldsValues } from "./constants";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { TextInputProps } from "flowbite-react";
 
 export interface FeatureAttributesConfigurationProps extends PropsWithChildren {
   className?: string;
+  dense?: boolean;
   /** If any feature in the data has a time feature */
   featuresHaveTimeFeature: boolean;
 }
@@ -34,8 +36,11 @@ export interface FeatureAttributesConfigurationProps extends PropsWithChildren {
 export function FeatureAttributesConfiguration({
   children,
   className,
+  dense,
   featuresHaveTimeFeature,
 }: FeatureAttributesConfigurationProps) {
+  const sizing: TextInputProps["sizing"] = dense ? "sm" : undefined;
+
   const values = useFormValues<FeatureAttributesFieldsValues>();
   const {
     type: featureType,
@@ -50,11 +55,17 @@ export function FeatureAttributesConfiguration({
 
   return (
     <div className={twMerge(formSpacingYDefault, className)}>
-      <FeatureAttributeTypeField />
-      <FeatureAttributeDataTypeField featureType={featureType} />
+      <FeatureAttributeTypeField sizing={sizing} />
+      <FeatureAttributeDataTypeField
+        featureType={featureType}
+        sizing={sizing}
+      />
 
-      <FeatureAttributeDateTimeFormatField dataType={dataType} />
-      <FeatureAttributeLocaleField dataType={dataType} />
+      <FeatureAttributeDateTimeFormatField
+        dataType={dataType}
+        sizing={sizing}
+      />
+      <FeatureAttributeLocaleField dataType={dataType} sizing={sizing} />
 
       <FeatureAttributeIsSensitiveField
         featureType={featureType}
@@ -64,6 +75,7 @@ export function FeatureAttributesConfiguration({
         featureType={featureType}
         dataType={dataType}
         nonSensitive={nonSensitive}
+        sizing={sizing}
       />
 
       <FeatureAttributeIdFeatureField
@@ -78,12 +90,14 @@ export function FeatureAttributesConfiguration({
       <FeatureAttributeObservationalErrorField
         featureType={featureType}
         dataType={dataType}
+        sizing={sizing}
       />
 
       <FeatureAttributesBoundsGroup
         featureType={featureType}
         dataType={dataType}
         dateTimeFormat={dateTimeFormat}
+        sizing={sizing}
       />
       <FeatureAttributeNullIsDependentField
         dependentFeatures={dependentFeatures}
@@ -97,14 +111,16 @@ export function FeatureAttributesConfiguration({
         timeSeriesLags={timeSeries?.lags}
         timeSeriesOrder={timeSeries?.order}
         timeSeriesType={timeSeries?.type}
+        sizing={sizing}
       />
 
       <FeatureAttributesContinuousNumbersGroup
         featureType={featureType}
         dataType={dataType}
+        sizing={sizing}
       />
 
-      <FeatureAttributesProgrammableGroup />
+      <FeatureAttributesProgrammableGroup sizing={sizing} />
       {children}
     </div>
   );

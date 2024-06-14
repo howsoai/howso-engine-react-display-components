@@ -1,18 +1,22 @@
 import { FC } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import { HelperText } from "flowbite-react";
-import { FieldTextList } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldTextList,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps = {
-  timeSeriesType: string | undefined;
-};
+export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
+  Partial<FieldTextProps> & {
+    timeSeriesType: string | undefined;
+  };
 /**
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureTimeSeries.html#howso.openapi.models.FeatureTimeSeries.rate_min
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureTimeSeries.html#howso.openapi.models.FeatureTimeSeries.rate_max
  */
 export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
   FeatureAttributeTimeSeriesRateMinMaxFieldsProps
-> = ({ timeSeriesType }) => {
+> = ({ timeSeriesType, ...props }) => {
   const { t } = useDefaultTranslation();
 
   if (timeSeriesType !== "rate") {
@@ -30,6 +34,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           )}
           placeholder="-1,-2,-3,-5,-7"
           valueAsNumber={true}
+          {...props}
         />
 
         <FieldTextList
@@ -40,6 +45,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           )}
           placeholder="1,2,3,5,7"
           valueAsNumber={true}
+          {...props}
         />
       </div>
       <HelperText color={"gray"}>

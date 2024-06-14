@@ -295,6 +295,7 @@ const Form: FC<ConfigurationProps> = ({
       >
         <ErrorBoundary>
           <FeatureAttributesConfiguration
+            dense
             featuresHaveTimeFeature={!!timeFeature}
           />
         </ErrorBoundary>

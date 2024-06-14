@@ -2,9 +2,14 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
-import { FieldTextArea, Link } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldTextArea,
+  FieldTextAreaProps,
+  Link,
+} from "@howso/react-tailwind-flowbite-components";
+import { twMerge } from "tailwind-merge";
 
-export type FeatureAttributePostProcessProps = Record<string, unknown>;
+export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 /**
  * Custom Amalgam code that is called on resulting values of this feature during react operations.
  *
@@ -12,7 +17,7 @@ export type FeatureAttributePostProcessProps = Record<string, unknown>;
  */
 export const FeatureAttributePostProcessField: FC<
   FeatureAttributePostProcessProps
-> = () => {
+> = (props) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -27,8 +32,9 @@ export const FeatureAttributePostProcessField: FC<
   #name 0 ; Don't adjust other names
 )`}
       rows={7}
+      {...props}
       {...form.register("post_process")}
-      className="font-mono"
+      className={twMerge("font-mono", props.className)}
       helperText={
         <Trans
           t={t}

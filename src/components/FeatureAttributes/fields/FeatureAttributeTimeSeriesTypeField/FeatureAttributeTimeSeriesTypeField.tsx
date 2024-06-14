@@ -2,19 +2,23 @@ import { FC } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import { useFormContext } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldSelect } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldSelect,
+  FieldSelectProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeTimeSeriesTypeFieldProps = {
-  featureType: FeatureAttributes["type"];
-  /** Is this the time feature that acts as the unique identifier for a time series */
-  isTimeFeature: boolean | undefined;
-};
+export type FeatureAttributeTimeSeriesTypeFieldProps =
+  Partial<FieldSelectProps> & {
+    featureType: FeatureAttributes["type"];
+    /** Is this the time feature that acts as the unique identifier for a time series */
+    isTimeFeature: boolean | undefined;
+  };
 /**
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureTimeSeries.html#howso.openapi.models.FeatureTimeSeries.type
  */
 export const FeatureAttributeTimeSeriesTypeField: FC<
   FeatureAttributeTimeSeriesTypeFieldProps
-> = ({ featureType, isTimeFeature }) => {
+> = ({ featureType, isTimeFeature, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
   const required = false;
@@ -30,6 +34,7 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
     <FieldSelect
       label={t("FeatureAttributes.FeatureAttributeTimeSeriesTypeField.label")}
       required={required}
+      {...props}
       {...form.register("time_series.type", {
         required,
         value: isTimeFeature ? "delta" : "rate",

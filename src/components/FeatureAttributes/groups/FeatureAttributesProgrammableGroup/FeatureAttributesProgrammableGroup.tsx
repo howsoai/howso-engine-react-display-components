@@ -16,7 +16,7 @@ export type FeatureAttributesProgrammableGroupProps = Omit<
 >;
 export const FeatureAttributesProgrammableGroup: FC<
   FeatureAttributesProgrammableGroupProps
-> = (props) => {
+> = ({ sizing, ...props }) => {
   const { t } = useDefaultTranslation();
 
   return (
@@ -25,8 +25,12 @@ export const FeatureAttributesProgrammableGroup: FC<
       title={t("FeatureAttributes.FeatureAttributesProgrammableGroup.title")}
       advanced={
         <div className={formSpacingYDefault}>
-          <FeatureAttributeDerivedFeatureCodeField />
-          <FeatureAttributePostProcessField />
+          <FeatureAttributeDerivedFeatureCodeField
+          // sizing={sizing} TODO fix props and make happen
+          />
+          <FeatureAttributePostProcessField
+          // sizing={sizing} TODO fix props and make happen
+          />
         </div>
       }
     />

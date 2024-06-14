@@ -3,6 +3,7 @@ import {
   ExpandCollapseControl,
   formSpacingYDefault,
 } from "@howso/react-tailwind-flowbite-components";
+import { TextInputProps } from "flowbite-react";
 import type { ComponentProps } from "react";
 import { FC, ReactNode, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -15,6 +16,7 @@ export type FeatureAttributesGroupBaseProps = Omit<
   basic?: ReactNode;
   advanced?: ReactNode;
   isAdvancedOpen?: boolean;
+  sizing?: TextInputProps["sizing"];
 };
 export const FeatureAttributesGroupBase: FC<
   FeatureAttributesGroupBaseProps

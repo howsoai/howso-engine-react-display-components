@@ -2,12 +2,16 @@ import { FC, ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeObservationalErrorFieldProps = {
-  featureType: FeatureAttributes["type"];
-  dataType: FeatureAttributes["data_type"];
-};
+export type FeatureAttributeObservationalErrorFieldProps =
+  Partial<FieldTextProps> & {
+    featureType: FeatureAttributes["type"];
+    dataType: FeatureAttributes["data_type"];
+  };
 /**
  * Specify the observed error value for this feature. Use when the error value is already known. Defaults to 0.
  *
@@ -15,11 +19,10 @@ export type FeatureAttributeObservationalErrorFieldProps = {
  */
 export const FeatureAttributeObservationalErrorField: FC<
   FeatureAttributeObservationalErrorFieldProps
-> = (props) => {
+> = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
-  const { featureType } = props;
   const max = featureType === "nominal" ? 1 : undefined;
 
   return (
@@ -29,12 +32,13 @@ export const FeatureAttributeObservationalErrorField: FC<
       )}
       inputMode="numeric"
       placeholder="0.0"
+      {...props}
       {...form.register("observational_error", {
         min: 0,
         max,
         valueAsNumber: true,
       })}
-      helperText={<HelperText {...props} />}
+      helperText={<HelperText featureType={featureType} dataType={dataType} />}
     />
   );
 };

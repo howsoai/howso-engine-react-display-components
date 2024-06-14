@@ -2,9 +2,15 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
-import { FieldTextArea, Link } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldTextArea,
+  FieldTextAreaProps,
+  Link,
+} from "@howso/react-tailwind-flowbite-components";
+import { twMerge } from "tailwind-merge";
 
-export type FeatureAttributeDerivedFeatureCodeProps = Record<string, unknown>;
+export type FeatureAttributeDerivedFeatureCodeProps =
+  Partial<FieldTextAreaProps>;
 /**
  * Code defining how the value for this feature could be derived if this feature is specified as a
  * derived_context_feature or a derived_action_feature during react flows.
@@ -13,7 +19,7 @@ export type FeatureAttributeDerivedFeatureCodeProps = Record<string, unknown>;
  */
 export const FeatureAttributeDerivedFeatureCodeField: FC<
   FeatureAttributeDerivedFeatureCodeProps
-> = () => {
+> = (props) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -31,7 +37,8 @@ export const FeatureAttributeDerivedFeatureCodeField: FC<
 )
 `}
       rows={7}
-      className="font-mono"
+      {...props}
+      className={twMerge("font-mono", props.className)}
       {...form.register("derived_feature_code")}
       helperText={
         <Trans

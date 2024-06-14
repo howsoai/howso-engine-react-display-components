@@ -27,6 +27,7 @@ export function FeatureAttributesBoundsGroup({
   featureType,
   dataType,
   dateTimeFormat,
+  sizing,
   ...props
 }: FeatureAttributesBoundsGroupProps) {
   const { t } = useDefaultTranslation();
@@ -37,19 +38,21 @@ export function FeatureAttributesBoundsGroup({
       title={t("FeatureAttributes.FeatureAttributesBoundsGroup.title")}
       basic={
         <div className={formSpacingYDefault}>
-          <FeatureAttributeAllowNullsField />
+          <FeatureAttributeAllowNullsField sizing={sizing} />
           <FeatureAttributeAllowedValuesField
             featureType={featureType}
             dataType={dataType}
             dateTimeFormat={dateTimeFormat}
+            // sizing={sizing} TODO fix props and make happen
           />
           <FeatureAttributeMinMaxFields
             type={featureType}
             dataType={dataType}
             dateTimeFormat={dateTimeFormat}
+            sizing={sizing}
           />
         </div>
       }
-    ></FeatureAttributesGroupBase>
+    />
   );
 }

@@ -2,12 +2,16 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeSignificantDigitsFieldProps = {
-  featureType: FeatureAttributes["type"];
-  dataType: FeatureAttributes["data_type"];
-};
+export type FeatureAttributeSignificantDigitsFieldProps =
+  Partial<FieldTextProps> & {
+    featureType: FeatureAttributes["type"];
+    dataType: FeatureAttributes["data_type"];
+  };
 /**
  * Round to the specified significant digits, default is no rounding.
  * The number of significant digits is the number of all digits ignoring the decimal point,
@@ -22,7 +26,7 @@ export type FeatureAttributeSignificantDigitsFieldProps = {
  */
 export const FeatureAttributeSignificantDigitsField: FC<
   FeatureAttributeSignificantDigitsFieldProps
-> = ({ featureType, dataType }) => {
+> = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -43,6 +47,7 @@ export const FeatureAttributeSignificantDigitsField: FC<
       type="number"
       step="1"
       placeholder="2; 3; 17"
+      {...props}
       {...form.register("significant_digits", { min: 0, valueAsNumber: true })}
       helperText={t(
         "FeatureAttributes.FeatureAttributeSignificantDigitsField.help",

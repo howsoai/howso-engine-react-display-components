@@ -1,14 +1,17 @@
-import { FieldTextList } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldTextList,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 import { FC } from "react";
 import { useDefaultTranslation } from "@/hooks";
 
-export type FeatureAttributeTimeSeriesLagsFieldProps = unknown;
+export type FeatureAttributeTimeSeriesLagsFieldProps = Partial<FieldTextProps>;
 /**
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureTimeSeries.html#howso.openapi.models.FeatureTimeSeries.lags
  */
 export const FeatureAttributeTimeSeriesLagsField: FC<
   FeatureAttributeTimeSeriesLagsFieldProps
-> = () => {
+> = (props) => {
   const { t } = useDefaultTranslation();
 
   return (
@@ -21,6 +24,7 @@ export const FeatureAttributeTimeSeriesLagsField: FC<
       helperText={t(
         "FeatureAttributes.FeatureAttributeTimeSeriesLagsField.help",
       )}
+      {...props}
     />
   );
 };

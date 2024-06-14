@@ -6,9 +6,12 @@ import {
 } from "@howso/openapi-client";
 import { useFormContext } from "react-hook-form";
 import { featureAttributeDataTypeFieldLabel } from "./constants";
-import { FieldSelect } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldSelect,
+  FieldSelectProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeDataTypeFieldProps = {
+export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributesTypeEnum;
 };
 /**
@@ -18,7 +21,7 @@ export type FeatureAttributeDataTypeFieldProps = {
  */
 export const FeatureAttributeDataTypeField: FC<
   FeatureAttributeDataTypeFieldProps
-> = ({ featureType }) => {
+> = ({ featureType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
   const dataType = form.getValues("data_type");
@@ -29,6 +32,7 @@ export const FeatureAttributeDataTypeField: FC<
       label={t(featureAttributeDataTypeFieldLabel)}
       required={required}
       helperText={<HelperText dataType={dataType} />}
+      {...props}
       {...form.register("data_type", { required })}
     >
       <option value="string">

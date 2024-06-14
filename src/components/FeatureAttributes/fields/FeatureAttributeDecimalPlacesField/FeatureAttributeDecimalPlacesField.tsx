@@ -2,9 +2,12 @@ import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldText } from "@howso/react-tailwind-flowbite-components";
+import {
+  FieldText,
+  FieldTextProps,
+} from "@howso/react-tailwind-flowbite-components";
 
-export type FeatureAttributeDecimalPlacesProps = {
+export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
   dataType: FeatureAttributes["data_type"];
 };
@@ -22,7 +25,7 @@ export type FeatureAttributeDecimalPlacesProps = {
  */
 export const FeatureAttributeDecimalPlacesField: FC<
   FeatureAttributeDecimalPlacesProps
-> = ({ featureType, dataType }) => {
+> = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
 
@@ -41,6 +44,7 @@ export const FeatureAttributeDecimalPlacesField: FC<
       type="number"
       step="1"
       placeholder="2; 3; 17"
+      {...props}
       {...form.register("decimal_places", { min: 0, valueAsNumber: true })}
       helperText={t(
         "FeatureAttributes.FeatureAttributeDecimalPlacesField.help",
