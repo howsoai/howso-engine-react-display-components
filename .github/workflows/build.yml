@@ -67,9 +67,15 @@ jobs:
         run: |
           sed -i "s|\"version\": \"0.0.0\"|\"version\": \"${{ needs.metadata.outputs.version }}\"|g" ./package.json
 
-      - name: Build and publish Node package
+      - name: Install dependencies
+        env:
+          NPM_TOKEN: ${{ secrets.JFROG_ACCESS_TOKEN }}
         run: |
+          echo -e "\n//dpbuild.jfrog.io/:_authToken=${NPM_TOKEN}" >> .npmrc
           npm ci
+
+      - name: Build package
+        run: |
           npm run build
           # Remove .npmrc so that we can easily change registries to npm-edge (for publishing)
           rm -f .npmrc
