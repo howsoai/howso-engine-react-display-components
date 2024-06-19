@@ -168,7 +168,7 @@
           "example": "e.g. Temperature or humidity."
         },
         "nominal": {
-          "description": "A value with no ordering.",
+          "description": "A qualitative representation of something that is not quantitative or ordered.",
           "example": "e.g. The name of a fruit."
         },
         "ordinal": {
