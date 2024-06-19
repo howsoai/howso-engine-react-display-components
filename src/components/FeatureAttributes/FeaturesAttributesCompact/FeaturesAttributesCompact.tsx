@@ -4,6 +4,7 @@ import {
   FC,
   useState,
   useEffect,
+  useContext,
 } from "react";
 import { Button, Alert, getTheme, Checkbox } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -16,6 +17,7 @@ import {
   ErrorBoundary,
   FieldLabel,
   FieldSelect,
+  FieldStatic,
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
@@ -35,7 +37,10 @@ import {
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
-import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
+import {
+  FeaturesAttributesContext,
+  FeaturesAttributesContextProvider,
+} from "../FeaturesAttributesContext";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -230,10 +235,6 @@ const Configuration: FC<ConfigurationProps> = (props) => {
             />
           )}
         </div>
-        <div>
-          {t(translations.labels.sample)}:{" "}
-          <FeatureAttributeSample attributes={attributes} disableModal />
-        </div>
       </header>
       {/* Purpose using `key` here to force the component to load and unload, creating new `useForm` defaults */}
       <Form key={activeFeature} {...props} />
@@ -249,6 +250,7 @@ const Form: FC<ConfigurationProps> = ({
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
@@ -292,6 +294,12 @@ const Form: FC<ConfigurationProps> = ({
 
   return (
     <FormProvider {...form}>
+      <FieldStatic
+        {...fieldTextProps}
+        label={t(translations.labels.sample)}
+        value={<FeatureAttributeSample attributes={attributes} disableModal />}
+        containerProps={{ className: "mb-6" }}
+      />
       <form
         noValidate
         data-feature={activeFeature}
