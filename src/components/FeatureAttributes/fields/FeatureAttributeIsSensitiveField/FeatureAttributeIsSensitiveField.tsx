@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "./FeatureAttributeIsSensitiveField.utils";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeIsSensitiveFieldProps = {
   featureType: FeatureAttributes["type"];
@@ -27,6 +28,7 @@ export const FeatureAttributeIsSensitiveField: FC<
   FeatureAttributeIsSensitiveFieldProps
 > = ({ featureType, dataType }) => {
   const { t } = useDefaultTranslation();
+  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   if (
@@ -46,6 +48,7 @@ export const FeatureAttributeIsSensitiveField: FC<
       render={({ field: { onChange, value, ...field } }) => (
         // @ts-expect-error Minimal typing differences
         <FieldCheckbox
+          {...fieldCheckboxProps}
           label={t("FeatureAttributes.FeatureAttributeIsSensitiveField.label")}
           {...field}
           checked={!value}

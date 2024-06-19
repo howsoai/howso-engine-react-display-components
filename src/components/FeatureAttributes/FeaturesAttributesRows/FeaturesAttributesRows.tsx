@@ -34,6 +34,7 @@ import {
   type FeatureAttributesOptionsAtom,
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
+import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -72,55 +73,53 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   };
 
   return (
-    <>
-      <ErrorBoundary>
-        <div className="relative overflow-x-auto rounded-lg shadow-md">
-          <Table striped>
-            <Table.Head>
-              <Table.HeadCell className="whitespace-nowrap">
-                {t(translations.headings.feature)}
-              </Table.HeadCell>
-              <Table.HeadCell className="whitespace-nowrap">
-                {t(translations.headings.sample)}
-              </Table.HeadCell>
-              <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
-                {t(featureAttributeTypeLabel)}
-              </Table.HeadCell>
-              <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                <div className="flex items-center gap-2">
-                  {options.time_series
-                    ? t(translations.headings.timeFeature)
-                    : t(translations.headings.timeSeries)}
-                  <ToggleInput
-                    onChange={onChangeTimeSeries}
-                    checked={options.time_series || false}
-                  />
-                </div>
-              </Table.HeadCell>
-              <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                {t(translations.headings.configuration)}
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {features.map((featureName) => (
-                <FeatureFields
-                  key={featureName}
-                  feature={featureName}
-                  {...props}
+    <FeaturesAttributesContextProvider>
+      <div className="relative overflow-x-auto rounded-lg shadow-md">
+        <Table striped>
+          <Table.Head>
+            <Table.HeadCell className="whitespace-nowrap">
+              {t(translations.headings.feature)}
+            </Table.HeadCell>
+            <Table.HeadCell className="whitespace-nowrap">
+              {t(translations.headings.sample)}
+            </Table.HeadCell>
+            <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
+              {t(featureAttributeTypeLabel)}
+            </Table.HeadCell>
+            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+              <div className="flex items-center gap-2">
+                {options.time_series
+                  ? t(translations.headings.timeFeature)
+                  : t(translations.headings.timeSeries)}
+                <ToggleInput
+                  onChange={onChangeTimeSeries}
+                  checked={options.time_series || false}
                 />
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-        {!features.length && (
-          <Alert color="warning" icon={WarningIcon}>
-            {t(translations.state.empty)}
-          </Alert>
-        )}
-        <Controls {...props} containerProps={{ className: "mt-4" }} />
-      </ErrorBoundary>
+              </div>
+            </Table.HeadCell>
+            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+              {t(translations.headings.configuration)}
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            {features.map((featureName) => (
+              <FeatureFields
+                key={featureName}
+                feature={featureName}
+                {...props}
+              />
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+      {!features.length && (
+        <Alert color="warning" icon={WarningIcon}>
+          {t(translations.state.empty)}
+        </Alert>
+      )}
+      <Controls {...props} containerProps={{ className: "mt-4" }} />
       {activeFeature && <ConfigureModal {...props} />}
-    </>
+    </FeaturesAttributesContextProvider>
   );
 };
 

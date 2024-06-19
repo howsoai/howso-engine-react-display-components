@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { getFormProviderDecorator } from "@/storybook";
 import { FeatureAttributesTemporalityGroup } from "./FeatureAttributesTemporalityGroup";
+import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesTemporalityGroup> = {
@@ -15,6 +16,7 @@ const meta: Meta<typeof FeatureAttributesTemporalityGroup> = {
     getFormProviderDecorator({
       defaultValues: { is_datetime: true },
     }),
+    getFeaturesAttributesContextDecorator(),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

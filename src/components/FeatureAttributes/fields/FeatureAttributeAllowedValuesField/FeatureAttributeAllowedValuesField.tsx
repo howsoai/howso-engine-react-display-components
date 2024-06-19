@@ -1,4 +1,10 @@
-import { ChangeEventHandler, FC, forwardRef, useCallback } from "react";
+import {
+  ChangeEventHandler,
+  FC,
+  forwardRef,
+  useCallback,
+  useContext,
+} from "react";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
@@ -12,6 +18,7 @@ import {
   FieldTextAreaProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { Textarea, TextareaProps } from "flowbite-react";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeAllowedValuesFieldProps =
   Partial<FieldTextAreaProps> & {
@@ -33,6 +40,7 @@ export const FeatureAttributeAllowedValuesField: FC<
   ...props
 }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
     "nominal",
     "ordinal",
@@ -62,9 +70,11 @@ export const FeatureAttributeAllowedValuesField: FC<
 
   return (
     <FieldTextAreaList
+      {...fieldTextAreaProps}
       name={featureAttributeAllowedValuesFieldName}
       label={label}
       labelProps={{
+        ...fieldTextAreaProps?.labelProps,
         required,
       }}
       placeholder={placeholder}

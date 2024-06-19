@@ -35,6 +35,7 @@ import {
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
+import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -67,7 +68,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const [areConfigurationsDirty, setAreConfigurationsDirty] = useState(false);
 
   return (
-    <ErrorBoundary>
+    <FeaturesAttributesContextProvider compact>
       <Header
         activeFeatureAtom={activeFeatureAtom}
         areConfigurationsDirty={areConfigurationsDirty}
@@ -94,7 +95,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
           setAreConfigurationsDirty={setAreConfigurationsDirty}
         />
       )}
-    </ErrorBoundary>
+    </FeaturesAttributesContextProvider>
   );
 };
 
@@ -139,6 +140,8 @@ const Header: FC<HeaderProps> = ({
             required
             label={t(translations.header.fields.feature.label)}
             labelInline
+            // labelProps={{ className: "w-40" }}
+            sizing={"sm"}
             name="feature"
             onChange={async (event) => {
               setActiveFeature(event.target.value);
@@ -172,6 +175,7 @@ const Header: FC<HeaderProps> = ({
       <div className="flex items-end">
         <Button
           color={"light"}
+          size={"sm"}
           disabled={!features.length}
           onClick={toggleIsMappingOpen}
         >
@@ -211,7 +215,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
     <section data-testid="configuration-container">
       <header className="mb-2 flex gap-4 items-baseline justify-between">
         <div className="flex gap-1 items-center">
-          <h3 className="text-xl">
+          <h3 className="text-lg">
             {t(translations.actions.configureName, {
               name: activeFeature,
             })}
@@ -295,7 +299,6 @@ const Form: FC<ConfigurationProps> = ({
       >
         <ErrorBoundary>
           <FeatureAttributesConfiguration
-            dense
             featuresHaveTimeFeature={!!timeFeature}
           />
         </ErrorBoundary>

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { getFormProviderDecorator, withPadding } from "@/storybook";
 import { FeatureAttributesConfiguration } from "./FeatureAttributesConfiguration";
 import { type FeatureAttributesFieldsValues } from "./constants";
+import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesConfiguration> = {
@@ -14,6 +15,7 @@ const meta: Meta<typeof FeatureAttributesConfiguration> = {
   },
   decorators: [
     getFormProviderDecorator<FeatureAttributesFieldsValues>(),
+    getFeaturesAttributesContextDecorator(),
     withPadding,
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes

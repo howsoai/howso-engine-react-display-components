@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import {
@@ -6,6 +6,7 @@ import {
   featureAttributeAllowNullsFieldName,
 } from "./constants";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
 /**
@@ -17,6 +18,7 @@ export const FeatureAttributeAllowNullsField: FC<
   FeatureAttributeAllowNullsFieldProps
 > = () => {
   const { t } = useDefaultTranslation();
+  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   return (
@@ -27,6 +29,7 @@ export const FeatureAttributeAllowNullsField: FC<
       render={({ field }) => (
         // @ts-expect-error There's a mismatch here I can't solve for
         <FieldCheckbox
+          {...fieldCheckboxProps}
           {...field}
           label={t(featureAttributeAllowNullsFieldLabel)}
           checked={field.value ?? true}

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -11,6 +11,7 @@ import {
   type FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { getFeatureAttributesForType } from "../../utils";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTypeFieldProps = Partial<FieldSelectProps>;
 /**
@@ -23,12 +24,14 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
   ...props
 }) => {
   const { t } = useDefaultTranslation();
+  const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const featureType =
     form.getValues("type") || featureAttributeTypeDefaultValue;
 
   return (
     <FieldSelect
+      {...fieldSelectProps}
       label={t(featureAttributeTypeLabel)}
       helperText={<FeatureTypeHelperText featureType={featureType} />}
       {...props}

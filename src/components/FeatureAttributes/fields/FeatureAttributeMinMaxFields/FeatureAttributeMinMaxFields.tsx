@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -7,6 +7,8 @@ import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { twMerge } from "tailwind-merge";
 
 export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
   type: FeatureAttributes["type"];
@@ -33,7 +35,9 @@ export const FeatureAttributeMinMaxFields: FC<
   ...props
 }) => {
   const { t } = useDefaultTranslation();
+  const { fieldStackProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+
   const isContinuousNumber = type === "continuous" && dataType === "number";
   const isContinuousDateTime =
     type === "continuous" && dataType === "formatted_date_time";
@@ -45,8 +49,12 @@ export const FeatureAttributeMinMaxFields: FC<
   const inputType = isContinuousDateTime ? "text" : "number";
 
   return (
-    <div className="flex gap-4">
+    <div
+      {...fieldStackProps?.stackProps}
+      className={twMerge("flex gap-4", fieldStackProps?.stackProps?.className)}
+    >
       <FieldText
+        {...fieldStackProps?.fieldTextProps}
         containerProps={{ className: "basis-1/2" }}
         label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.min")}
         type={inputType}
@@ -56,6 +64,7 @@ export const FeatureAttributeMinMaxFields: FC<
       />
 
       <FieldText
+        {...fieldStackProps?.fieldTextProps}
         containerProps={{ className: "basis-1/2" }}
         label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.max")}
         type={inputType}

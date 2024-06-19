@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import {
@@ -10,6 +10,7 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeSubtypeFieldLabel } from "./constants";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeSubtypeProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -40,6 +41,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   ...props
 }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   if (featureType === "continuous" || nonSensitive) {
@@ -50,6 +52,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
 
   return (
     <FieldText
+      {...fieldTextProps}
       required={required}
       label={t(featureAttributeSubtypeFieldLabel)}
       {...props}

@@ -7,6 +7,7 @@ import {
 } from "./constants";
 import { useForm, FormProvider, UseFormProps } from "react-hook-form";
 import { FC, ReactNode } from "react";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 describe("AllowNullsField", () => {
   it("should be rendered with a default value of true if not in form context", async () => {
@@ -59,7 +60,11 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
   formProps,
 }) => {
   const form = useForm(formProps);
-  return <FormProvider {...form}>{children}</FormProvider>;
+  return (
+    <FeaturesAttributesContextProvider>
+      <FormProvider {...form}>{children}</FormProvider>
+    </FeaturesAttributesContextProvider>
+  );
 };
 
 const getField = () =>

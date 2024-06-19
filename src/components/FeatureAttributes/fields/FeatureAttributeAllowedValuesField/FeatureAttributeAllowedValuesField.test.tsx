@@ -8,6 +8,7 @@ import { FeatureAttributes } from "@howso/openapi-client";
 import { FC, ReactNode } from "react";
 import { UseFormProps, useForm, FormProvider } from "react-hook-form";
 import { FeatureAttributeAllowedValuesField } from "./FeatureAttributeAllowedValuesField";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 const nominalRegex = new RegExp(
   `^${featureAttributeAllowedValuesFieldNominalLabel}.*`,
@@ -117,5 +118,9 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
   formProps,
 }) => {
   const form = useForm(formProps);
-  return <FormProvider {...form}>{children}</FormProvider>;
+  return (
+    <FeaturesAttributesContextProvider>
+      <FormProvider {...form}>{children}</FormProvider>
+    </FeaturesAttributesContextProvider>
+  );
 };

@@ -2,8 +2,9 @@ import {
   FieldTextList,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useDefaultTranslation } from "@/hooks";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTimeSeriesLagsFieldProps = Partial<FieldTextProps>;
 /**
@@ -13,9 +14,11 @@ export const FeatureAttributeTimeSeriesLagsField: FC<
   FeatureAttributeTimeSeriesLagsFieldProps
 > = (props) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   return (
     <FieldTextList
+      {...fieldTextProps}
       name={"time_series.lags"}
       containerProps={{ className: "basis-1/2" }}
       label={t("FeatureAttributes.FeatureAttributeTimeSeriesLagsField.label")}

@@ -6,6 +6,7 @@ import {
 } from "..";
 import { useForm, FormProvider } from "react-hook-form";
 import { FC, ReactNode } from "react";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 describe("SubtypeField", () => {
   it("should not be rendered for continuous feature types", async () => {
@@ -149,14 +150,16 @@ describe("SubtypeField", () => {
 const Wrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const form = useForm();
   return (
-    <FormProvider {...form}>
-      {children}
-      <FeatureAttributeSubtypeField
-        featureType={"continuous"}
-        dataType={"string"}
-        nonSensitive={false}
-      />
-    </FormProvider>
+    <FeaturesAttributesContextProvider>
+      <FormProvider {...form}>
+        {children}
+        <FeatureAttributeSubtypeField
+          featureType={"continuous"}
+          dataType={"string"}
+          nonSensitive={false}
+        />
+      </FormProvider>
+    </FeaturesAttributesContextProvider>
   );
 };
 
