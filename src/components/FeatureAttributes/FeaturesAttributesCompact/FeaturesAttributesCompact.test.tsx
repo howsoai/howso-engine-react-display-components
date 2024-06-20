@@ -1,17 +1,7 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { act } from "react";
 import "@testing-library/jest-dom";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
-import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
-import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
 import { translations } from "./constants";
 import {
   type FeatureAttributesIndex,
@@ -23,6 +13,7 @@ import {
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
 import { sleep } from "@/utils";
+import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 
 describe("FeaturesAttributesCompact", () => {
   const featuresAttributes: FeatureAttributesIndex = {
@@ -125,7 +116,11 @@ describe("FeaturesAttributesCompact", () => {
     const [feature, attributes] = featureEntries[0];
 
     const container = getConfigurationContainer();
-    await expectFeatureAttributesInContainer(container, feature, attributes);
+    await expectFeatureAttributeConfigurationInContainer(
+      container,
+      feature,
+      attributes,
+    );
 
     // Change a value in the form
     const allowNullsField = within(container).getByLabelText<HTMLInputElement>(
@@ -182,7 +177,11 @@ describe("FeaturesAttributesCompact", () => {
       const [feature, attributes] = featureEntries[i];
 
       const container = getConfigurationContainer();
-      await expectFeatureAttributesInContainer(container, feature, attributes);
+      await expectFeatureAttributeConfigurationInContainer(
+        container,
+        feature,
+        attributes,
+      );
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(container).getByRole("button", {
           name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
@@ -195,31 +194,6 @@ describe("FeaturesAttributesCompact", () => {
     }
   });
 });
-
-const expectFeatureAttributesInContainer = async (
-  container: HTMLElement,
-  feature: string,
-  attributes: FeatureAttributes,
-) => {
-  expect(container).toBeVisible();
-  expect(within(container).getByRole("heading")).toHaveTextContent(
-    "actions.configure_{{name}}",
-  );
-  await waitFor(() => {
-    expect(within(container).getByRole("form").dataset.feature).toBe(feature);
-  });
-  expect(getFeatureTypeFieldInElement(container)).toHaveValue(
-    attributes.type || "",
-  );
-  expect(getDataTypeFieldInElement(container)).toHaveValue(
-    attributes.data_type || "",
-  );
-  attributes.bounds?.allowed?.forEach((element) => {
-    expect(
-      getAllowedValuesFieldInElement(container, attributes.type),
-    ).toHaveTextContent(element);
-  });
-};
 
 const getFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(

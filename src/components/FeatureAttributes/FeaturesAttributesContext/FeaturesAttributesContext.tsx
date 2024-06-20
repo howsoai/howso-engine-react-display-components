@@ -1,5 +1,6 @@
 import {
   ErrorBoundary,
+  FieldRadiosProps,
   FieldSelectProps,
   FieldTextAreaProps,
   FieldTextProps,
@@ -18,6 +19,7 @@ import { FeatureAttributesGroupBaseProps } from "../groups";
 
 export type IFeaturesAttributesContext = {
   fieldCheckboxProps?: Partial<FieldToggleProps>;
+  fieldRadiosProps?: Pick<FieldRadiosProps, "labelInline" | "labelProps">;
   fieldSelectProps?: Pick<FieldSelectProps, "labelInline" | "labelProps">;
   fieldTextProps?: Pick<FieldTextProps, "labelInline" | "labelProps">;
   fieldStackProps?: {
@@ -43,6 +45,17 @@ export const FeaturesAttributesContextProvider: FC<
 > = ({ children, compact }) => {
   const fieldCheckboxProps: IFeaturesAttributesContext["fieldCheckboxProps"] =
     useMemo(() => ({}), []);
+  const fieldRadiosProps: IFeaturesAttributesContext["fieldRadiosProps"] =
+    useMemo(
+      () => ({
+        labelInline: compact,
+        labelProps: compact
+          ? { className: twMerge(inlineLabelClassName) }
+          : undefined,
+        sizing: compact ? compactFieldSize : undefined,
+      }),
+      [compact],
+    );
   const fieldSelectProps: IFeaturesAttributesContext["fieldSelectProps"] =
     useMemo(
       () => ({
@@ -110,6 +123,7 @@ export const FeaturesAttributesContextProvider: FC<
     <FeaturesAttributesContext.Provider
       value={{
         fieldCheckboxProps,
+        fieldRadiosProps,
         fieldSelectProps,
         fieldTextProps,
         fieldStackProps,

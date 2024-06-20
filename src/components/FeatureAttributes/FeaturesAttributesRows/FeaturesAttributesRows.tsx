@@ -228,6 +228,7 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
   return (
     <FormProvider {...form}>
       <FeatureAttributeTypeField
+        fieldType="select"
         onChange={onChange}
         label={undefined}
         helperText={undefined}
@@ -279,7 +280,7 @@ const ConfigureModal: FC<ConfigureModalProps> = (props) => {
   const onClose = useCallback(() => setActiveFeature(null), [setActiveFeature]);
 
   return (
-    <FormModal dismissible show size={"3xl"} onClose={onClose}>
+    <FormModal dismissible show size={"4xl"} onClose={onClose}>
       {/* Purpose using `key` here to force the component to load and unload, creating new `useForm` defaults */}
       <Form key={activeFeature} {...props} onClose={onClose} />
     </FormModal>
@@ -420,7 +421,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
         {label}
       </Button>
       {isOpen && (
-        <FormModal dismissible show size={"3xl"} onClose={onClose}>
+        <FormModal dismissible show size={"4xl"} onClose={onClose}>
           <form noValidate aria-label={label}>
             <Modal.Header>{label}</Modal.Header>
             <Modal.Body>

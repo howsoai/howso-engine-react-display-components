@@ -1,16 +1,6 @@
-import {
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-  within,
-} from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowedValuesField/FeatureAttributeAllowedValuesField.test";
-import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
-import { getFeatureTypeFieldInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
 import { translations } from "./constants";
 import {
   type FeatureAttributesIndex,
@@ -21,6 +11,7 @@ import {
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
+import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 
 describe("FeaturesAttributesRows", () => {
   it("should open a configuration modal, save, and load the next", async () => {
@@ -97,7 +88,11 @@ describe("FeaturesAttributesRows", () => {
       const [feature, attributes] = featureEntries[i];
 
       const modal = screen.getByRole("dialog");
-      await expectFeatureAttributesInDialog(modal, feature, attributes);
+      await expectFeatureAttributeConfigurationInContainer(
+        modal,
+        feature,
+        attributes,
+      );
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(modal).getByRole("button", {
           name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
@@ -110,28 +105,3 @@ describe("FeaturesAttributesRows", () => {
     }
   });
 });
-
-const expectFeatureAttributesInDialog = async (
-  modal: HTMLElement,
-  feature: string,
-  attributes: FeatureAttributes,
-) => {
-  expect(modal).toBeVisible();
-  expect(within(modal).getByRole("heading")).toHaveTextContent(
-    "actions.configure_{{name}}",
-  );
-  await waitFor(() => {
-    expect(within(modal).getByRole("form").dataset.feature).toBe(feature);
-  });
-  expect(getFeatureTypeFieldInElement(modal)).toHaveValue(
-    attributes.type || "",
-  );
-  expect(getDataTypeFieldInElement(modal)).toHaveValue(
-    attributes.data_type || "",
-  );
-  attributes.bounds?.allowed?.forEach((element) => {
-    expect(
-      getAllowedValuesFieldInElement(modal, attributes.type),
-    ).toHaveTextContent(element);
-  });
-};

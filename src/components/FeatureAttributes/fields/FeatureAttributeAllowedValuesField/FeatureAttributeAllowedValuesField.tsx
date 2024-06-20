@@ -57,7 +57,6 @@ export const FeatureAttributeAllowedValuesField: FC<
     return null;
   }
 
-  const required = false;
   const label =
     featureType === "ordinal"
       ? t(featureAttributeAllowedValuesFieldOrdinalLabel)
@@ -73,10 +72,6 @@ export const FeatureAttributeAllowedValuesField: FC<
       {...fieldTextAreaProps}
       name={featureAttributeAllowedValuesFieldName}
       label={label}
-      labelProps={{
-        ...fieldTextAreaProps?.labelProps,
-        required,
-      }}
       placeholder={placeholder}
       helperText={helperText}
       rows={4}

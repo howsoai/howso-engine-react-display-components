@@ -50,7 +50,7 @@ export function FeatureAttributesConfiguration({
 
   return (
     <div className={twMerge(formSpacingYDefault, className)}>
-      <FeatureAttributeTypeField />
+      <FeatureAttributeTypeField fieldType="radios" />
       <FeatureAttributeDataTypeField featureType={featureType} />
 
       <FeatureAttributeDateTimeFormatField dataType={dataType} />
