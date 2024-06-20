@@ -162,7 +162,7 @@ const Header: FC<HeaderProps> = ({
             ))}
           </FieldSelect>
 
-          <FieldLabel>
+          <FieldLabel sizing="sm">
             <Checkbox
               color={"blue"}
               disabled={!activeFeature}
