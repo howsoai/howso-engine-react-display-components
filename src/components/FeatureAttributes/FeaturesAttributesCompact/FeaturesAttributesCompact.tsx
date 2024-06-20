@@ -71,13 +71,17 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const [isMappingOpen, setIsMappingOpen] = useState(false);
 
   const [areConfigurationsDirty, setAreConfigurationsDirty] = useState(false);
+  const [isCompact, setIsCompact] = useState(true);
 
   return (
-    <FeaturesAttributesContextProvider compact>
+    <FeaturesAttributesContextProvider compact={isCompact}>
       <Header
         activeFeatureAtom={activeFeatureAtom}
         areConfigurationsDirty={areConfigurationsDirty}
         featureAttributesIndexAtom={featureAttributesIndexAtom}
+        // is compact
+        isCompact={isCompact}
+        setIsCompact={setIsCompact}
         toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
         optionsAtom={optionsAtom}
         timeFeatureAtom={timeFeatureAtom}
@@ -108,6 +112,9 @@ type HeaderProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   areConfigurationsDirty: boolean;
   featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  // isCompact
+  isCompact: boolean;
+  setIsCompact: Dispatch<SetStateAction<boolean>>;
   // isMappingOpen
   toggleIsMappingOpen: () => void;
   optionsAtom: FeatureAttributesOptionsAtom;
@@ -121,6 +128,8 @@ const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   areConfigurationsDirty,
   featureAttributesIndexAtom,
+  isCompact,
+  setIsCompact,
   toggleIsMappingOpen,
   optionsAtom,
   timeFeatureAtom,
@@ -177,7 +186,7 @@ const Header: FC<HeaderProps> = ({
         </FormProvider>
       </div>
 
-      <div className="flex items-end">
+      <div className="flex gap-4 items-end">
         <Button
           color={"light"}
           size={"sm"}
@@ -187,6 +196,24 @@ const Header: FC<HeaderProps> = ({
           <MapDependentFeatureAttributesIcon className={"mr-1"} />
           {t(translations.actions.mapDependents)}
         </Button>
+        <Button.Group>
+          <Button
+            size={"sm"}
+            color={isCompact ? "info" : "gray"}
+            onClick={() => setIsCompact(true)}
+          >
+            {/* <HiUserCircle className="mr-3 h-4 w-4" /> */}
+            Compact
+          </Button>
+          <Button
+            size={"sm"}
+            color={!isCompact ? "info" : "gray"}
+            onClick={() => setIsCompact(false)}
+          >
+            {/* <HiAdjustments className="mr-3 h-4 w-4" /> */}
+            Comfortable
+          </Button>
+        </Button.Group>
       </div>
     </header>
   );
