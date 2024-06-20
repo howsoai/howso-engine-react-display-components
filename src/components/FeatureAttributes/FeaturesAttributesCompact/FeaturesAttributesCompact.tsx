@@ -177,7 +177,9 @@ const Header: FC<HeaderProps> = ({
               disabled={!activeFeature}
               onChange={async (event) => {
                 setOptions({ ...options, time_series: event.target.checked });
-                if (event.target.checked) setTimeFeature(activeFeature);
+                setTimeFeature(
+                  event.target.checked ? activeFeature : undefined,
+                );
               }}
               checked={activeFeature === timeFeature?.name}
             />{" "}

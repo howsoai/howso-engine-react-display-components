@@ -45,7 +45,7 @@ export const getFeatureAttributesTimeFeatureAtom = ({
         }
       }
     },
-    (get, set, featureName: ActiveFeature) => {
+    (get, set, featureName: ActiveFeature | undefined) => {
       const features = { ...get(featureAttributesIndexAtom) };
       for (const name of Object.keys(features)) {
         const attributes = { ...features[name] };
