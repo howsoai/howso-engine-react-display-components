@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@hookform/error-message": "^2.0.1",
     "@howso/openapi-client": "^1.0.0",
-    "@howso/react-tailwind-flowbite-components": "file:../react-tailwind-flowbite-components/howso-react-tailwind-flowbite-components-0.0.0.tgz",
+    "@howso/react-tailwind-flowbite-components": "^3.0.0",
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.7.2",
     "jotai": "^2.8.3",
@@ -58,7 +58,7 @@
     "@fontsource/inter": "^5.0.5",
     "@hookform/error-message": "^2.0.1",
     "@howso/openapi-client": "^1.0.0",
-    "@howso/react-tailwind-flowbite-components": "file:../react-tailwind-flowbite-components/howso-react-tailwind-flowbite-components-0.0.0.tgz",
+    "@howso/react-tailwind-flowbite-components": "^3.0.0",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-a11y": "^8.1.5",
     "@storybook/addon-actions": "^8.1.5",
