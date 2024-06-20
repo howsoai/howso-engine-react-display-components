@@ -1,11 +1,7 @@
-import { FeatureAttributes } from "@howso/openapi-client";
-
 export const featureAttributeTypeName = "type";
 
 export const featureAttributeTypeLabel =
   "FeatureAttributes.FeatureAttributeTypeField.label";
-export const featureAttributeTypeDefaultValue: FeatureAttributes["type"] =
-  "continuous";
 
 export const featureAttributeTypeOptions = {
   continuous: {

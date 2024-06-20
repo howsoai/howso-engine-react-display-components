@@ -3,7 +3,6 @@ import { RegisterOptions, useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
-  featureAttributeTypeDefaultValue,
   featureAttributeTypeLabel,
   featureAttributeTypeName,
   featureAttributeTypeOptions,
@@ -56,9 +55,7 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
     [form, required, onChange],
   );
 
-  const featureType =
-    form.getValues(featureAttributeTypeName) ||
-    featureAttributeTypeDefaultValue;
+  const featureType = form.getValues(featureAttributeTypeName);
 
   switch (fieldType) {
     case "radios":
@@ -101,7 +98,6 @@ const FieldTypeRadios: FC<FieldTypeRadiosProps> = ({
       labelInline
       {...props}
       required={required}
-      defaultValue={featureAttributeTypeDefaultValue}
       name={featureAttributeTypeName}
       options={Object.values(featureAttributeTypeOptions).map(
         ({ value, translationKey }) => ({
@@ -131,9 +127,9 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
       label={t(featureAttributeTypeLabel)}
       {...props}
       required={required}
-      defaultValue={featureAttributeTypeDefaultValue}
       {...form.register(featureAttributeTypeName, registerOptions)}
     >
+      <option value="" />
       {Object.values(featureAttributeTypeOptions).map(
         ({ value, translationKey }) => (
           <option key={value} value={value}>
@@ -191,6 +187,8 @@ const FeatureTypeHelperText: FC<{
         </>
       );
     default:
-      return null;
+      return t(
+        "FeatureAttributes.FeatureAttributeTypeField.help.empty.description",
+      );
   }
 };
