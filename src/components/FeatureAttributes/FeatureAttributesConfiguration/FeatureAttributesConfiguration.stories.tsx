@@ -28,6 +28,15 @@ const meta: Meta<typeof FeatureAttributesConfiguration> = {
 export default meta;
 type Story = StoryObj<typeof FeatureAttributesConfiguration>;
 
+export const Default: Story = {
+  decorators: [
+    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+      defaultValues: {},
+    }),
+  ],
+  args: {},
+};
+
 export const ContinuousNumber: Story = {
   decorators: [
     getFormProviderDecorator<FeatureAttributesFieldsValues>({
