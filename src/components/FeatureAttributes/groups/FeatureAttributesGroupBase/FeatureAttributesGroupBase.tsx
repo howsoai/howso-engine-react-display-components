@@ -15,6 +15,7 @@ export type FeatureAttributesGroupBaseProps = Omit<
 > & {
   title: ReactNode;
   titleProps?: ComponentProps<"div">;
+  sectionProps?: ComponentProps<"div">;
   basic?: ReactNode;
   advanced?: ReactNode;
   advancedControlProps?: Omit<
@@ -25,49 +26,65 @@ export type FeatureAttributesGroupBaseProps = Omit<
 };
 export const FeatureAttributesGroupBase: FC<
   FeatureAttributesGroupBaseProps
-> = ({ title, basic, advanced, isAdvancedOpen, ...props }) => {
+> = ({ title, sectionProps, basic, advanced, isAdvancedOpen, ...props }) => {
   const { t } = useDefaultTranslation();
-  const { groupBaseProps: groupBasePropsRaw = {} } = useContext(
+  const { groupBaseProps: contextProps } = useContext(
     FeaturesAttributesContext,
   );
-  const { titleProps, advancedControlProps, ...groupBaseProps } =
-    groupBasePropsRaw;
-
   const [isOpen, setIsOpen] = useState(isAdvancedOpen ?? false);
 
   return (
     <section
-      {...groupBaseProps}
       {...props}
       className={twMerge(
         "border-t border-solid pt-2",
         formSpacingYDefault,
-        groupBaseProps?.className,
+        contextProps?.className,
         props.className,
       )}
     >
       {title && (
         <header className={"mb-4 flex items-center justify-between gap-4"}>
           <div
-            {...titleProps}
+            {...contextProps?.titleProps}
             className={twMerge(
               "text-lg font-medium dark:text-white",
-              titleProps?.className,
+              contextProps?.titleProps?.className,
             )}
           >
             {title}
           </div>
         </header>
       )}
-      {basic && <div className={childIndention}>{basic}</div>}
+      {basic && (
+        <div
+          {...contextProps?.sectionProps}
+          {...sectionProps}
+          className={twMerge(
+            defaultSectionProps,
+            contextProps?.sectionProps?.className,
+            sectionProps?.className,
+          )}
+        >
+          {basic}
+        </div>
+      )}
       {advanced && (
-        <div className={twMerge(childIndention)}>
+        <div
+          {...contextProps?.sectionProps}
+          {...sectionProps}
+          className={twMerge(
+            defaultSectionProps,
+            contextProps?.sectionProps?.className,
+            sectionProps?.className,
+          )}
+        >
           <ExpandCollapseControl
-            {...advancedControlProps}
+            {...contextProps?.advancedControlProps}
             isExpanded={isOpen}
             className={twMerge(
               "mb-4 p-0 text-sm font-normal",
-              advancedControlProps?.className,
+              contextProps?.advancedControlProps?.className,
             )}
             fullSized
             onClick={
@@ -94,4 +111,4 @@ export const FeatureAttributesGroupBase: FC<
   );
 };
 
-const childIndention = "ml-7";
+const defaultSectionProps = "ml-7";

@@ -4,7 +4,7 @@ import {
   FieldSelectProps,
   FieldTextAreaProps,
   FieldTextProps,
-  FieldToggleProps,
+  FieldCheckboxProps,
 } from "@howso/react-tailwind-flowbite-components";
 import {
   ComponentProps,
@@ -18,7 +18,7 @@ import { twMerge } from "tailwind-merge";
 import { FeatureAttributesGroupBaseProps } from "../groups";
 
 export type IFeaturesAttributesContext = {
-  fieldCheckboxProps?: Partial<FieldToggleProps>;
+  fieldCheckboxProps?: Partial<FieldCheckboxProps>;
   fieldRadiosProps?: Pick<FieldRadiosProps, "labelInline" | "labelProps">;
   fieldSelectProps?: Pick<FieldSelectProps, "labelInline" | "labelProps">;
   fieldTextProps?: Pick<FieldTextProps, "labelInline" | "labelProps">;
@@ -26,7 +26,6 @@ export type IFeaturesAttributesContext = {
     stackProps?: ComponentProps<"div">;
   } & Pick<IFeaturesAttributesContext, "fieldTextProps">;
   fieldTextAreaProps?: Pick<FieldTextAreaProps, "labelInline" | "labelProps">;
-  fieldToggleProps?: Partial<FieldToggleProps>;
   groupBaseProps?: Omit<
     FeatureAttributesGroupBaseProps,
     "title" | "basic" | "advanced" | "isAdvancedOpen"
@@ -44,7 +43,14 @@ export const FeaturesAttributesContextProvider: FC<
   FeaturesAttributesContextProviderProps
 > = ({ children, compact }) => {
   const fieldCheckboxProps: IFeaturesAttributesContext["fieldCheckboxProps"] =
-    useMemo(() => ({}), []);
+    useMemo(
+      () => ({
+        containerProps: compact
+          ? { className: inlineCheckboxClassName }
+          : undefined,
+      }),
+      [compact],
+    );
   const fieldRadiosProps: IFeaturesAttributesContext["fieldRadiosProps"] =
     useMemo(
       () => ({
@@ -88,8 +94,6 @@ export const FeaturesAttributesContextProvider: FC<
       }),
       [compact],
     );
-  const fieldToggleProps: IFeaturesAttributesContext["fieldToggleProps"] =
-    useMemo(() => ({}), []);
 
   const fieldStackProps: IFeaturesAttributesContext["fieldStackProps"] =
     useMemo(
@@ -109,12 +113,9 @@ export const FeaturesAttributesContextProvider: FC<
     );
   const groupBaseProps: IFeaturesAttributesContext["groupBaseProps"] = useMemo(
     () => ({
-      titleProps: {
-        className: twMerge(compact && "text-md"),
-      },
-      advancedControlProps: {
-        size: compact ? "sm" : undefined,
-      },
+      titleProps: { className: twMerge(compact && "text-md") },
+      advancedControlProps: { size: compact ? "sm" : undefined },
+      sectionProps: { className: twMerge(compact && "ml-0") },
     }),
     [compact],
   );
@@ -128,7 +129,6 @@ export const FeaturesAttributesContextProvider: FC<
         fieldTextProps,
         fieldStackProps,
         fieldTextAreaProps,
-        fieldToggleProps,
         groupBaseProps,
       }}
     >
@@ -136,7 +136,9 @@ export const FeaturesAttributesContextProvider: FC<
     </FeaturesAttributesContext.Provider>
   );
 };
+
 const inlineLabelClassName = "w-40";
+const inlineCheckboxClassName = "ml-40 pl-2"; // pl-2 accounts for the flex gap 2 between label and field
 const inlineLabelStackClassName = `[&_div:nth-child(1)_label]:w-40`;
 const inlineLabelStackFieldClassName = "";
 const compactFieldSize: FieldTextProps["sizing"] = "sm";
