@@ -225,6 +225,15 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
     setAttributes(values);
   }, [form, setAttributes]);
 
+  useEffect(() => {
+    const values = form.getValues();
+    if (values.type === attributes.type) {
+      return;
+    }
+
+    form.resetField("type", { defaultValue: attributes.type });
+  }, [form, attributes.type]);
+
   return (
     <FormProvider {...form}>
       <FeatureAttributeTypeField
