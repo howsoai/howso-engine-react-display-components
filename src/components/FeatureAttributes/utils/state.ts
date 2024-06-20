@@ -59,9 +59,8 @@ export function isSensitiveNominal(attributes: FeatureAttributes) {
 export const getFeatureAttributesForType = (
   attributes: FeatureAttributes,
 ): FeatureAttributes => {
-  attributes.type ||= "continuous";
   const isContinuous = attributes.type === "continuous";
-  const data_type = getDataTypeFromFeatureAttributes(attributes) || "string";
+  const data_type = getDataTypeFromFeatureAttributes(attributes);
   return {
     ...attributes,
     type: attributes.type,
