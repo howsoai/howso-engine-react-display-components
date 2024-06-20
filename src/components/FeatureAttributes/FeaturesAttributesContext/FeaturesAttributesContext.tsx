@@ -48,6 +48,7 @@ export const FeaturesAttributesContextProvider: FC<
         containerProps: compact
           ? { className: inlineCheckboxClassName }
           : undefined,
+        sizing: compact ? compactFieldSize : undefined,
       }),
       [compact],
     );
