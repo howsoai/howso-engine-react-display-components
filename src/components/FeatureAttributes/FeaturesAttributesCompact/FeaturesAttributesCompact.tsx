@@ -204,16 +204,14 @@ const Header: FC<HeaderProps> = ({
             color={isCompact ? "info" : "gray"}
             onClick={() => setIsCompact(true)}
           >
-            {/* <HiUserCircle className="mr-3 h-4 w-4" /> */}
-            Compact
+            {t(translations.labels.density.compact)}
           </Button>
           <Button
             size={"sm"}
             color={!isCompact ? "info" : "gray"}
             onClick={() => setIsCompact(false)}
           >
-            {/* <HiAdjustments className="mr-3 h-4 w-4" /> */}
-            Comfortable
+            {t(translations.labels.density.comfortable)}
           </Button>
         </Button.Group>
       </div>

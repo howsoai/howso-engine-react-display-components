@@ -201,6 +201,10 @@
         "label": "Configure feature"
       },
       "labels": {
+        "density": {
+          "compact": "Compact",
+          "comfortable": "Comfortable"
+        },
         "invalidConfiguration": "Please adjust this configuration",
         "sample": "Sample"
       },
