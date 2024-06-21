@@ -321,12 +321,16 @@ const Form: FC<ConfigurationProps> = ({
 
   return (
     <FormProvider {...form}>
-      <FieldStatic
-        {...fieldTextProps}
-        label={t(translations.labels.sample)}
-        value={<FeatureAttributeSample attributes={attributes} disableModal />}
-        containerProps={{ className: "mb-6" }}
-      />
+      {attributes.sample && (
+        <FieldStatic
+          {...fieldTextProps}
+          label={t(translations.labels.sample)}
+          value={
+            <FeatureAttributeSample attributes={attributes} disableModal />
+          }
+          containerProps={{ className: "mb-6" }}
+        />
+      )}
       <form
         noValidate
         data-feature={activeFeature}
