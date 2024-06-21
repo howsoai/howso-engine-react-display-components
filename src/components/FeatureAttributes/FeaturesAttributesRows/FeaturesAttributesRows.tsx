@@ -1,6 +1,14 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { Table, Button, Radio, Modal, Alert, getTheme } from "flowbite-react";
+import {
+  Table,
+  Button,
+  Radio,
+  Modal,
+  Alert,
+  getTheme,
+  Tooltip,
+} from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
@@ -21,7 +29,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
-  areFeatureAttributesValid,
+  getAllFeatureAttributeConfigurationIssues,
+  getFeatureAttributeConfigurationIssues,
   getFeatureAttributesForType,
   getFeatureAttributesFromFormData,
 } from "../utils";
@@ -35,6 +44,7 @@ import {
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
+import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
 
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -155,7 +165,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
     },
     [feature, setFeatureAttributes],
   );
-  const isValid = areFeatureAttributesValid(attributes);
+  const issues = getFeatureAttributeConfigurationIssues(attributes);
 
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -189,14 +199,17 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
             <span>{t(translations.actions.configure)}</span>
           </Button>
 
-          {!isValid && (
-            <WarningIcon
-              className={twMerge(
-                "ml-1 text-lg",
-                theme.label.root.colors.warning,
-              )}
-              title={t(translations.labels.invalid_configuration)}
-            />
+          {issues && (
+            <Tooltip
+              content={<FeatureAttributesConfigurationIssues issues={issues} />}
+            >
+              <WarningIcon
+                className={twMerge(
+                  "ml-1 text-lg",
+                  theme.label.root.colors.warning,
+                )}
+              />
+            </Tooltip>
           )}
         </div>
       </Table.Cell>

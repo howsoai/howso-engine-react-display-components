@@ -4,43 +4,92 @@ import type {
 } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
 import type { InferFeatureAttributesOptions } from "../types/api";
-import { type DirtyFeatureAttributes } from "../hooks";
+import { FeatureAttributesIndex, type DirtyFeatureAttributes } from "../hooks";
+
+export type FeatureAttributesConfigurationIssuesIndex = Record<
+  string,
+  FeatureAttributesConfigurationIssue[]
+>;
+export const getAllFeatureAttributeConfigurationIssues = (
+  featuresAttributesIndex: FeatureAttributesIndex,
+): FeatureAttributesConfigurationIssuesIndex | undefined => {
+  const issuesIndex = Object.entries(featuresAttributesIndex).reduce(
+    (issuesIndex, [feature, attributes]) => {
+      const issues = getFeatureAttributeConfigurationIssues(attributes);
+      if (issues) {
+        issuesIndex[feature] = issues;
+      }
+      return issuesIndex;
+    },
+    {} as FeatureAttributesConfigurationIssuesIndex,
+  );
+
+  const length = Object.keys(issuesIndex).length;
+  return length > 0 ? issuesIndex : undefined;
+};
 
 export const areAllFeatureAttributesValid = (
-  featuresAttributes: FeatureAttributes[],
+  featuresAttributesIndex: FeatureAttributesIndex,
 ): boolean => {
-  const hasInvalid = featuresAttributes.some((attributes) => {
-    const isValid = areFeatureAttributesValid(attributes);
-    return !isValid;
-  });
+  const hasInvalid = Object.values(featuresAttributesIndex).some(
+    (attributes) => {
+      const issues = getFeatureAttributeConfigurationIssues(attributes);
+      return issues !== undefined;
+    },
+  );
   return !hasInvalid;
 };
 
-export const areFeatureAttributesValid = (
-  attributes: FeatureAttributes,
-): boolean => {
-  if (!attributes.type) {
-    return false;
+export type FeatureAttributesConfigurationIssue = {
+  translationKey: `FeatureAttributes.ConfigurationIssue.${string}`;
+};
+
+const featureAttributeIssues: Record<
+  string,
+  FeatureAttributesConfigurationIssue
+> = {
+  typeUndefined: {
+    translationKey: `FeatureAttributes.ConfigurationIssue.typeUndefined`,
+  },
+  dataTypeUndefined: {
+    translationKey: `FeatureAttributes.ConfigurationIssue.dataTypeUndefined`,
+  },
+  sensitiveSubtypeUndefined: {
+    translationKey: `FeatureAttributes.ConfigurationIssue.sensitiveSubtypeUndefined`,
+  },
+  dateTimeFormatUndefined: {
+    translationKey: `FeatureAttributes.ConfigurationIssue.dateTimeFormatUndefined`,
+  },
+};
+
+export const getFeatureAttributeConfigurationIssues = (
+  featureAttributes: FeatureAttributes,
+): FeatureAttributesConfigurationIssue[] | undefined => {
+  const issues: FeatureAttributesConfigurationIssue[] = [];
+
+  if (!featureAttributes.type) {
+    issues.push(featureAttributeIssues.typeUndefined);
   }
 
-  if (!attributes.data_type) {
-    return false;
+  if (!featureAttributes.data_type) {
+    issues.push(featureAttributeIssues.dataTypeUndefined);
   }
 
-  if (isFeatureAttributeSensitiveAttributeAvailable(attributes)) {
-    const isSensitive = !attributes.non_sensitive;
-    if (isSensitive && !attributes.subtype) {
-      return false;
+  if (isFeatureAttributeSensitiveAttributeAvailable(featureAttributes)) {
+    const isSensitive = !featureAttributes.non_sensitive;
+    if (isSensitive && !featureAttributes.subtype) {
+      issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
     }
   }
 
-  switch (true) {
-    case attributes.data_type === "formatted_date_time" &&
-      !attributes.date_time_format:
-      return false;
-    default:
-      return true;
+  if (
+    featureAttributes.data_type === "formatted_date_time" &&
+    !featureAttributes.date_time_format
+  ) {
+    issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
   }
+
+  return issues.length ? issues : undefined;
 };
 
 /**

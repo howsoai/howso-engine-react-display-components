@@ -1,5 +1,6 @@
 export * from "./FeatureAttributeSample";
 export * from "./FeatureAttributesConfiguration";
+export * from "./FeatureAttributesConfigurationIssues";
 export * from "./FeaturesAttributesContext";
 export * from "./FeaturesAttributesCompact";
 export * from "./FeaturesAttributesDependencies";

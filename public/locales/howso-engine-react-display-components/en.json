@@ -1,5 +1,11 @@
 {
   "FeatureAttributes": {
+    "ConfigurationIssue": {
+      "typeUndefined": "Type is required",
+      "dataTypeUndefined": "Data type is required",
+      "sensitiveSubtypeUndefined": "Sensitive attributes require a Subtype for substitution",
+      "dateTimeFormatUndefined": "Formatted date times require Date Time Format"
+    },
     "FeatureAttributeAllowedValuesField": {
       "help": {
         "nominal": "Use a new line for each value.",
@@ -205,7 +211,6 @@
           "compact": "Compact",
           "comfortable": "Comfortable"
         },
-        "invalidConfiguration": "Please adjust this configuration",
         "sample": "Sample"
       },
       "state": {
@@ -240,9 +245,6 @@
         "timeFeature": "Time feature",
         "timeSeries": "Time series",
         "type": "Type"
-      },
-      "labels": {
-        "invalidConfiguration": "Please adjust this configuration"
       },
       "state": {
         "empty": "No features were found in the dataset."

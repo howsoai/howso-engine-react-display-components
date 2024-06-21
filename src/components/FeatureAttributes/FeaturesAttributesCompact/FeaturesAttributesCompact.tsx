@@ -6,7 +6,7 @@ import {
   useEffect,
   useContext,
 } from "react";
-import { Button, Alert, getTheme, Checkbox } from "flowbite-react";
+import { Button, Alert, getTheme, Checkbox, Tooltip } from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
@@ -23,7 +23,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
-  areFeatureAttributesValid,
+  getFeatureAttributeConfigurationIssues,
   getFeatureAttributesForType,
   getFeatureAttributesFromFormData,
 } from "../utils";
@@ -41,6 +41,7 @@ import {
   FeaturesAttributesContext,
   FeaturesAttributesContextProvider,
 } from "../FeaturesAttributesContext";
+import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -241,7 +242,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   if (!attributes) {
     throw new Error(`attributes are not defined for ${activeFeature}`);
   }
-  const isValid = areFeatureAttributesValid(attributes);
+  const issues = getFeatureAttributeConfigurationIssues(attributes);
 
   return (
     <section data-testid="configuration-container">
@@ -252,14 +253,17 @@ const Configuration: FC<ConfigurationProps> = (props) => {
               name: activeFeature,
             })}
           </h3>
-          {!isValid && (
-            <WarningIcon
-              className={twMerge(
-                "ml-1 text-lg",
-                theme.label.root.colors.warning,
-              )}
-              title={t(translations.labels.invalidConfiguration)}
-            />
+          {issues && (
+            <Tooltip
+              content={<FeatureAttributesConfigurationIssues issues={issues} />}
+            >
+              <WarningIcon
+                className={twMerge(
+                  "ml-1 text-lg",
+                  theme.label.root.colors.warning,
+                )}
+              />
+            </Tooltip>
           )}
         </div>
       </header>
