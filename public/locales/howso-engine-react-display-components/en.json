@@ -118,7 +118,7 @@
       "title": "Temporality"
     },
     "FeatureAttributeSubtypeField": {
-      "help": "Your platform supports a default list of options. You may create your own, supplying the name here instead.",
+      "help": "Your platform supports a default list of options. Refer to documentation for creation of a custom subtype.",
       "label": "Subtype"
     },
     "FeatureAttributeTimeSeriesDeltaMinMaxFields": {

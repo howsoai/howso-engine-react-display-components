@@ -4,9 +4,10 @@ import {
   FeatureAttributeSubtypeField,
   featureAttributeSubtypeFieldLabel,
 } from "..";
-import { useForm, FormProvider } from "react-hook-form";
+import { useForm, FormProvider, UseFormProps } from "react-hook-form";
 import { FC, ReactNode } from "react";
 import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
+import { FeatureAttributeFormValues } from "../../utils";
 
 describe("SubtypeField", () => {
   it("should not be rendered for continuous feature types", async () => {
@@ -145,10 +146,31 @@ describe("SubtypeField", () => {
     const field = getField();
     expect(field).toBeTruthy();
   });
+
+  it("should render a custom subtype as an option", async () => {
+    const subtype = Math.random().toFixed(3);
+    render(
+      <Wrapper formProps={{ defaultValues: { subtype } }}>
+        <FeatureAttributeSubtypeField
+          featureType={"ordinal"}
+          dataType={"string"}
+          nonSensitive={false}
+        />
+        ,
+      </Wrapper>,
+    );
+
+    const field = getField();
+    expect(field).toBeTruthy();
+    expect(field).toHaveValue(subtype);
+  });
 });
 
-const Wrapper: FC<{ children: ReactNode }> = ({ children }) => {
-  const form = useForm();
+const Wrapper: FC<{
+  children: ReactNode;
+  formProps?: UseFormProps<FeatureAttributeFormValues>;
+}> = ({ children, formProps }) => {
+  const form = useForm<FeatureAttributeFormValues>(formProps);
   return (
     <FeaturesAttributesContextProvider>
       <FormProvider {...form}>

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FeatureAttributeSubtypeField } from "./FeatureAttributeSubtypeField";
 import { getFormProviderDecorator } from "@/storybook";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { FeatureAttributeFormValues } from "../../utils";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributeSubtypeField> = {
@@ -13,7 +14,7 @@ const meta: Meta<typeof FeatureAttributeSubtypeField> = {
     layout: "centered",
   },
   decorators: [
-    getFormProviderDecorator(),
+    getFormProviderDecorator<FeatureAttributeFormValues>(),
     getFeaturesAttributesContextDecorator(),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -38,5 +39,17 @@ export const String: Story = {
 export const Number: Story = {
   args: {
     dataType: "number",
+  },
+};
+
+export const CustomSubtype: Story = {
+  decorators: [
+    getFormProviderDecorator<FeatureAttributeFormValues>({
+      defaultValues: { subtype: "My custom subtype " },
+    }),
+    getFeaturesAttributesContextDecorator(),
+  ],
+  args: {
+    dataType: "string",
   },
 };
