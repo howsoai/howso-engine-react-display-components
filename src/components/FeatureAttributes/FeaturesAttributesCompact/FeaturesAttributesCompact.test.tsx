@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { act } from "react";
 import "@testing-library/jest-dom";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
@@ -14,6 +15,7 @@ import {
 } from "../hooks";
 import { sleep } from "@/utils";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
+import { getFeatureAttributeObservationalErrorFieldInElement } from "../fields/FeatureAttributeObservationalErrorField/FeatureAttributeObservationalErrorField.test";
 
 describe("FeaturesAttributesCompact", () => {
   const featuresAttributes: FeatureAttributesIndex = {
@@ -170,7 +172,9 @@ describe("FeaturesAttributesCompact", () => {
 
     const featuresField = getFeatureField();
     expect(featuresField).toBeEnabled();
-    fireEvent.change(featuresField, { target: { value: firstFeature } });
+    act(() => {
+      fireEvent.change(featuresField, { target: { value: firstFeature } });
+    });
     expect(featuresField.value).toBe(firstFeature);
 
     for (let i = 0; i <= featureEntries.length - 1; i++) {
@@ -182,14 +186,30 @@ describe("FeaturesAttributesCompact", () => {
         feature,
         attributes,
       );
+
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(container).getByRole("button", {
           name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
         });
-        fireEvent(
-          updateAndNext,
-          new MouseEvent("click", { bubbles: true, cancelable: true }),
-        );
+        expect(updateAndNext).toBeDisabled();
+
+        // Make a change to a field present on all forms
+        const value = Math.random().toFixed(2);
+        const observationalErrorField =
+          getFeatureAttributeObservationalErrorFieldInElement(container);
+        act(() => {
+          fireEvent.change(observationalErrorField, { target: { value } });
+        });
+        expect(observationalErrorField).toHaveValue(value);
+        expect(updateAndNext).toBeEnabled();
+
+        // Save and move on
+        act(() => {
+          fireEvent(
+            updateAndNext,
+            new MouseEvent("click", { bubbles: true, cancelable: true }),
+          );
+        });
       }
     }
   });

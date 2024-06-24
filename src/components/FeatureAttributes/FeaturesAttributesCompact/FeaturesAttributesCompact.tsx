@@ -102,6 +102,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       ) : (
         <Configuration
           {...props}
+          areConfigurationsDirty={areConfigurationsDirty}
           setAreConfigurationsDirty={setAreConfigurationsDirty}
         />
       )}
@@ -227,6 +228,7 @@ type ConfigurationProps = Pick<
   | "setFeatureAttributesAtom"
   | "timeFeatureAtom"
 > & {
+  areConfigurationsDirty: boolean;
   setAreConfigurationsDirty: Dispatch<SetStateAction<boolean>>;
 };
 const Configuration: FC<ConfigurationProps> = (props) => {
@@ -274,10 +276,11 @@ const Configuration: FC<ConfigurationProps> = (props) => {
 };
 
 const Form: FC<ConfigurationProps> = ({
-  featureAttributesIndexAtom,
-  activeFeatureAtom,
-  setFeatureAttributesAtom,
+  areConfigurationsDirty,
   setAreConfigurationsDirty,
+  activeFeatureAtom,
+  featureAttributesIndexAtom,
+  setFeatureAttributesAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
@@ -350,6 +353,7 @@ const Form: FC<ConfigurationProps> = ({
             {...buttonProps}
             color="primary"
             onClick={form.handleSubmit(onSave)}
+            disabled={!areConfigurationsDirty}
           >
             <UpdateIcon className="mr-1 h-5 w-5" />
             <span>{t(translations.actions.update)}</span>
@@ -359,6 +363,7 @@ const Form: FC<ConfigurationProps> = ({
               {...buttonProps}
               color="primary"
               onClick={form.handleSubmit(onSaveAndContinue)}
+              disabled={!areConfigurationsDirty}
             >
               <UpdateIcon className="mr-1 h-5 w-5" />
               <div className="max-w-60 truncate">
