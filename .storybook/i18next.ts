@@ -1,28 +1,30 @@
 import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
-import Backend from "i18next-http-backend";
 import LanguageDetector from "i18next-browser-languagedetector";
+import { defaultTranslationNamespace as reactTailwindFlowbiteComponentsNs } from "@howso/react-tailwind-flowbite-components";
+import howsoReactTailwindFlowbiteComponentsEn from "@howso/react-tailwind-flowbite-components/lib/public/locales/react-tailwind-flowbite-components/en.json" with { type:
+  "json" };
 import { defaultTranslationNamespace } from "../src/hooks/useDefaultTranslation";
+import howsoEngineReactDisplayComponentsEn from "../public/locales/howso-engine-react-display-components/en.json" with { type:
+  "json" };
 
-const ns = [defaultTranslationNamespace];
+const ns = [reactTailwindFlowbiteComponentsNs, defaultTranslationNamespace];
 const supportedLngs = ["en"];
 
-i18n
+export default i18n
   .use(initReactI18next)
   .use(LanguageDetector)
-  .use(Backend)
   .init({
-    //debug: true,
     lng: supportedLngs[0],
-    fallbackLng: supportedLngs[0],
-    defaultNS: ns[0],
     ns,
     interpolation: { escapeValue: false },
-    react: { useSuspense: true },
+    // react: { useSuspense: true },
     supportedLngs,
-    backend: {
-      loadPath: "/locales/{{ns}}/{{lng}}.json",
+    resources: {
+      en: {
+        [reactTailwindFlowbiteComponentsNs]:
+          howsoReactTailwindFlowbiteComponentsEn,
+        [defaultTranslationNamespace]: howsoEngineReactDisplayComponentsEn,
+      },
     },
   });
-
-export default i18n;

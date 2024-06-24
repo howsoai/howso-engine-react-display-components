@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
@@ -9,6 +9,7 @@ import {
   Link,
 } from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeLocaleFieldLabel } from "./constants";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeLocaleFieldProps = Partial<FieldTextProps> & {
   dataType: FeatureAttributes["data_type"];
@@ -26,6 +27,7 @@ export const FeatureAttributeLocaleField: FC<
   FeatureAttributeLocaleFieldProps
 > = ({ dataType, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const required = false;
 
@@ -35,6 +37,7 @@ export const FeatureAttributeLocaleField: FC<
 
   return (
     <FieldText
+      {...fieldTextProps}
       type="text"
       label={t(featureAttributeLocaleFieldLabel)}
       placeholder="en; en_US; zh_CN"

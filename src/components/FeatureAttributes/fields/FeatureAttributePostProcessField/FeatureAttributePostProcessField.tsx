@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { Trans } from "react-i18next";
@@ -8,6 +8,7 @@ import {
   Link,
 } from "@howso/react-tailwind-flowbite-components";
 import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 /**
@@ -19,10 +20,12 @@ export const FeatureAttributePostProcessField: FC<
   FeatureAttributePostProcessProps
 > = (props) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   return (
     <FieldTextArea
+      {...fieldTextAreaProps}
       label={t("FeatureAttributes.FeatureAttributePostProcessField.label")}
       placeholder={`; Simple example: Included standard text prefixing 'target'.
 (concat "PROCESSED: " #target 0)

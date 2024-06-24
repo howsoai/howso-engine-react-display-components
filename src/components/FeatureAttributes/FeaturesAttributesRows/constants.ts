@@ -17,9 +17,6 @@ export const translations = {
   form: {
     label: `${base}.form.label`,
   },
-  labels: {
-    invalid_configuration: `${base}.labels.invalidConfiguration`,
-  },
   state: {
     empty: `${base}.state.empty`,
   },

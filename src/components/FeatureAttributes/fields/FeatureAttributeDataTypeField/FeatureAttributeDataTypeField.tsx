@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributesDataTypeEnum,
@@ -10,6 +10,7 @@ import {
   FieldSelect,
   FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributesTypeEnum;
@@ -23,6 +24,7 @@ export const FeatureAttributeDataTypeField: FC<
   FeatureAttributeDataTypeFieldProps
 > = ({ featureType, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const dataType = form.getValues("data_type");
   const required = true;
@@ -32,6 +34,7 @@ export const FeatureAttributeDataTypeField: FC<
       label={t(featureAttributeDataTypeFieldLabel)}
       required={required}
       helperText={<HelperText dataType={dataType} />}
+      {...fieldSelectProps}
       {...props}
       {...form.register("data_type", { required })}
     >

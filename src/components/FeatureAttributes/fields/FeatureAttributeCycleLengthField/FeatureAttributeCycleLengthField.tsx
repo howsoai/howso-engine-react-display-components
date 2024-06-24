@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -6,6 +6,7 @@ import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -26,6 +27,7 @@ export const FeatureAttributeCycleLengthField: FC<
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
   const form = useFormContext();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
@@ -38,6 +40,7 @@ export const FeatureAttributeCycleLengthField: FC<
 
   return (
     <FieldText
+      {...fieldTextProps}
       label={t("FeatureAttributes.FeatureAttributeCycleLengthField.label")}
       type="number"
       step="1"

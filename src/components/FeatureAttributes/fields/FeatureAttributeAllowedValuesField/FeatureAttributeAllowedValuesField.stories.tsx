@@ -4,6 +4,7 @@ import { getFormProviderDecorator } from "@/storybook";
 import { FC, ReactNode } from "react";
 import { UseFormProps, useForm, FormProvider } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
+import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 const defaultValues: FeatureAttributes = {
   type: "nominal",
@@ -20,7 +21,10 @@ const meta: Meta<typeof FeatureAttributeAllowedValuesField> = {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "centered",
   },
-  decorators: [getFormProviderDecorator()],
+  decorators: [
+    getFormProviderDecorator(),
+    getFeaturesAttributesContextDecorator(),
+  ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {

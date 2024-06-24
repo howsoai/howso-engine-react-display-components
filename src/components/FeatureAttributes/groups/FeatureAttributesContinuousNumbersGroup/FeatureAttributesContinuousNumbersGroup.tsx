@@ -21,7 +21,7 @@ export type FeatureAttributesContinuousNumbersGroupProps = Omit<
 };
 export const FeatureAttributesContinuousNumbersGroup: FC<
   FeatureAttributesContinuousNumbersGroupProps
-> = ({ featureType, dataType, sizing, ...props }) => {
+> = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
@@ -44,17 +44,14 @@ export const FeatureAttributesContinuousNumbersGroup: FC<
           <FeatureAttributeCycleLengthField
             featureType={featureType}
             dataType={dataType}
-            sizing={sizing}
           />
           <FeatureAttributeSignificantDigitsField
             featureType={featureType}
             dataType={dataType}
-            sizing={sizing}
           />
           <FeatureAttributeDecimalPlacesField
             featureType={featureType}
             dataType={dataType}
-            sizing={sizing}
           />
         </div>
       }

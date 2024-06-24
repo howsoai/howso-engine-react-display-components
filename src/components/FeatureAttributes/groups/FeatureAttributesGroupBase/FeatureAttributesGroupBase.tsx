@@ -1,27 +1,36 @@
 import { useDefaultTranslation } from "@/hooks";
 import {
   ExpandCollapseControl,
+  ExpandCollapseControlProps,
   formSpacingYDefault,
 } from "@howso/react-tailwind-flowbite-components";
-import { TextInputProps } from "flowbite-react";
 import type { ComponentProps } from "react";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributesGroupBaseProps = Omit<
   ComponentProps<"section">,
   "children"
 > & {
   title: ReactNode;
+  titleProps?: ComponentProps<"div">;
+  sectionProps?: ComponentProps<"div">;
   basic?: ReactNode;
   advanced?: ReactNode;
+  advancedControlProps?: Omit<
+    ExpandCollapseControlProps,
+    "children" | "isExpanded" | "onClick"
+  >;
   isAdvancedOpen?: boolean;
-  sizing?: TextInputProps["sizing"];
 };
 export const FeatureAttributesGroupBase: FC<
   FeatureAttributesGroupBaseProps
-> = ({ title, basic, advanced, isAdvancedOpen, ...props }) => {
+> = ({ title, sectionProps, basic, advanced, isAdvancedOpen, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { groupBaseProps: contextProps } = useContext(
+    FeaturesAttributesContext,
+  );
   const [isOpen, setIsOpen] = useState(isAdvancedOpen ?? false);
 
   return (
@@ -30,20 +39,53 @@ export const FeatureAttributesGroupBase: FC<
       className={twMerge(
         "border-t border-solid pt-2",
         formSpacingYDefault,
+        contextProps?.className,
         props.className,
       )}
     >
       {title && (
         <header className={"mb-4 flex items-center justify-between gap-4"}>
-          <div className="text-lg font-medium dark:text-white">{title}</div>
+          <div
+            {...contextProps?.titleProps}
+            className={twMerge(
+              "text-lg font-medium dark:text-white",
+              contextProps?.titleProps?.className,
+            )}
+          >
+            {title}
+          </div>
         </header>
       )}
-      {basic && <div className={childIndention}>{basic}</div>}
+      {basic && (
+        <div
+          {...contextProps?.sectionProps}
+          {...sectionProps}
+          className={twMerge(
+            defaultSectionProps,
+            contextProps?.sectionProps?.className,
+            sectionProps?.className,
+          )}
+        >
+          {basic}
+        </div>
+      )}
       {advanced && (
-        <div className={twMerge(childIndention)}>
+        <div
+          {...contextProps?.sectionProps}
+          {...sectionProps}
+          className={twMerge(
+            defaultSectionProps,
+            contextProps?.sectionProps?.className,
+            sectionProps?.className,
+          )}
+        >
           <ExpandCollapseControl
+            {...contextProps?.advancedControlProps}
             isExpanded={isOpen}
-            className="mb-4 p-0 text-sm font-normal"
+            className={twMerge(
+              "mb-4 p-0 text-sm font-normal",
+              contextProps?.advancedControlProps?.className,
+            )}
             fullSized
             onClick={
               advanced
@@ -57,7 +99,7 @@ export const FeatureAttributesGroupBase: FC<
           </ExpandCollapseControl>
           <div
             className={twMerge(
-              "max-h-0 overflow-hidden px-1 transition-[max-height] duration-200 ease-in-out",
+              "max-h-0 overflow-hidden transition-[max-height] duration-200 ease-in-out",
               isOpen && "max-h-[99rem]", // I wonder if this is enough...
             )}
           >
@@ -69,4 +111,4 @@ export const FeatureAttributesGroupBase: FC<
   );
 };
 
-const childIndention = "ml-7";
+const defaultSectionProps = "ml-7";

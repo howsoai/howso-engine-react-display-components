@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -6,6 +6,7 @@ import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeObservationalErrorFieldProps =
   Partial<FieldTextProps> & {
@@ -21,12 +22,14 @@ export const FeatureAttributeObservationalErrorField: FC<
   FeatureAttributeObservationalErrorFieldProps
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   const max = featureType === "nominal" ? 1 : undefined;
 
   return (
     <FieldText
+      {...fieldTextProps}
       label={t(
         "FeatureAttributes.FeatureAttributeObservationalErrorField.label",
       )}

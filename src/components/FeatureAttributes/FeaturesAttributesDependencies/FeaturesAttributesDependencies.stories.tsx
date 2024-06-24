@@ -5,6 +5,7 @@ import {
   FeatureAttributesIndex,
   getFeatureAttributesIndexAtom,
 } from "../hooks";
+import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesDependencies> = {
@@ -15,6 +16,7 @@ const meta: Meta<typeof FeaturesAttributesDependencies> = {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "centered",
   },
+  decorators: [getFeaturesAttributesContextDecorator()],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {

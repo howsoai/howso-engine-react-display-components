@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import { HelperText } from "flowbite-react";
 import {
   FieldTextList,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
   Partial<FieldTextProps> & {
@@ -18,6 +19,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
   FeatureAttributeTimeSeriesRateMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   if (timeSeriesType !== "rate") {
     return null;
@@ -27,6 +29,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
     <div className={"space-y-1"}>
       <div className="flex gap-4">
         <FieldTextList
+          {...fieldTextProps}
           name={"time_series.rate_min"}
           containerProps={{ className: "basis-1/2" }}
           label={t(
@@ -38,6 +41,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
         />
 
         <FieldTextList
+          {...fieldTextProps}
           name={"time_series.rate_max"}
           containerProps={{ className: "basis-1/2" }}
           label={t(

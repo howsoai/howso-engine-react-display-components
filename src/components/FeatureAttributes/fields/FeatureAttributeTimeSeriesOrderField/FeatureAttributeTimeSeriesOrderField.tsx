@@ -2,9 +2,10 @@ import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTimeSeriesOrderFieldProps = Partial<FieldTextProps>;
 /**
@@ -14,10 +15,12 @@ export const FeatureAttributeTimeSeriesOrderField: FC<
   FeatureAttributeTimeSeriesOrderFieldProps
 > = (props) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   return (
     <FieldText
+      {...fieldTextProps}
       type="number"
       label={t("FeatureAttributes.FeatureAttributeTimeSeriesOrderField.label")}
       placeholder="1"

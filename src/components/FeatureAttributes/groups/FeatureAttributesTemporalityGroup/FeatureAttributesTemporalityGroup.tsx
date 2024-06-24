@@ -45,7 +45,6 @@ export const FeatureAttributesTemporalityGroup: FC<
   timeSeriesLags,
   timeSeriesOrder,
   timeSeriesType,
-  sizing,
   ...props
 }) => {
   const { t } = useDefaultTranslation();
@@ -63,29 +62,24 @@ export const FeatureAttributesTemporalityGroup: FC<
           <FeatureAttributeTimeSeriesTypeField
             featureType={featureType}
             isTimeFeature={isTimeFeature}
-            sizing={sizing}
           />
           <FeatureAttributeTimeSeriesDeltaMinMaxFields
             timeSeriesType={timeSeriesType}
-            sizing={sizing}
           />
           <FeatureAttributeTimeSeriesRateMinMaxFields
             timeSeriesType={timeSeriesType}
-            sizing={sizing}
           />
           {!isTimeFeature && (
             <>
-              <FeatureAttributeTimeSeriesOrderField sizing={sizing} />
+              <FeatureAttributeTimeSeriesOrderField />
               <FeatureAttributeTimeSeriesDerivedOrdersField
                 timeSeriesOrder={timeSeriesOrder}
-                sizing={sizing}
               />
             </>
           )}
-          <FeatureAttributeTimeSeriesLagsField sizing={sizing} />
+          <FeatureAttributeTimeSeriesLagsField />
           <FeatureAttributeTimeSeriesNumLagsField
             timeSeriesLags={timeSeriesLags}
-            sizing={sizing}
           />
           <FeatureAttributeTimeSeriesHasTerminatorsField
             isIdFeature={isIdFeature}

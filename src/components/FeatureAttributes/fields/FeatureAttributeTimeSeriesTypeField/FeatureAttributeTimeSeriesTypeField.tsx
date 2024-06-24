@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import { useFormContext } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -6,6 +6,7 @@ import {
   FieldSelect,
   FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTimeSeriesTypeFieldProps =
   Partial<FieldSelectProps> & {
@@ -20,6 +21,7 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
   FeatureAttributeTimeSeriesTypeFieldProps
 > = ({ featureType, isTimeFeature, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const required = false;
 
@@ -32,6 +34,7 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
 
   return (
     <FieldSelect
+      {...fieldSelectProps}
       label={t("FeatureAttributes.FeatureAttributeTimeSeriesTypeField.label")}
       required={required}
       {...props}

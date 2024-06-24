@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -6,6 +6,7 @@ import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -27,6 +28,7 @@ export const FeatureAttributeDecimalPlacesField: FC<
   FeatureAttributeDecimalPlacesProps
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useDefaultTranslation();
+  const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
@@ -40,6 +42,7 @@ export const FeatureAttributeDecimalPlacesField: FC<
 
   return (
     <FieldText
+      {...fieldTextProps}
       label={t("FeatureAttributes.FeatureAttributeDecimalPlacesField.label")}
       type="number"
       step="1"

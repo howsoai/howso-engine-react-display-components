@@ -1,6 +1,14 @@
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { Table, Button, Radio, Modal, Alert, getTheme } from "flowbite-react";
+import {
+  Table,
+  Button,
+  Radio,
+  Modal,
+  Alert,
+  getTheme,
+  Tooltip,
+} from "flowbite-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
@@ -21,7 +29,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
-  areFeatureAttributesValid,
+  getAllFeatureAttributeConfigurationIssues,
+  getFeatureAttributeConfigurationIssues,
   getFeatureAttributesForType,
   getFeatureAttributesFromFormData,
 } from "../utils";
@@ -34,6 +43,8 @@ import {
   type FeatureAttributesOptionsAtom,
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
+import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
+import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
 
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -72,55 +83,53 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   };
 
   return (
-    <>
-      <ErrorBoundary>
-        <div className="relative overflow-x-auto rounded-lg shadow-md">
-          <Table striped>
-            <Table.Head>
-              <Table.HeadCell className="whitespace-nowrap">
-                {t(translations.headings.feature)}
-              </Table.HeadCell>
-              <Table.HeadCell className="whitespace-nowrap">
-                {t(translations.headings.sample)}
-              </Table.HeadCell>
-              <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
-                {t(featureAttributeTypeLabel)}
-              </Table.HeadCell>
-              <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                <div className="flex items-center gap-2">
-                  {options.time_series
-                    ? t(translations.headings.timeFeature)
-                    : t(translations.headings.timeSeries)}
-                  <ToggleInput
-                    onChange={onChangeTimeSeries}
-                    checked={options.time_series || false}
-                  />
-                </div>
-              </Table.HeadCell>
-              <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-                {t(translations.headings.configuration)}
-              </Table.HeadCell>
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {features.map((featureName) => (
-                <FeatureFields
-                  key={featureName}
-                  feature={featureName}
-                  {...props}
+    <FeaturesAttributesContextProvider>
+      <div className="relative overflow-x-auto rounded-lg shadow-md">
+        <Table striped>
+          <Table.Head>
+            <Table.HeadCell className="whitespace-nowrap">
+              {t(translations.headings.feature)}
+            </Table.HeadCell>
+            <Table.HeadCell className="whitespace-nowrap">
+              {t(translations.headings.sample)}
+            </Table.HeadCell>
+            <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
+              {t(featureAttributeTypeLabel)}
+            </Table.HeadCell>
+            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+              <div className="flex items-center gap-2">
+                {options.time_series
+                  ? t(translations.headings.timeFeature)
+                  : t(translations.headings.timeSeries)}
+                <ToggleInput
+                  onChange={onChangeTimeSeries}
+                  checked={options.time_series || false}
                 />
-              ))}
-            </Table.Body>
-          </Table>
-        </div>
-        {!features.length && (
-          <Alert color="warning" icon={WarningIcon}>
-            {t(translations.state.empty)}
-          </Alert>
-        )}
-        <Controls {...props} containerProps={{ className: "mt-4" }} />
-      </ErrorBoundary>
+              </div>
+            </Table.HeadCell>
+            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+              {t(translations.headings.configuration)}
+            </Table.HeadCell>
+          </Table.Head>
+          <Table.Body className="divide-y">
+            {features.map((featureName) => (
+              <FeatureFields
+                key={featureName}
+                feature={featureName}
+                {...props}
+              />
+            ))}
+          </Table.Body>
+        </Table>
+      </div>
+      {!features.length && (
+        <Alert color="warning" icon={WarningIcon}>
+          {t(translations.state.empty)}
+        </Alert>
+      )}
+      <Controls {...props} containerProps={{ className: "mt-4" }} />
       {activeFeature && <ConfigureModal {...props} />}
-    </>
+    </FeaturesAttributesContextProvider>
   );
 };
 
@@ -156,7 +165,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
     },
     [feature, setFeatureAttributes],
   );
-  const isValid = areFeatureAttributesValid(attributes);
+  const issues = getFeatureAttributeConfigurationIssues(attributes);
 
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -190,14 +199,17 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
             <span>{t(translations.actions.configure)}</span>
           </Button>
 
-          {!isValid && (
-            <WarningIcon
-              className={twMerge(
-                "ml-1 text-lg",
-                theme.label.root.colors.warning,
-              )}
-              title={t(translations.labels.invalid_configuration)}
-            />
+          {issues && (
+            <Tooltip
+              content={<FeatureAttributesConfigurationIssues issues={issues} />}
+            >
+              <WarningIcon
+                className={twMerge(
+                  "ml-1 text-lg",
+                  theme.label.root.colors.warning,
+                )}
+              />
+            </Tooltip>
           )}
         </div>
       </Table.Cell>
@@ -226,9 +238,19 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
     setAttributes(values);
   }, [form, setAttributes]);
 
+  useEffect(() => {
+    const values = form.getValues();
+    if (values.type === attributes.type) {
+      return;
+    }
+
+    form.resetField("type", { defaultValue: attributes.type });
+  }, [form, attributes.type]);
+
   return (
     <FormProvider {...form}>
       <FeatureAttributeTypeField
+        fieldType="select"
         onChange={onChange}
         label={undefined}
         helperText={undefined}
@@ -280,7 +302,7 @@ const ConfigureModal: FC<ConfigureModalProps> = (props) => {
   const onClose = useCallback(() => setActiveFeature(null), [setActiveFeature]);
 
   return (
-    <FormModal dismissible show size={"3xl"} onClose={onClose}>
+    <FormModal dismissible show size={"4xl"} onClose={onClose}>
       {/* Purpose using `key` here to force the component to load and unload, creating new `useForm` defaults */}
       <Form key={activeFeature} {...props} onClose={onClose} />
     </FormModal>
@@ -421,7 +443,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
         {label}
       </Button>
       {isOpen && (
-        <FormModal dismissible show size={"3xl"} onClose={onClose}>
+        <FormModal dismissible show size={"4xl"} onClose={onClose}>
           <form noValidate aria-label={label}>
             <Modal.Header>{label}</Modal.Header>
             <Modal.Body>

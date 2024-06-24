@@ -21,6 +21,10 @@ export const translations = {
     label: `${base}.form.label`,
   },
   labels: {
+    density: {
+      compact: `${base}.labels.density.compact`,
+      comfortable: `${base}.labels.density.comfortable`,
+    },
     invalidConfiguration: `${base}.labels.invalidConfiguration`,
     sample: `${base}.labels.sample`,
   },

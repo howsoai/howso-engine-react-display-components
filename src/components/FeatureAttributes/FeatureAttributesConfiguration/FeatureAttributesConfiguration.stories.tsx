@@ -2,18 +2,20 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { getFormProviderDecorator, withPadding } from "@/storybook";
 import { FeatureAttributesConfiguration } from "./FeatureAttributesConfiguration";
 import { type FeatureAttributesFieldsValues } from "./constants";
+import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesConfiguration> = {
   component: FeatureAttributesConfiguration,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/7.0/react/writing-docs/docs-page
-  tags: ["autodocs"],
+  // tags: ["autodocs"],
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
     layout: "fullscreen",
   },
   decorators: [
     getFormProviderDecorator<FeatureAttributesFieldsValues>(),
+    getFeaturesAttributesContextDecorator(),
     withPadding,
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
@@ -25,6 +27,15 @@ const meta: Meta<typeof FeatureAttributesConfiguration> = {
 
 export default meta;
 type Story = StoryObj<typeof FeatureAttributesConfiguration>;
+
+export const Default: Story = {
+  decorators: [
+    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+      defaultValues: {},
+    }),
+  ],
+  args: {},
+};
 
 export const ContinuousNumber: Story = {
   decorators: [
