@@ -281,7 +281,7 @@ const Form: FC<ConfigurationProps> = ({
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { buttonProps, fieldTextProps } = useContext(FeaturesAttributesContext);
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
@@ -346,12 +346,17 @@ const Form: FC<ConfigurationProps> = ({
           />
         </ErrorBoundary>
         <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
-          <Button color="primary" onClick={form.handleSubmit(onSave)}>
+          <Button
+            {...buttonProps}
+            color="primary"
+            onClick={form.handleSubmit(onSave)}
+          >
             <UpdateIcon className="mr-1 h-5 w-5" />
             <span>{t(translations.actions.update)}</span>
           </Button>
           {nextFeature && (
             <Button
+              {...buttonProps}
               color="primary"
               onClick={form.handleSubmit(onSaveAndContinue)}
             >
