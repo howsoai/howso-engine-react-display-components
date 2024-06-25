@@ -1,10 +1,10 @@
 {
   "FeatureAttributes": {
     "ConfigurationIssue": {
-      "typeUndefined": "Type is required",
       "dataTypeUndefined": "Data type is required",
+      "dateTimeFormatUndefined": "Formatted date times require Date Time Format",
       "sensitiveSubtypeUndefined": "Sensitive attributes require a Subtype for substitution",
-      "dateTimeFormatUndefined": "Formatted date times require Date Time Format"
+      "typeUndefined": "Type is required"
     },
     "FeatureAttributeAllowedValuesField": {
       "help": {
@@ -16,21 +16,21 @@
         "ordinal": "Allowed Values"
       }
     },
+    "FeatureAttributeAllowNullsField": {
+      "label": "Allow Nulls"
+    },
     "FeatureAttributeBoundingModeField": {
+      "help": {
+        "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
+        "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
+        "userDefined": "Specify min and max manually (not recommended)"
+      },
       "label": "Bounding mode",
       "options": {
         "auto": "Auto",
         "tightBounds": "Tight bounds",
         "userDefined": "User defined"
-      },
-      "help": {
-        "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
-        "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
-        "userDefined": "Specify min and max manually (not recommended)"
       }
-    },
-    "FeatureAttributeAllowNullsField": {
-      "label": "Allow Nulls"
     },
     "FeatureAttributeCycleLengthField": {
       "help": "Only required if your feature is cyclical, such as days of the week.",
@@ -221,8 +221,8 @@
       },
       "labels": {
         "density": {
-          "compact": "Compact",
-          "comfortable": "Comfortable"
+          "comfortable": "Comfortable",
+          "compact": "Compact"
         },
         "sample": "Sample"
       },
