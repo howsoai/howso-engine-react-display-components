@@ -1,22 +1,38 @@
+const base = "FeatureAttributes.FeatureAttributeTypeField";
+
 export const featureAttributeTypeName = "type";
 
-export const featureAttributeTypeLabel =
-  "FeatureAttributes.FeatureAttributeTypeField.label";
+export const featureAttributeTypeLabel = `${base}.label`;
 
 export const featureAttributeTypeOptions = {
   continuous: {
     value: "continuous",
-    translationKey:
-      "FeatureAttributes.FeatureAttributeTypeField.options.continuous",
+    translations: {
+      label: `${base}.options.continuous`,
+      help: {
+        description: `${base}.help.continuous.description`,
+        example: `${base}.help.continuous.example`,
+      },
+    },
   },
   nominal: {
     value: "nominal",
-    translationKey:
-      "FeatureAttributes.FeatureAttributeTypeField.options.nominal",
+    translations: {
+      label: `${base}.options.nominal`,
+      help: {
+        description: `${base}.help.nominal.description`,
+        example: `${base}.help.nominal.example`,
+      },
+    },
   },
   ordinal: {
     value: "ordinal",
-    translationKey:
-      "FeatureAttributes.FeatureAttributeTypeField.options.ordinal",
+    translations: {
+      label: `${base}.options.ordinal`,
+      help: {
+        description: `${base}.help.ordinal.description`,
+        example: `${base}.help.ordinal.example`,
+      },
+    },
   },
 };

@@ -29,9 +29,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
+  featureAttributesFormSubmitHandler,
   getFeatureAttributeConfigurationIssues,
-  getFeatureAttributesForType,
-  getFeatureAttributesFromFormData,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
@@ -41,6 +40,8 @@ import {
   type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
   type InferFeatureAttributesParamsTimeFeatureAtom,
+  useFeatureAttributesForm,
+  InferFeatureAttributesParamsSetParamAtom,
 } from "../hooks";
 import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
@@ -48,8 +49,9 @@ import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfig
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
-  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
+  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
+  setParamsAtom: InferFeatureAttributesParamsSetParamAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
@@ -297,6 +299,7 @@ type ConfigureModalProps = Pick<
   | "activeFeatureAtom"
   | "inferFeatureAttributesParamsAtom"
   | "setFeatureAttributesAtom"
+  | "setParamsAtom"
   | "timeFeatureAtom"
 >;
 const ConfigureModal: FC<ConfigureModalProps> = (props) => {
@@ -315,6 +318,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   inferFeatureAttributesParamsAtom,
   activeFeatureAtom,
   setFeatureAttributesAtom,
+  setParamsAtom,
   timeFeatureAtom,
   onClose,
 }) => {
@@ -324,17 +328,10 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
     throw new Error("activeFeature is undefined");
   }
   const params = useAtomValue(inferFeatureAttributesParamsAtom);
-  const attributes = params.features?.[activeFeature];
   const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
+  const setParams = useSetAtom(setParamsAtom);
   const timeFeature = useAtomValue(timeFeatureAtom);
-
-  const form = useForm<FeatureAttributeFormValues>({
-    defaultValues: {
-      ...getFeatureAttributesForType(attributes),
-      is_datetime: !!attributes?.date_time_format,
-    },
-    shouldUnregister: true,
-  });
+  const form = useFeatureAttributesForm(params, activeFeature);
 
   const { dirtyFields } = form.formState;
   const features = Object.keys(params.features || {});
@@ -352,8 +349,13 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   };
 
   const save: SubmitHandler<FeatureAttributeFormValues> = (data) => {
-    const attributes = getFeatureAttributesFromFormData(data);
-    setFeatureAttributes(activeFeature, attributes, dirtyFields);
+    featureAttributesFormSubmitHandler({
+      data,
+      feature: activeFeature,
+      dirtyFields,
+      setFeatureAttributes,
+      setParams,
+    });
   };
 
   return (

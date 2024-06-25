@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { getFormProviderDecorator, withPadding } from "@/storybook";
 import { FeatureAttributesConfiguration } from "./FeatureAttributesConfiguration";
-import { type FeatureAttributesFieldsValues } from "./constants";
 import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { FeatureAttributeFormValues } from "../utils";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesConfiguration> = {
@@ -14,7 +14,7 @@ const meta: Meta<typeof FeatureAttributesConfiguration> = {
     layout: "fullscreen",
   },
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>(),
+    getFormProviderDecorator<FeatureAttributeFormValues>(),
     getFeaturesAttributesContextDecorator(),
     withPadding,
   ],
@@ -30,7 +30,7 @@ type Story = StoryObj<typeof FeatureAttributesConfiguration>;
 
 export const Default: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {},
     }),
   ],
@@ -39,7 +39,7 @@ export const Default: Story = {
 
 export const ContinuousNumber: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "continuous",
         data_type: "number",
@@ -52,7 +52,7 @@ export const ContinuousNumber: Story = {
 
 export const ContinuousString: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "continuous",
         data_type: "string",
@@ -64,7 +64,7 @@ export const ContinuousString: Story = {
 
 export const ContinuousFormattedDateTime: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "continuous",
         data_type: "formatted_date_time",
@@ -79,7 +79,7 @@ export const ContinuousFormattedDateTime: Story = {
 
 export const ContinuousComplex: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "continuous",
         data_type: "json",
@@ -91,7 +91,7 @@ export const ContinuousComplex: Story = {
 
 export const NominalNumber: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "nominal",
         data_type: "number",
@@ -103,7 +103,7 @@ export const NominalNumber: Story = {
 
 export const NominalString: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "nominal",
         data_type: "string",
@@ -118,7 +118,7 @@ export const NominalString: Story = {
 
 export const NominalFormattedDateTime: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "nominal",
         data_type: "formatted_date_time",
@@ -136,7 +136,7 @@ export const NominalFormattedDateTime: Story = {
 
 export const NominalComplex: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "nominal",
         data_type: "json",
@@ -148,7 +148,7 @@ export const NominalComplex: Story = {
 
 export const OrdinalNumber: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "ordinal",
         data_type: "number",
@@ -163,7 +163,7 @@ export const OrdinalNumber: Story = {
 
 export const OrdinalString: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "ordinal",
         data_type: "string",
@@ -178,7 +178,7 @@ export const OrdinalString: Story = {
 
 export const OrdinalFormattedDateTime: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributesFieldsValues>({
+    getFormProviderDecorator<FeatureAttributeFormValues>({
       defaultValues: {
         type: "ordinal",
         data_type: "formatted_date_time",

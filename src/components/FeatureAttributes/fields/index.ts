@@ -1,5 +1,6 @@
 export * from "./FeatureAttributeAllowedValuesField";
 export * from "./FeatureAttributeAllowNullsField";
+export * from "./FeatureAttributeBoundingModeField";
 export * from "./FeatureAttributeCycleLengthField";
 export * from "./FeatureAttributeDataTypeField";
 export * from "./FeatureAttributeDateTimeFormatField";

@@ -19,6 +19,7 @@ const meta: Meta<typeof FeatureAttributeMinMaxFields> = {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {
+    boundingMode: "userDefined",
     type: "continuous",
   },
 };

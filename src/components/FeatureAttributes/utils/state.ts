@@ -8,6 +8,7 @@ import type {
   InferFeatureAttributesParams,
 } from "../types/api";
 import { type DirtyFeatureAttributes } from "../hooks";
+import { FeatureAttributesBoundingMode } from "./forms";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -156,6 +157,27 @@ const getDataTypeFromOriginalType = (
   }
 };
 
+// Bounds
+
+export const getFeatureAttributesBoundingMode = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+): FeatureAttributesBoundingMode => {
+  if (params.tight_bounds?.includes(feature)) {
+    return "tightBounds";
+  }
+
+  const attributes = params.features?.[feature];
+  if (
+    typeof attributes?.bounds?.min === "number" ||
+    typeof attributes?.bounds?.max === "number"
+  ) {
+    return "userDefined";
+  }
+
+  return "auto";
+};
+
 export const getFeatureAttributesUnbound = (
   featureAttributes?: FeatureAttributes,
 ): FeatureAttributes => {
@@ -171,6 +193,8 @@ export const getFeatureAttributesUnbound = (
   }
   return adjustedFeature;
 };
+
+// Configs
 
 export const getInferFeatureAttributesConfigParameters = (
   config: Partial<InferFeatureAttributesParams> = {},

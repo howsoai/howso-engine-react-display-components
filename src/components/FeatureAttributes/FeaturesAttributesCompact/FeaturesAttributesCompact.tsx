@@ -23,9 +23,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
+  featureAttributesFormSubmitHandler,
   getFeatureAttributeConfigurationIssues,
-  getFeatureAttributesForType,
-  getFeatureAttributesFromFormData,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
@@ -35,6 +34,8 @@ import {
   type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
   type InferFeatureAttributesParamsTimeFeatureAtom,
+  useFeatureAttributesForm,
+  InferFeatureAttributesParamsSetParamAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import {
@@ -46,8 +47,9 @@ import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfig
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
-  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
+  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
+  setParamsAtom: InferFeatureAttributesParamsSetParamAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
@@ -227,6 +229,7 @@ type ConfigurationProps = Pick<
   | "activeFeatureAtom"
   | "inferFeatureAttributesParamsAtom"
   | "setFeatureAttributesAtom"
+  | "setParamsAtom"
   | "timeFeatureAtom"
 > & {
   areConfigurationsDirty: boolean;
@@ -282,6 +285,7 @@ const Form: FC<ConfigurationProps> = ({
   activeFeatureAtom,
   inferFeatureAttributesParamsAtom,
   setFeatureAttributesAtom,
+  setParamsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
@@ -294,15 +298,9 @@ const Form: FC<ConfigurationProps> = ({
   const features = Object.keys(params.features || {});
   const attributes = params.features?.[activeFeature];
   const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
+  const setParams = useSetAtom(setParamsAtom);
   const timeFeature = useAtomValue(timeFeatureAtom);
-
-  const form = useForm<FeatureAttributeFormValues>({
-    defaultValues: {
-      ...getFeatureAttributesForType(attributes),
-      is_datetime: !!attributes?.date_time_format,
-    },
-    shouldUnregister: true,
-  });
+  const form = useFeatureAttributesForm(params, activeFeature);
 
   const { dirtyFields, isDirty } = form.formState;
   useEffect(() => {
@@ -322,8 +320,13 @@ const Form: FC<ConfigurationProps> = ({
   };
 
   const save: SubmitHandler<FeatureAttributeFormValues> = (data) => {
-    const attributes = getFeatureAttributesFromFormData(data);
-    setFeatureAttributes(activeFeature, attributes, dirtyFields);
+    featureAttributesFormSubmitHandler({
+      data,
+      feature: activeFeature,
+      dirtyFields,
+      setFeatureAttributes,
+      setParams,
+    });
     form.reset(attributes, { keepDirty: false, keepDefaultValues: false });
   };
 

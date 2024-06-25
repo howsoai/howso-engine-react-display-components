@@ -1,5 +1,8 @@
 import { Getter, Setter, atom } from "jotai";
-import { getFeatureAttributesUnbound } from "../utils";
+import {
+  FeatureAttributesBoundingMode,
+  getFeatureAttributesUnbound,
+} from "../utils";
 import { InferFeatureAttributesParamsAtom } from "./useInferFeatureAttributesParamsAtom";
 import { useMemo } from "react";
 
@@ -56,7 +59,7 @@ export type InferFeatureAttributesParamsSetParamPayload =
 export type InferFeatureAttributesParamsSetParamBoundingModePayload = {
   action: "setBoundingMode";
   feature: string;
-  mode: "auto" | "defined" | "tight";
+  mode: FeatureAttributesBoundingMode | undefined;
 };
 const setBoundingMode = (
   get: Getter,
@@ -68,20 +71,7 @@ const setBoundingMode = (
   const tightBoundsSet = new Set(params.tight_bounds);
 
   switch (payload.mode) {
-    case "auto":
-      tightBoundsSet.delete(payload.feature);
-      set(inferFeatureAttributesParamsAtom, {
-        ...params,
-        tight_bounds: Array.from(tightBoundsSet),
-        features: {
-          ...params.features,
-          [payload.feature]: getFeatureAttributesUnbound(
-            params.features?.[payload.feature],
-          ),
-        },
-      });
-      return;
-    case "defined":
+    case "userDefined":
       tightBoundsSet.delete(payload.feature);
       set(inferFeatureAttributesParamsAtom, {
         ...params,
@@ -95,7 +85,7 @@ const setBoundingMode = (
         // },
       });
       return;
-    case "tight":
+    case "tightBounds":
       tightBoundsSet.add(payload.feature);
       set(inferFeatureAttributesParamsAtom, {
         ...params,
@@ -108,5 +98,21 @@ const setBoundingMode = (
         },
       });
       return;
+    case "auto":
+    case undefined:
+      tightBoundsSet.delete(payload.feature);
+      set(inferFeatureAttributesParamsAtom, {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        features: {
+          ...params.features,
+          [payload.feature]: getFeatureAttributesUnbound(
+            params.features?.[payload.feature],
+          ),
+        },
+      });
+      return;
+    default:
+      throw new Error(`Unhandled bounding mode: ${payload.mode}`);
   }
 };

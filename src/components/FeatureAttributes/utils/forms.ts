@@ -1,9 +1,24 @@
 import { isFormDataEmpty } from "@/utils/forms";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { type FeatureAttributes } from "@howso/openapi-client";
+import {
+  DirtyFeatureAttributes,
+  InferFeatureAttributesParamsSetFeatureAttributesAtom,
+  InferFeatureAttributesParamsSetParamAtom,
+} from "../hooks";
+import { type useSetAtom } from "jotai";
 
 export type FeatureAttributeFormValues = FeatureAttributes & {
-  is_datetime: boolean;
+  /** Values are that are not true Feature Attributes but requires user interactions and save handling */
+  reserved?: {
+    boundingMode: FeatureAttributesBoundingMode;
+    isDateTime: boolean;
+  };
 };
+
+export type FeatureAttributesBoundingMode =
+  | "auto"
+  | "tightBounds"
+  | "userDefined";
 
 /**
  * Reshapes form data, which has empty strings and arrays, etc
@@ -14,7 +29,7 @@ export const getFeatureAttributesFromFormData = (
 ): FeatureAttributes => {
   const attributes = Object.entries(data).reduce((attributes, [key, value]) => {
     const skipKeys: (keyof FeatureAttributeFormValues)[] = [
-      "is_datetime",
+      "reserved",
       "sample",
     ];
     const keyAs = key as keyof FeatureAttributeFormValues;
@@ -74,4 +89,33 @@ const sanitizeFeatureAttributeValue = (value: unknown): unknown => {
   }
 
   return value;
+};
+
+type FeatureAttributesFormSubmitHandlerParams = {
+  data: FeatureAttributeFormValues;
+  dirtyFields: DirtyFeatureAttributes;
+  setFeatureAttributes: ReturnType<
+    typeof useSetAtom<InferFeatureAttributesParamsSetFeatureAttributesAtom>
+  >;
+  setParams: ReturnType<
+    typeof useSetAtom<InferFeatureAttributesParamsSetParamAtom>
+  >;
+  feature: string;
+};
+export const featureAttributesFormSubmitHandler = ({
+  data,
+  dirtyFields,
+  setFeatureAttributes,
+  setParams,
+  feature,
+}: FeatureAttributesFormSubmitHandlerParams) => {
+  // Update all of the attributes
+  const attributes = getFeatureAttributesFromFormData(data);
+  setFeatureAttributes(feature, attributes, dirtyFields);
+  // Take action based any reserved field - TODO, feels like bad performance making two mutations...
+  setParams({
+    action: "setBoundingMode",
+    feature,
+    mode: data.reserved?.boundingMode,
+  });
 };

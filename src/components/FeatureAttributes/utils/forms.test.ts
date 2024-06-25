@@ -9,7 +9,10 @@ describe("getFeatureAttributesFromFormData", () => {
     const data: FeatureAttributeFormValues = {
       type: "continuous",
       data_type: "number",
-      is_datetime: false,
+      reserved: {
+        boundingMode: "auto",
+        isDateTime: true,
+      },
       significant_digits: undefined,
       decimal_places: undefined,
       date_time_format: "",
@@ -29,7 +32,10 @@ describe("getFeatureAttributesFromFormData", () => {
     const data: FeatureAttributeFormValues = {
       type: "continuous",
       data_type: "number",
-      is_datetime: false,
+      reserved: {
+        boundingMode: "auto",
+        isDateTime: true,
+      },
       significant_digits: 0,
       decimal_places: 0,
     };
@@ -47,10 +53,13 @@ describe("getFeatureAttributesFromFormData", () => {
     const data: FeatureAttributeFormValues = {
       type: "continuous",
       data_type: "string",
-      is_datetime: true,
       date_time_format: "YYYY-MM-DD ",
       bounds: {
         allowed: ["This little ", "piggy went to ", "market "],
+      },
+      reserved: {
+        boundingMode: "auto",
+        isDateTime: true,
       },
     };
     const attributes = getFeatureAttributesFromFormData(data);

@@ -9,6 +9,7 @@ import {
   getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
+  getInferFeatureAttributesParamsSetParamAtom,
 } from "../hooks";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 import type {
@@ -66,6 +67,10 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
+
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -77,6 +82,7 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -103,6 +109,9 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -114,6 +123,7 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -142,6 +152,8 @@ describe("FeaturesAttributesRows", () => {
         const updateAndNext = within(modal).getByRole("button", {
           name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
         });
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(updateAndNext).toBeEnabled();
         fireEvent(
           updateAndNext,
           new MouseEvent("click", { bubbles: true, cancelable: true }),

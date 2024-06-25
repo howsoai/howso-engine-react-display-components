@@ -10,6 +10,7 @@ import {
   getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
+  getInferFeatureAttributesParamsSetParamAtom,
 } from "../hooks";
 import { sleep } from "@/utils";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
@@ -71,6 +72,9 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -82,6 +86,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -107,6 +112,9 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -118,6 +126,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -146,6 +155,9 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -157,6 +169,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -207,6 +220,9 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
+    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
+      inferFeatureAttributesParamsAtom,
+    });
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
@@ -218,6 +234,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         setFeatureAttributesAtom={setFeatureAttributesAtom}
+        setParamsAtom={setParamsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -255,6 +272,8 @@ describe("FeaturesAttributesCompact", () => {
         expect(updateAndNext).toBeEnabled();
 
         // Save and move on
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(updateAndNext).toBeEnabled();
         fireEvent(
           updateAndNext,
           new MouseEvent("click", { bubbles: true, cancelable: true }),

@@ -9,10 +9,12 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { twMerge } from "tailwind-merge";
+import { FeatureAttributesBoundingMode } from "../../utils";
 
 export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
   type: FeatureAttributes["type"];
   dataType: FeatureAttributes["data_type"];
+  boundingMode: FeatureAttributesBoundingMode | undefined;
   dateTimeFormat: string | undefined;
 };
 
@@ -31,12 +33,17 @@ export const FeatureAttributeMinMaxFields: FC<
 > = ({
   type,
   dataType,
+  boundingMode,
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
   ...props
 }) => {
   const { t } = useDefaultTranslation();
   const { fieldStackProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+
+  if (boundingMode !== "userDefined") {
+    return null;
+  }
 
   const isContinuousNumber = type === "continuous" && dataType === "number";
   const isContinuousDateTime =
