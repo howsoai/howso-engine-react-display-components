@@ -8,4 +8,5 @@ export * from "./FeaturesAttributesRows";
 export * from "./hooks";
 export * from "./fields";
 export * from "./groups";
+export * from "./types";
 export * from "./utils";

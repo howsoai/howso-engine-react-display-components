@@ -17,7 +17,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { useDefaultTranslation } from "@/hooks";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
-import { FeatureAttributesIndex } from "../types/api";
+import { FeatureAttributesIndex } from "../types";
 
 export type FeaturesAttributesDependenciesProps = {
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;

@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 import { FeaturesAttributesDependencies } from "./FeaturesAttributesDependencies";
 import { getInferFeatureAttributesParamsAtom } from "../hooks";
 import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
-import type { FeatureAttributesIndex } from "../types/api";
+import type { FeatureAttributesIndex } from "../types";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesDependencies> = {

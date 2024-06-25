@@ -16,10 +16,7 @@ import { sleep } from "@/utils";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 import { getFeatureAttributeObservationalErrorFieldInElement } from "../fields/FeatureAttributeObservationalErrorField/FeatureAttributeObservationalErrorField.test";
 import { getFeatureAttributesAllowNullsFieldInContainer } from "../fields/FeatureAttributeAllowNullsField/FeatureAttributeAllowNullsField.test";
-import {
-  FeatureAttributesIndex,
-  InferFeatureAttributesParams,
-} from "../types/api";
+import { FeatureAttributesIndex, InferFeatureAttributesParams } from "../types";
 import { getFeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup/FeatureAttributesTemporalityGroup.test";
 
 describe("FeaturesAttributesCompact", () => {

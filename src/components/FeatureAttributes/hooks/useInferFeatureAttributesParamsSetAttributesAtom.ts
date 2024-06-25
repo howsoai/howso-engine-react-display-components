@@ -7,7 +7,7 @@ import {
   DirtyFeatureAttributes,
 } from "./useFeatureAttributesAreDirtyAtom";
 import { useMemo } from "react";
-import { InferFeatureAttributesParams } from "../types/api";
+import { InferFeatureAttributesParams } from "../types";
 
 export const useInferFeatureAttributesParamsSetFeatureAttributesAtom = ({
   inferFeatureAttributesParamsAtom,

@@ -4,7 +4,7 @@ import {
   getFeatureAttributesForType,
   getFeatureAttributesBoundingMode,
 } from "../utils";
-import { InferFeatureAttributesParams } from "../types/api";
+import { InferFeatureAttributesParams } from "../types";
 
 export const useFeatureAttributesForm = (
   params: InferFeatureAttributesParams,

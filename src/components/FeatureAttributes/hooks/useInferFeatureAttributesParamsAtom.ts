@@ -1,6 +1,6 @@
 import { atomWithReset } from "jotai/utils";
 import { useMemo } from "react";
-import { InferFeatureAttributesParams } from "../types/api";
+import { InferFeatureAttributesParams } from "../types";
 
 export const useInferFeatureAttributesParamsAtom = (
   params: InferFeatureAttributesParams,

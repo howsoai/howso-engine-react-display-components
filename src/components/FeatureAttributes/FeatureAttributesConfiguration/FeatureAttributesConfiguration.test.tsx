@@ -2,7 +2,7 @@ import { getAllowedValuesFieldInElement } from "../fields/FeatureAttributeAllowe
 import { getDataTypeFieldInElement } from "../fields/FeatureAttributeDataTypeField/FeatureAttributeDataTypeField.test";
 import { getFeatureTypeFieldRadioInElement } from "../fields/FeatureAttributeTypeField/FeatureAttributeTypeField.test";
 import { waitFor, within } from "@testing-library/react";
-import { InferFeatureAttributesParams } from "../types/api";
+import { InferFeatureAttributesParams } from "../types";
 
 it.todo("Write a test someday");
 

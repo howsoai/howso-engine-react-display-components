@@ -10,7 +10,7 @@ import {
   getInferFeatureAttributesParamsTimeFeatureAtom,
 } from "../hooks";
 import { withPadding } from "@/storybook";
-import type { FeatureAttributesIndex } from "../types/api";
+import type { FeatureAttributesIndex } from "../types";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesRows> = {

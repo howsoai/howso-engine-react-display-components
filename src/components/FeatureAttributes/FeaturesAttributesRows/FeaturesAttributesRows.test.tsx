@@ -15,7 +15,7 @@ import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttrib
 import type {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
-} from "../types/api";
+} from "../types";
 
 describe("FeaturesAttributesRows", () => {
   const featuresAttributes: FeatureAttributesIndex = {

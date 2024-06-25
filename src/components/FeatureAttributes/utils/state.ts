@@ -6,7 +6,7 @@ import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/Feature
 import type {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
-} from "../types/api";
+} from "../types";
 import { type DirtyFeatureAttributes } from "../hooks";
 import { FeatureAttributesBoundingMode } from "./forms";
 
