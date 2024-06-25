@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import {
-  FeatureAttributeFormValues,
+  InferFeatureAttributeFormValues,
   getFeatureAttributesForType,
   getFeatureAttributesBoundingMode,
 } from "../utils";
@@ -10,15 +10,23 @@ export const useFeatureAttributesForm = (
   params: InferFeatureAttributesParams,
   feature: string,
 ) => {
-  const attributes = params.features?.[feature];
-  return useForm<FeatureAttributeFormValues>({
-    defaultValues: {
-      ...getFeatureAttributesForType(attributes),
-      reserved: {
-        boundingMode: getFeatureAttributesBoundingMode(params, feature),
-        isDateTime: !!attributes?.date_time_format,
-      },
-    },
+  return useForm<InferFeatureAttributeFormValues>({
+    defaultValues: getFeatureAttributesFormDefaultValues(params, feature),
     shouldUnregister: true,
   });
+};
+
+export const getFeatureAttributesFormDefaultValues = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+): InferFeatureAttributeFormValues => {
+  const attributes = params.features?.[feature];
+
+  return {
+    ...getFeatureAttributesForType(attributes),
+    reserved: {
+      boundingMode: getFeatureAttributesBoundingMode(params, feature),
+      isDateTime: !!attributes?.date_time_format,
+    },
+  };
 };

@@ -1,4 +1,4 @@
-import { FeatureAttributesBoundingMode } from "../../utils";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
 
 const base = "FeatureAttributes.FeatureAttributeBoundingModeField";
 export const translations = {
@@ -16,7 +16,7 @@ export const translations = {
 };
 
 export const options: {
-  value: FeatureAttributesBoundingMode;
+  value: InferFeatureAttributesBoundingMode;
   translations: {
     label: string;
     help?: string;

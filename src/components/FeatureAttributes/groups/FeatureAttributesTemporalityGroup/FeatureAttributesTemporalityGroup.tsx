@@ -28,7 +28,7 @@ export type FeatureAttributesTemporalityGroupProps = Omit<
 > & {
   /** If any feature in the data has a time feature */
   featuresHaveTimeFeature: boolean;
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   isIdFeature: boolean | undefined;
   /** time_series.time_feature */
   isTimeFeature: boolean | undefined;

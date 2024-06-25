@@ -12,15 +12,15 @@ import {
 } from "../FeatureAttributesGroupBase";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { FeatureAttributesBoundingMode } from "../../utils";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
 
 export type FeatureAttributesBoundsGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
   "title" | "basic" | "advanced"
 > & {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
-  boundingMode: FeatureAttributesBoundingMode | undefined;
+  boundingMode: InferFeatureAttributesBoundingMode | undefined;
   dateTimeFormat: string | undefined;
 };
 

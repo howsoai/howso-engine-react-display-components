@@ -6,7 +6,7 @@ import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeIdFeatureFieldProps = {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
 };
 /**
@@ -29,6 +29,7 @@ export const FeatureAttributeIdFeatureField: FC<
     "number",
   ];
   if (
+    !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
     !allowedDataTypes.includes(dataType)
   ) {

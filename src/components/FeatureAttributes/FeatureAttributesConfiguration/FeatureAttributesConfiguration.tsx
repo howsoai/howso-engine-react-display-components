@@ -20,7 +20,7 @@ import {
 } from "../groups";
 import { useFormValues } from "@/hooks/useFormValues";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { FeatureAttributeFormValues } from "../utils";
+import { InferFeatureAttributeFormValues } from "../utils";
 
 export type FeatureAttributesConfigurationProps = {
   className?: string;
@@ -35,7 +35,7 @@ export type FeatureAttributesConfigurationProps = {
 export const FeatureAttributesConfiguration: FC<
   FeatureAttributesConfigurationProps
 > = ({ children, className, featuresHaveTimeFeature }) => {
-  const values = useFormValues<FeatureAttributeFormValues>();
+  const values = useFormValues<InferFeatureAttributeFormValues>();
   const {
     type: featureType,
     data_type: dataType,

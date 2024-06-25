@@ -7,8 +7,8 @@ import type {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
 } from "../types";
-import { type DirtyFeatureAttributes } from "../hooks";
-import { FeatureAttributesBoundingMode } from "./forms";
+import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
+import { InferFeatureAttributesBoundingMode } from "./forms";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -157,12 +157,78 @@ const getDataTypeFromOriginalType = (
   }
 };
 
+export const setInferFeatureAttributeParamsFeatureAttributes = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  attributes: FeatureAttributes,
+): InferFeatureAttributesParams => {
+  const newParams = { ...params };
+  newParams.features ||= {};
+  newParams.features[feature] = attributes;
+  return newParams;
+};
+
 // Bounds
+
+// Bounding modes
+
+export const getInferFeatureAttributeParamsWithFeatureBoundingMode = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  mode: InferFeatureAttributesBoundingMode | undefined,
+): InferFeatureAttributesParams => {
+  const tightBoundsSet = new Set(params.tight_bounds);
+
+  let newParams: InferFeatureAttributesParams;
+  switch (mode) {
+    case "userDefined":
+      tightBoundsSet.delete(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        // features: {
+        //   ...params.features,
+        // TODO, can I find the bounds we had originally somewhere...? Probably in the calculated features...
+        // [feature]: getFeatureAttributesCalculatedBounds(
+        //   params.features?.[feature]
+        // ),
+        // },
+      };
+      break;
+    case "tightBounds":
+      tightBoundsSet.add(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        features: {
+          ...params.features,
+          [feature]: getFeatureAttributesUnbound(params.features?.[feature]),
+        },
+      };
+      break;
+    case "auto":
+    case undefined:
+      tightBoundsSet.delete(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        features: {
+          ...params.features,
+          [feature]: getFeatureAttributesUnbound(params.features?.[feature]),
+        },
+      };
+      break;
+    default:
+      throw new Error(`Unhandled bounding mode: ${mode}`);
+  }
+
+  return newParams;
+};
 
 export const getFeatureAttributesBoundingMode = (
   params: InferFeatureAttributesParams,
   feature: string,
-): FeatureAttributesBoundingMode => {
+): InferFeatureAttributesBoundingMode => {
   if (params.tight_bounds?.includes(feature)) {
     return "tightBounds";
   }
@@ -208,7 +274,9 @@ export const getInferFeatureAttributesConfigParameters = (
  * @param fields Changed fields.
  * @returns True if infer should be re-run.
  */
-export function shouldInferAgain(fields: DirtyFeatureAttributes) {
+export function shouldInferAgain(
+  fields: InferFeatureAttributesRunRequiredFields,
+) {
   if (fields == null) return false;
   for (const field of Object.keys(fields)) {
     // These fields do not require re-run of infer feature attributes

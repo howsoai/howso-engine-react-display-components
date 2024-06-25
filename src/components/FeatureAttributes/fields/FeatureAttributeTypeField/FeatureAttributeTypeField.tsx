@@ -14,7 +14,7 @@ import {
   type FieldRadiosProps,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  FeatureAttributeFormValues,
+  InferFeatureAttributeFormValues,
   getFeatureAttributesForType,
 } from "../../utils";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
@@ -34,7 +34,7 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
   required,
   ...props
 }) => {
-  const form = useFormContext<FeatureAttributeFormValues>();
+  const form = useFormContext<InferFeatureAttributeFormValues>();
   const registerOptions: RegisterOptions = useMemo(
     () => ({
       required,
@@ -121,7 +121,7 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
 }) => {
   const { t } = useDefaultTranslation();
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
-  const form = useFormContext<FeatureAttributeFormValues>();
+  const form = useFormContext<InferFeatureAttributeFormValues>();
 
   return (
     <FieldSelect

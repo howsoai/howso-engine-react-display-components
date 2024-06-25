@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FeatureAttributeDataTypeField } from "./FeatureAttributeDataTypeField";
 import { getFormProviderDecorator } from "@/storybook";
-import { FeatureAttributeFormValues } from "../../utils";
+import { InferFeatureAttributeFormValues } from "../../utils";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -33,7 +33,7 @@ export const Default: Story = {
 
 export const FormattedDateTime: Story = {
   decorators: [
-    getFormProviderDecorator<FeatureAttributeFormValues>({
+    getFormProviderDecorator<InferFeatureAttributeFormValues>({
       defaultValues: { data_type: "formatted_date_time" },
     }),
   ],

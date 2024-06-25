@@ -1,7 +1,9 @@
 import { FeatureAttributes } from "@howso/openapi-client";
 
 export const isFeatureAttributeSensitiveAttributeAvailable = (
-  attributes: Pick<FeatureAttributes, "type" | "data_type"> | undefined,
+  attributes:
+    | Partial<Pick<FeatureAttributes, "type" | "data_type">>
+    | undefined,
 ): boolean => {
   if (!attributes) {
     return false;

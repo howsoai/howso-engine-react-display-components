@@ -13,7 +13,7 @@ import { featureAttributeSubtypeFieldLabel } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeSubtypeProps = Partial<FieldSelectProps> & {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
   nonSensitive: FeatureAttributes["non_sensitive"];
 };

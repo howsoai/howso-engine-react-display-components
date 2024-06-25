@@ -9,12 +9,12 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { twMerge } from "tailwind-merge";
-import { FeatureAttributesBoundingMode } from "../../utils";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
 
 export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
-  type: FeatureAttributes["type"];
+  type: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
-  boundingMode: FeatureAttributesBoundingMode | undefined;
+  boundingMode: InferFeatureAttributesBoundingMode | undefined;
   dateTimeFormat: string | undefined;
 };
 

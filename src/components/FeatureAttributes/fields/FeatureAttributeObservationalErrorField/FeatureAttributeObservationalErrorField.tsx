@@ -11,7 +11,7 @@ import { translations } from "./constants";
 
 export type FeatureAttributeObservationalErrorFieldProps =
   Partial<FieldTextProps> & {
-    featureType: FeatureAttributes["type"];
+    featureType: FeatureAttributes["type"] | undefined;
     dataType: FeatureAttributes["data_type"];
   };
 /**

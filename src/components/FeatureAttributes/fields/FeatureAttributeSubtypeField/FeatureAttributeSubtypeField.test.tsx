@@ -7,7 +7,7 @@ import {
 import { useForm, FormProvider, UseFormProps } from "react-hook-form";
 import { FC, ReactNode } from "react";
 import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
-import { FeatureAttributeFormValues } from "../../utils";
+import { InferFeatureAttributeFormValues } from "../../utils";
 
 describe("SubtypeField", () => {
   it("should not be rendered for continuous feature types", async () => {
@@ -168,9 +168,9 @@ describe("SubtypeField", () => {
 
 const Wrapper: FC<{
   children: ReactNode;
-  formProps?: UseFormProps<FeatureAttributeFormValues>;
+  formProps?: UseFormProps<InferFeatureAttributeFormValues>;
 }> = ({ children, formProps }) => {
-  const form = useForm<FeatureAttributeFormValues>(formProps);
+  const form = useForm<InferFeatureAttributeFormValues>(formProps);
   return (
     <FeaturesAttributesContextProvider>
       <FormProvider {...form}>

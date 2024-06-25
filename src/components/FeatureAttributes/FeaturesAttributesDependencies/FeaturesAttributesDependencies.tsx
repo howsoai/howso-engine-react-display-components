@@ -20,7 +20,7 @@ import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
 
 export type FeaturesAttributesDependenciesProps = {
-  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
   /** A function to be called update operations */
   onUpdate?: (event: MouseEvent) => void;
 };
@@ -33,7 +33,7 @@ export const FeaturesAttributesDependencies: FC<
   FeaturesAttributesDependenciesProps
 > = (props) => {
   const { t } = useDefaultTranslation();
-  const [params, setParams] = useAtom(props.inferFeatureAttributesParamsAtom);
+  const [params, setParams] = useAtom(props.paramsAtom);
   const [dependencies, setDependencies] = useState<DependenciesIndex>(
     getDependencies(params.features || {}),
   );

@@ -3,12 +3,12 @@ import { atom } from "jotai";
 import { isEmpty } from "lodash";
 import { ActiveFeature } from "./useFeatureAttributesActiveFeatureAtom";
 import { InferFeatureAttributesParamsAtom } from "./useInferFeatureAttributesParamsAtom";
-import { FeaturesAttributesAreDirtyAtom } from "./useFeatureAttributesAreDirtyAtom";
+import { InferFeatureAttributesRunRequiredFieldsAtom } from "./useInferFeatureAttributesRunRequiredFields";
 import { useMemo } from "react";
 
 export type GetInferFeatureAttributesParamsTimeFeatureAtom = {
-  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
-  featuresDirtyAtom: FeaturesAttributesAreDirtyAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
+  runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
 };
 
 /*
@@ -16,16 +16,16 @@ export type GetInferFeatureAttributesParamsTimeFeatureAtom = {
  * Causes dirty atom to be tripped when set.
  */
 export const useInferFeatureAttributesParamsTimeFeatureAtom = ({
-  inferFeatureAttributesParamsAtom,
-  featuresDirtyAtom,
+  paramsAtom,
+  runRequiredAtom,
 }: GetInferFeatureAttributesParamsTimeFeatureAtom) =>
   useMemo(
     () =>
       getInferFeatureAttributesParamsTimeFeatureAtom({
-        inferFeatureAttributesParamsAtom,
-        featuresDirtyAtom,
+        paramsAtom,
+        runRequiredAtom,
       }),
-    [inferFeatureAttributesParamsAtom, featuresDirtyAtom],
+    [paramsAtom, runRequiredAtom],
   );
 
 /*
@@ -33,12 +33,12 @@ export const useInferFeatureAttributesParamsTimeFeatureAtom = ({
  * Causes dirty atom to be tripped when set.
  */
 export const getInferFeatureAttributesParamsTimeFeatureAtom = ({
-  inferFeatureAttributesParamsAtom,
-  featuresDirtyAtom,
+  paramsAtom,
+  runRequiredAtom,
 }: GetInferFeatureAttributesParamsTimeFeatureAtom) =>
   atom(
     (get) => {
-      const params = get(inferFeatureAttributesParamsAtom);
+      const params = get(paramsAtom);
       const features = params?.features || {};
       for (const [name, attributes] of Object.entries(features)) {
         if (attributes?.time_series?.time_feature) {
@@ -47,7 +47,7 @@ export const getInferFeatureAttributesParamsTimeFeatureAtom = ({
       }
     },
     (get, set, featureName: ActiveFeature | undefined) => {
-      const params = get(inferFeatureAttributesParamsAtom);
+      const params = get(paramsAtom);
       const features = params?.features || {};
       for (const name of Object.keys(params?.features || {})) {
         const attributes = { ...features[name] };
@@ -63,8 +63,8 @@ export const getInferFeatureAttributesParamsTimeFeatureAtom = ({
         }
         features[name] = attributes;
       }
-      set(inferFeatureAttributesParamsAtom, { ...params, features });
-      set(featuresDirtyAtom, true);
+      set(paramsAtom, { ...params, features });
+      set(runRequiredAtom, true);
     },
   );
 export type InferFeatureAttributesParamsTimeFeatureAtom = ReturnType<

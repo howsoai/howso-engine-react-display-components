@@ -10,7 +10,7 @@ import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeTimeSeriesTypeFieldProps =
   Partial<FieldSelectProps> & {
-    featureType: FeatureAttributes["type"];
+    featureType: FeatureAttributes["type"] | undefined;
     /** Is this the time feature that acts as the unique identifier for a time series */
     isTimeFeature: boolean | undefined;
   };
@@ -48,14 +48,14 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
       )}
     >
       <option value=""></option>
-      {rateTypes.includes(featureType) && (
+      {featureType && rateTypes.includes(featureType) && (
         <option value="rate">
           {t(
             "FeatureAttributes.FeatureAttributeTimeSeriesTypeField.options.rate",
           )}
         </option>
       )}
-      {deltaTypes.includes(featureType) && (
+      {featureType && deltaTypes.includes(featureType) && (
         <option value="delta">
           {t(
             "FeatureAttributes.FeatureAttributeTimeSeriesTypeField.options.delta",

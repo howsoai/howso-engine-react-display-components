@@ -3,13 +3,11 @@ import "@testing-library/jest-dom";
 import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 import { translations } from "./constants";
 import {
-  getFeatureAttributesAreDirtyAtom,
+  getInferFeatureAttributesRunRequiredFields,
   getInferFeatureAttributesParamsAtom,
-  getInferFeatureAttributesParamsSetFeatureAttributesAtom,
   getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
-  getInferFeatureAttributesParamsSetParamAtom,
 } from "../hooks";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 import type {
@@ -58,31 +56,20 @@ describe("FeaturesAttributesRows", () => {
       features: featuresAttributes,
     };
     const features = Object.keys(featuresAttributes);
-
-    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
     const inferFeatureAttributesParamsAtom =
       getInferFeatureAttributesParamsAtom(params);
-    const setFeatureAttributesAtom =
-      getInferFeatureAttributesParamsSetFeatureAttributesAtom({
-        inferFeatureAttributesParamsAtom,
-        featuresDirtyAtom,
-      });
-    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
-      inferFeatureAttributesParamsAtom,
-    });
-
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
-      inferFeatureAttributesParamsAtom,
-      featuresDirtyAtom,
+      paramsAtom: inferFeatureAttributesParamsAtom,
+      runRequiredAtom: runRequiredAtom,
     });
 
     render(
       <FeaturesAttributesRows
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
-        setFeatureAttributesAtom={setFeatureAttributesAtom}
-        setParamsAtom={setParamsAtom}
+        paramsAtom={inferFeatureAttributesParamsAtom}
+        runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -101,29 +88,20 @@ describe("FeaturesAttributesRows", () => {
     };
     const featureEntries = Object.entries(featuresAttributes);
 
-    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
     const inferFeatureAttributesParamsAtom =
       getInferFeatureAttributesParamsAtom(params);
-    const setFeatureAttributesAtom =
-      getInferFeatureAttributesParamsSetFeatureAttributesAtom({
-        inferFeatureAttributesParamsAtom,
-        featuresDirtyAtom,
-      });
-    const setParamsAtom = getInferFeatureAttributesParamsSetParamAtom({
-      inferFeatureAttributesParamsAtom,
-    });
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
     const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
-      inferFeatureAttributesParamsAtom,
-      featuresDirtyAtom,
+      paramsAtom: inferFeatureAttributesParamsAtom,
+      runRequiredAtom: runRequiredAtom,
     });
 
     render(
       <FeaturesAttributesRows
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
-        setFeatureAttributesAtom={setFeatureAttributesAtom}
-        setParamsAtom={setParamsAtom}
+        paramsAtom={inferFeatureAttributesParamsAtom}
+        runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );

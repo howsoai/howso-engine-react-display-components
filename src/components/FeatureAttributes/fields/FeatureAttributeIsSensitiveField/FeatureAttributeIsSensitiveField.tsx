@@ -7,7 +7,7 @@ import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeIsSensitiveFieldProps = {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
 };
 /**

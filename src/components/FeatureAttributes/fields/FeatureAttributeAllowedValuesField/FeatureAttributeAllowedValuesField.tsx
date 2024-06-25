@@ -22,7 +22,7 @@ import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeAllowedValuesFieldProps =
   Partial<FieldTextAreaProps> & {
-    featureType: FeatureAttributes["type"];
+    featureType: FeatureAttributes["type"] | undefined;
     dataType: FeatureAttributes["data_type"];
     dateTimeFormat: string | undefined;
   };
@@ -51,6 +51,7 @@ export const FeatureAttributeAllowedValuesField: FC<
     "formatted_date_time",
   ];
   if (
+    !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
     !allowedDataTypes.includes(dataType)
   ) {

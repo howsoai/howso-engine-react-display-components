@@ -13,7 +13,7 @@ import {
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
-  featureType: FeatureAttributesTypeEnum;
+  featureType: FeatureAttributesTypeEnum | undefined;
 };
 /**
  * Specify the data type for features with a type of nominal or continuous.

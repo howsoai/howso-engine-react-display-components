@@ -28,30 +28,31 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  FeatureAttributeFormValues,
-  featureAttributesFormSubmitHandler,
+  InferFeatureAttributeFormValues,
   getFeatureAttributeConfigurationIssues,
+  getInferFeatureAttributeParamsFormValuesOnSubmit,
+  setInferFeatureAttributeParamsFeatureAttributes,
+  shouldInferAgain,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
 import {
   type FeatureAttributesActiveFeatureAtom,
   type InferFeatureAttributesParamsAtom,
-  type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
   type InferFeatureAttributesParamsTimeFeatureAtom,
   useFeatureAttributesForm,
-  InferFeatureAttributesParamsSetParamAtom,
+  getFeatureAttributesFormDefaultValues,
+  InferFeatureAttributesRunRequiredFieldsAtom,
 } from "../hooks";
 import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
 
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
-  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
+  runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
-  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
-  setParamsAtom: InferFeatureAttributesParamsSetParamAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
@@ -64,14 +65,9 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   props,
 ) => {
   const { t } = useDefaultTranslation();
-  const {
-    activeFeatureAtom,
-    inferFeatureAttributesParamsAtom,
-    optionsAtom,
-    timeFeatureAtom,
-  } = props;
+  const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
-  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const params = useAtomValue(paramsAtom);
   const [options, setOptions] = useAtom(optionsAtom);
   const setTimeFeature = useSetAtom(timeFeatureAtom);
 
@@ -139,32 +135,38 @@ type FeatureFieldsProps = {
 } & Pick<
   FeaturesAttributesRowsProps,
   | "activeFeatureAtom"
-  | "inferFeatureAttributesParamsAtom"
-  | "setFeatureAttributesAtom"
+  | "paramsAtom"
   | "optionsAtom"
+  | "runRequiredAtom"
   | "timeFeatureAtom"
 >;
 const FeatureFields: FC<FeatureFieldsProps> = ({
   activeFeatureAtom,
-  inferFeatureAttributesParamsAtom,
+  runRequiredAtom,
+  paramsAtom,
   feature,
-  setFeatureAttributesAtom,
   optionsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
   const theme = getTheme();
   const setActiveFeature = useSetAtom(activeFeatureAtom);
-  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const setRunRequired = useSetAtom(runRequiredAtom);
+  const [params, setParams] = useAtom(paramsAtom);
   const options = useAtomValue(optionsAtom);
-  const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
 
   const attributes = params.features?.[feature];
   const setFeatureType = useCallback(
     (attributes: FeatureAttributes) => {
-      setFeatureAttributes(feature, attributes, { type: true });
+      const newParams = setInferFeatureAttributeParamsFeatureAttributes(
+        params,
+        feature,
+        attributes,
+      );
+      setParams(newParams);
+      if (shouldInferAgain({ type: true })) setRunRequired(true);
     },
-    [feature, setFeatureAttributes],
+    [setRunRequired, params, feature],
   );
   const issues = getFeatureAttributeConfigurationIssues(attributes);
 
@@ -296,11 +298,7 @@ const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
 
 type ConfigureModalProps = Pick<
   FeaturesAttributesRowsProps,
-  | "activeFeatureAtom"
-  | "inferFeatureAttributesParamsAtom"
-  | "setFeatureAttributesAtom"
-  | "setParamsAtom"
-  | "timeFeatureAtom"
+  "activeFeatureAtom" | "paramsAtom" | "runRequiredAtom" | "timeFeatureAtom"
 >;
 const ConfigureModal: FC<ConfigureModalProps> = (props) => {
   const [activeFeature, setActiveFeature] = useAtom(props.activeFeatureAtom);
@@ -315,10 +313,9 @@ const ConfigureModal: FC<ConfigureModalProps> = (props) => {
 };
 
 const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
-  inferFeatureAttributesParamsAtom,
   activeFeatureAtom,
-  setFeatureAttributesAtom,
-  setParamsAtom,
+  runRequiredAtom,
+  paramsAtom,
   timeFeatureAtom,
   onClose,
 }) => {
@@ -327,9 +324,8 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
   }
-  const params = useAtomValue(inferFeatureAttributesParamsAtom);
-  const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
-  const setParams = useSetAtom(setParamsAtom);
+  const setRunRequired = useSetAtom(runRequiredAtom);
+  const [params, setParams] = useAtom(paramsAtom);
   const timeFeature = useAtomValue(timeFeatureAtom);
   const form = useFeatureAttributesForm(params, activeFeature);
 
@@ -337,25 +333,31 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   const features = Object.keys(params.features || {});
   const nextFeature = features[features.indexOf(activeFeature) + 1];
 
-  const onSave: SubmitHandler<FeatureAttributeFormValues> = (data) => {
+  const onSave: SubmitHandler<InferFeatureAttributeFormValues> = (data) => {
     save(data);
     onClose();
   };
-  const onSaveAndContinue: SubmitHandler<FeatureAttributeFormValues> = (
+  const onSaveAndContinue: SubmitHandler<InferFeatureAttributeFormValues> = (
     data,
   ) => {
     save(data);
     setActiveFeature(nextFeature);
   };
 
-  const save: SubmitHandler<FeatureAttributeFormValues> = (data) => {
-    featureAttributesFormSubmitHandler({
+  const save: SubmitHandler<InferFeatureAttributeFormValues> = (data) => {
+    const newParams = getInferFeatureAttributeParamsFormValuesOnSubmit({
       data,
       feature: activeFeature,
-      dirtyFields,
-      setFeatureAttributes,
-      setParams,
+      params,
     });
+    setParams(newParams);
+    if (shouldInferAgain(dirtyFields)) setRunRequired(true);
+
+    const newDefaults = getFeatureAttributesFormDefaultValues(
+      newParams,
+      activeFeature,
+    );
+    form.reset(newDefaults, { keepDirty: false, keepDefaultValues: false });
   };
 
   return (
@@ -403,31 +405,23 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   );
 };
 
-type ControlsProps = Pick<
-  FeaturesAttributesRowsProps,
-  "inferFeatureAttributesParamsAtom"
-> & {
+type ControlsProps = Pick<FeaturesAttributesRowsProps, "paramsAtom"> & {
   containerProps: React.HTMLProps<HTMLDivElement>;
 };
-const Controls: FC<ControlsProps> = ({
-  inferFeatureAttributesParamsAtom,
-  containerProps,
-}) => {
+const Controls: FC<ControlsProps> = ({ paramsAtom, containerProps }) => {
   return (
     <footer
       {...containerProps}
       className={twMerge(containerProps.className, "flex gap-2")}
     >
-      <MapDependenciesControl
-        inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
-      />
+      <MapDependenciesControl paramsAtom={paramsAtom} />
     </footer>
   );
 };
 
 type MapDependenciesControlProps = Pick<
   FeaturesAttributesRowsProps,
-  "inferFeatureAttributesParamsAtom"
+  "paramsAtom"
 >;
 const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
   const { t } = useDefaultTranslation();
