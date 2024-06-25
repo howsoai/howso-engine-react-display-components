@@ -2,15 +2,15 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
-  type FeatureAttributesIndex,
   getFeatureAttributesAreDirtyAtom,
   getFeatureAttributesActiveFeatureAtom,
-  getFeatureAttributesIndexAtom,
+  getInferFeatureAttributesParamsAtom,
   getFeatureAttributesOptionsAtom,
-  getFeatureAttributesSetAttributesAtom,
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom,
   getFeatureAttributesTimeFeatureAtom,
 } from "../hooks";
 import { withPadding } from "@/storybook";
+import { FeatureAttributesIndex } from "../types/api";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesCompact> = {
@@ -157,18 +157,21 @@ export const Default: Story = {
   args: {
     activeFeatureAtom:
       getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
-    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
-      sampleFeatureAttributesIndex,
-    ),
+    inferFeatureAttributesParamsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeatureAttributesIndex,
+    }),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-Default.args!.setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
-  featureAttributesIndexAtom: Default.args!.featureAttributesIndexAtom!,
-  featuresDirtyAtom: defaultAreDirtyAtom,
-});
+Default.args!.setFeatureAttributesAtom =
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+    inferFeatureAttributesParamsAtom:
+      Default.args!.inferFeatureAttributesParamsAtom!,
+    featuresDirtyAtom: defaultAreDirtyAtom,
+  });
 Default.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: Default.args!.featureAttributesIndexAtom!,
+  inferFeatureAttributesParamsAtom:
+    Default.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: defaultAreDirtyAtom,
 });
 
@@ -176,17 +179,19 @@ const noFeaturesAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const NoFeatures: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
-    featureAttributesIndexAtom: getFeatureAttributesIndexAtom({}),
+    inferFeatureAttributesParamsAtom: getInferFeatureAttributesParamsAtom({}),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
 NoFeatures.args!.setFeatureAttributesAtom =
-  getFeatureAttributesSetAttributesAtom({
-    featureAttributesIndexAtom: NoFeatures.args!.featureAttributesIndexAtom!,
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+    inferFeatureAttributesParamsAtom:
+      NoFeatures.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: noFeaturesAreDirtyAtom,
   });
 NoFeatures.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: NoFeatures.args!.featureAttributesIndexAtom!,
+  inferFeatureAttributesParamsAtom:
+    NoFeatures.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: noFeaturesAreDirtyAtom,
 });
 
@@ -194,19 +199,21 @@ const noSelectionAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const NoSelection: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
-    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
-      sampleFeatureAttributesIndex,
-    ),
+    inferFeatureAttributesParamsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeatureAttributesIndex,
+    }),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
 NoSelection.args!.setFeatureAttributesAtom =
-  getFeatureAttributesSetAttributesAtom({
-    featureAttributesIndexAtom: NoSelection.args!.featureAttributesIndexAtom!,
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+    inferFeatureAttributesParamsAtom:
+      NoSelection.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: noSelectionAreDirtyAtom,
   });
 NoSelection.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: NoSelection.args!.featureAttributesIndexAtom!,
+  inferFeatureAttributesParamsAtom:
+    NoSelection.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: noSelectionAreDirtyAtom,
 });
 
@@ -214,20 +221,21 @@ const lastItemAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const LastItem: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(lastActiveFeature),
-    featureAttributesIndexAtom: getFeatureAttributesIndexAtom(
-      sampleFeatureAttributesIndex,
-    ),
+    inferFeatureAttributesParamsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeatureAttributesIndex,
+    }),
     optionsAtom: getFeatureAttributesOptionsAtom({}),
   },
 };
-LastItem.args!.setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom(
-  {
-    featureAttributesIndexAtom: LastItem.args!.featureAttributesIndexAtom!,
+LastItem.args!.setFeatureAttributesAtom =
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+    inferFeatureAttributesParamsAtom:
+      LastItem.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: lastItemAreDirtyAtom,
-  },
-);
+  });
 LastItem.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: LastItem.args!.featureAttributesIndexAtom!,
+  inferFeatureAttributesParamsAtom:
+    LastItem.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: lastItemAreDirtyAtom,
 });
 
@@ -236,19 +244,23 @@ export const TimeSeries: Story = {
   args: {
     activeFeatureAtom:
       getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
-    featureAttributesIndexAtom: getFeatureAttributesIndexAtom({
-      timeFeature,
-      ...sampleFeatureAttributesIndex,
+    inferFeatureAttributesParamsAtom: getInferFeatureAttributesParamsAtom({
+      features: {
+        timeFeature,
+        ...sampleFeatureAttributesIndex,
+      },
     }),
     optionsAtom: getFeatureAttributesOptionsAtom({ time_series: true }),
   },
 };
 TimeSeries.args!.setFeatureAttributesAtom =
-  getFeatureAttributesSetAttributesAtom({
-    featureAttributesIndexAtom: TimeSeries.args!.featureAttributesIndexAtom!,
+  getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+    inferFeatureAttributesParamsAtom:
+      TimeSeries.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: timeSeriesAreDirtyAtom,
   });
 TimeSeries.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  featureAttributesIndexAtom: TimeSeries.args!.featureAttributesIndexAtom!,
+  inferFeatureAttributesParamsAtom:
+    TimeSeries.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: timeSeriesAreDirtyAtom,
 });

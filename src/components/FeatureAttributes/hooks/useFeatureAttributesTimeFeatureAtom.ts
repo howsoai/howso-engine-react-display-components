@@ -2,12 +2,12 @@ import { FeatureTimeSeries } from "@howso/openapi-client";
 import { atom } from "jotai";
 import { isEmpty } from "lodash";
 import { ActiveFeature } from "./useFeatureAttributesActiveFeatureAtom";
-import { FeatureAttributesIndexAtom } from "./useFeatureAttributesIndexAtom";
+import { InferFeatureAttributesParamsAtom } from "./useInferFeatureAttributesParamsAtom";
 import { FeaturesAttributesAreDirtyAtom } from "./useFeatureAttributesAreDirtyAtom";
 import { useMemo } from "react";
 
 export type GetTimeFeatureAtomParams = {
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   featuresDirtyAtom: FeaturesAttributesAreDirtyAtom;
 };
 
@@ -16,16 +16,16 @@ export type GetTimeFeatureAtomParams = {
  * Causes dirty atom to be tripped when set.
  */
 export const useFeatureAttributesTimeFeatureAtom = ({
-  featureAttributesIndexAtom,
+  inferFeatureAttributesParamsAtom,
   featuresDirtyAtom,
 }: GetTimeFeatureAtomParams) =>
   useMemo(
     () =>
       getFeatureAttributesTimeFeatureAtom({
-        featureAttributesIndexAtom,
+        inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       }),
-    [featureAttributesIndexAtom, featuresDirtyAtom],
+    [inferFeatureAttributesParamsAtom, featuresDirtyAtom],
   );
 
 /*
@@ -33,12 +33,13 @@ export const useFeatureAttributesTimeFeatureAtom = ({
  * Causes dirty atom to be tripped when set.
  */
 export const getFeatureAttributesTimeFeatureAtom = ({
-  featureAttributesIndexAtom,
+  inferFeatureAttributesParamsAtom,
   featuresDirtyAtom,
 }: GetTimeFeatureAtomParams) =>
   atom(
     (get) => {
-      const features = get(featureAttributesIndexAtom);
+      const params = get(inferFeatureAttributesParamsAtom);
+      const features = params?.features || {};
       for (const [name, attributes] of Object.entries(features)) {
         if (attributes?.time_series?.time_feature) {
           return { name, attributes };
@@ -46,8 +47,9 @@ export const getFeatureAttributesTimeFeatureAtom = ({
       }
     },
     (get, set, featureName: ActiveFeature | undefined) => {
-      const features = { ...get(featureAttributesIndexAtom) };
-      for (const name of Object.keys(features)) {
+      const params = { ...get(inferFeatureAttributesParamsAtom) };
+      const features = params?.features || {};
+      for (const name of Object.keys(params?.features || {})) {
         const attributes = { ...features[name] };
         if (name === featureName) {
           attributes.time_series = {
@@ -61,7 +63,7 @@ export const getFeatureAttributesTimeFeatureAtom = ({
         }
         features[name] = attributes;
       }
-      set(featureAttributesIndexAtom, features);
+      set(inferFeatureAttributesParamsAtom, features);
       set(featuresDirtyAtom, true);
     },
   );

@@ -16,13 +16,11 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import { useDefaultTranslation } from "@/hooks";
-import {
-  type FeatureAttributesIndexAtom,
-  type FeatureAttributesIndex,
-} from "../hooks";
+import { type InferFeatureAttributesParamsAtom } from "../hooks";
+import { FeatureAttributesIndex } from "../types/api";
 
 export type FeaturesAttributesDependenciesProps = {
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   /** A function to be called update operations */
   onUpdate?: (event: MouseEvent) => void;
 };
@@ -35,21 +33,20 @@ export const FeaturesAttributesDependencies: FC<
   FeaturesAttributesDependenciesProps
 > = (props) => {
   const { t } = useDefaultTranslation();
-  const [featuresAttributes, setFeaturesAttributes] = useAtom(
-    props.featureAttributesIndexAtom,
-  );
+  const [params, setParams] = useAtom(props.inferFeatureAttributesParamsAtom);
   const [dependencies, setDependencies] = useState<DependenciesIndex>(
-    getDependencies(featuresAttributes),
+    getDependencies(params.features || {}),
   );
-  const features = Object.keys(featuresAttributes);
+  const features = Object.keys(params);
 
   const onUpdate: ButtonProps["onClick"] = (event) => {
     event.preventDefault();
-    setFeaturesAttributes((featureAttributes) => {
-      const updates = { ...featureAttributes };
+    setParams((params) => {
+      const updates = { ...params };
+      updates.features ||= {};
       // Remove all current dependencies
       Object.keys(updates).forEach((feature) => {
-        delete updates[feature].dependent_features;
+        delete updates.features![feature].dependent_features;
       });
 
       // Loop through the dependencies map updating features
@@ -62,10 +59,10 @@ export const FeaturesAttributesDependencies: FC<
           return;
         }
 
-        updates[featureA].dependent_features ||= [];
-        updates[featureB].dependent_features ||= [];
-        updates[featureA].dependent_features!.push(featureB);
-        updates[featureB].dependent_features!.push(featureA);
+        updates.features![featureA].dependent_features ||= [];
+        updates.features![featureB].dependent_features ||= [];
+        updates.features![featureA].dependent_features!.push(featureB);
+        updates.features![featureB].dependent_features!.push(featureA);
       });
 
       return updates;

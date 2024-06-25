@@ -3,8 +3,11 @@ import type {
   FeatureOriginalType,
 } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
-import type { InferFeatureAttributesOptions } from "../types/api";
-import { FeatureAttributesIndex, type DirtyFeatureAttributes } from "../hooks";
+import type {
+  FeatureAttributesIndex,
+  InferFeatureAttributesParams,
+} from "../types/api";
+import { type DirtyFeatureAttributes } from "../hooks";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -63,28 +66,28 @@ const featureAttributeIssues: Record<
 };
 
 export const getFeatureAttributeConfigurationIssues = (
-  featureAttributes: FeatureAttributes,
+  featureAttributes: FeatureAttributes | undefined,
 ): FeatureAttributesConfigurationIssue[] | undefined => {
   const issues: FeatureAttributesConfigurationIssue[] = [];
 
-  if (!featureAttributes.type) {
+  if (!featureAttributes?.type) {
     issues.push(featureAttributeIssues.typeUndefined);
   }
 
-  if (!featureAttributes.data_type) {
+  if (!featureAttributes?.data_type) {
     issues.push(featureAttributeIssues.dataTypeUndefined);
   }
 
   if (isFeatureAttributeSensitiveAttributeAvailable(featureAttributes)) {
-    const isSensitive = !featureAttributes.non_sensitive;
-    if (isSensitive && !featureAttributes.subtype) {
+    const isSensitive = !featureAttributes?.non_sensitive;
+    if (isSensitive && !featureAttributes?.subtype) {
       issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
     }
   }
 
   if (
-    featureAttributes.data_type === "formatted_date_time" &&
-    !featureAttributes.date_time_format
+    featureAttributes?.data_type === "formatted_date_time" &&
+    !featureAttributes?.date_time_format
   ) {
     issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
   }
@@ -106,18 +109,18 @@ export function isSensitiveNominal(attributes: FeatureAttributes) {
 }
 
 export const getFeatureAttributesForType = (
-  attributes: FeatureAttributes,
-): FeatureAttributes => {
-  const isContinuous = attributes.type === "continuous";
+  attributes: FeatureAttributes | undefined,
+): Partial<FeatureAttributes> => {
+  const isContinuous = attributes?.type === "continuous";
   const data_type = getDataTypeFromFeatureAttributes(attributes);
   return {
     ...attributes,
-    type: attributes.type,
+    // type: attributes?.type,
     // Reset fields on change
-    id_feature: isContinuous ? undefined : attributes.id_feature,
+    id_feature: isContinuous ? undefined : attributes?.id_feature,
     data_type,
     decimal_places:
-      data_type === "number" ? attributes.decimal_places : undefined,
+      data_type === "number" ? attributes?.decimal_places : undefined,
   };
 };
 
@@ -153,9 +156,25 @@ const getDataTypeFromOriginalType = (
   }
 };
 
+export const getFeatureAttributesUnbound = (
+  featureAttributes?: FeatureAttributes,
+): FeatureAttributes => {
+  const type = featureAttributes?.type || "continuous";
+  const adjustedFeature: FeatureAttributes = {
+    ...featureAttributes,
+    type,
+  };
+  // Remove the bounds
+  if (adjustedFeature.bounds) {
+    delete adjustedFeature.bounds.max;
+    delete adjustedFeature.bounds.min;
+  }
+  return adjustedFeature;
+};
+
 export const getInferFeatureAttributesConfigParameters = (
-  config: Partial<InferFeatureAttributesOptions> = {},
-): InferFeatureAttributesOptions => ({
+  config: Partial<InferFeatureAttributesParams> = {},
+): InferFeatureAttributesParams => ({
   ...config,
   include_sample: true,
 });

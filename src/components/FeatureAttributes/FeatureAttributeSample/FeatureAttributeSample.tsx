@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type FeatureAttributeSampleProps = {
-  attributes: Pick<FeatureAttributes, "data_type" | "sample">;
+  attributes: Pick<FeatureAttributes, "data_type" | "sample"> | undefined;
   disableModal?: boolean;
 };
 export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
@@ -13,6 +13,10 @@ export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
   disableModal,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  if (!attributes) {
+    return null;
+  }
+
   const openModal = () => {
     if (disableModal) {
       return;
@@ -73,6 +77,10 @@ const FeatureAttributeSampleModal: FC<
   FeatureAttributeSampleProps & { onClose: () => void }
 > = ({ attributes, onClose }) => {
   const { t } = useDefaultTranslation();
+  if (!attributes) {
+    return null;
+  }
+
   return (
     <Modal show onClose={onClose} dismissible>
       <Modal.Header>

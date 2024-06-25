@@ -1,9 +1,11 @@
 import type { FeatureAttributes } from "@howso/openapi-client";
 
+export type FeatureAttributesIndex = Record<string, FeatureAttributes>;
+
 /** Options available to the InferFeatureAttributes call in the platform API */
-export interface InferFeatureAttributesOptions {
+export interface InferFeatureAttributesParams {
   // Initial feature attributes to build onto.
-  features?: Record<string, FeatureAttributes>;
+  features?: FeatureAttributesIndex;
   // Defaults to true, set to false to disable inferring bounds.
   infer_bounds?: boolean;
   // Use tight min and max bounds for the features specified.

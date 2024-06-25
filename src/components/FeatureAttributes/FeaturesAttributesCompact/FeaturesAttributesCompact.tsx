@@ -31,8 +31,8 @@ import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
 import {
   type FeatureAttributesActiveFeatureAtom,
-  type FeatureAttributesIndexAtom,
-  type FeatureAttributesSetAttributesAtom,
+  type InferFeatureAttributesParamsAtom,
+  type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
   type FeatureAttributesTimeFeatureAtom,
 } from "../hooks";
@@ -45,8 +45,8 @@ import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfig
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  setFeatureAttributesAtom: FeatureAttributesSetAttributesAtom;
+  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
+  setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
   timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
 };
@@ -62,13 +62,13 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const { t } = useDefaultTranslation();
   const {
     activeFeatureAtom,
-    featureAttributesIndexAtom,
+    inferFeatureAttributesParamsAtom,
     optionsAtom,
     timeFeatureAtom,
   } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
-  const features = Object.keys(featuresAttributes);
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const features = Object.keys(params.features || {});
   const [isMappingOpen, setIsMappingOpen] = useState(false);
 
   const [areConfigurationsDirty, setAreConfigurationsDirty] = useState(false);
@@ -79,7 +79,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       <Header
         activeFeatureAtom={activeFeatureAtom}
         areConfigurationsDirty={areConfigurationsDirty}
-        featureAttributesIndexAtom={featureAttributesIndexAtom}
+        inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
         // is compact
         isCompact={isCompact}
         setIsCompact={setIsCompact}
@@ -113,7 +113,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
 type HeaderProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   areConfigurationsDirty: boolean;
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   // isCompact
   isCompact: boolean;
   setIsCompact: Dispatch<SetStateAction<boolean>>;
@@ -129,7 +129,7 @@ type HeaderFormValues = {
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   areConfigurationsDirty,
-  featureAttributesIndexAtom,
+  inferFeatureAttributesParamsAtom,
   isCompact,
   setIsCompact,
   toggleIsMappingOpen,
@@ -137,7 +137,8 @@ const Header: FC<HeaderProps> = ({
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const featuresAttributes = params.features || {};
   const features = Object.keys(featuresAttributes);
 
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
@@ -224,7 +225,7 @@ const Header: FC<HeaderProps> = ({
 type ConfigurationProps = Pick<
   FeaturesAttributesCompactProps,
   | "activeFeatureAtom"
-  | "featureAttributesIndexAtom"
+  | "inferFeatureAttributesParamsAtom"
   | "setFeatureAttributesAtom"
   | "timeFeatureAtom"
 > & {
@@ -232,14 +233,14 @@ type ConfigurationProps = Pick<
   setAreConfigurationsDirty: Dispatch<SetStateAction<boolean>>;
 };
 const Configuration: FC<ConfigurationProps> = (props) => {
-  const { activeFeatureAtom, featureAttributesIndexAtom } = props;
+  const { activeFeatureAtom, inferFeatureAttributesParamsAtom } = props;
 
   const { t } = useDefaultTranslation();
   const theme = getTheme();
   const activeFeature = useAtomValue(activeFeatureAtom);
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
   const attributes = activeFeature
-    ? featuresAttributes[activeFeature]
+    ? params.features?.[activeFeature]
     : undefined;
   if (!attributes) {
     throw new Error(`attributes are not defined for ${activeFeature}`);
@@ -279,7 +280,7 @@ const Form: FC<ConfigurationProps> = ({
   areConfigurationsDirty,
   setAreConfigurationsDirty,
   activeFeatureAtom,
-  featureAttributesIndexAtom,
+  inferFeatureAttributesParamsAtom,
   setFeatureAttributesAtom,
   timeFeatureAtom,
 }) => {
@@ -289,15 +290,16 @@ const Form: FC<ConfigurationProps> = ({
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
   }
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
-  const attributes = featuresAttributes[activeFeature];
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const features = Object.keys(params.features || {});
+  const attributes = params.features?.[activeFeature];
   const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
   const timeFeature = useAtomValue(timeFeatureAtom);
 
   const form = useForm<FeatureAttributeFormValues>({
     defaultValues: {
       ...getFeatureAttributesForType(attributes),
-      is_datetime: !!attributes.date_time_format,
+      is_datetime: !!attributes?.date_time_format,
     },
     shouldUnregister: true,
   });
@@ -307,7 +309,6 @@ const Form: FC<ConfigurationProps> = ({
     setAreConfigurationsDirty(isDirty && Object.keys(dirtyFields).length > 0);
   }, [setAreConfigurationsDirty, isDirty, dirtyFields]);
 
-  const features = Object.keys(featuresAttributes);
   const nextFeature = features[features.indexOf(activeFeature) + 1];
 
   const onSave: SubmitHandler<FeatureAttributeFormValues> = (data) => {
@@ -328,7 +329,7 @@ const Form: FC<ConfigurationProps> = ({
 
   return (
     <FormProvider {...form}>
-      {attributes.sample && (
+      {attributes?.sample && (
         <FieldStatic
           {...fieldTextProps}
           label={t(translations.labels.sample)}

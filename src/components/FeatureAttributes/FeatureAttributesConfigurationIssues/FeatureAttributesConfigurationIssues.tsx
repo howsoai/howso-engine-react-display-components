@@ -17,7 +17,7 @@ export const FeatureAttributesConfigurationIssues: FC<
   return (
     <ul className="list-disc list-outside pl-4">
       {issues.map((issue) => (
-        <li>{t(issue.translationKey)}</li>
+        <li key={issue.translationKey}>{t(issue.translationKey)}</li>
       ))}
     </ul>
   );
