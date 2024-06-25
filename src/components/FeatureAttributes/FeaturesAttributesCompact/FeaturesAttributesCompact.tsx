@@ -34,7 +34,7 @@ import {
   type InferFeatureAttributesParamsAtom,
   type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
-  type FeatureAttributesTimeFeatureAtom,
+  type InferFeatureAttributesParamsTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import {
@@ -48,7 +48,7 @@ export type FeaturesAttributesCompactProps = {
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
-  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
  * A specialized view of all feature attributes at once.
@@ -120,7 +120,7 @@ type HeaderProps = {
   // isMappingOpen
   toggleIsMappingOpen: () => void;
   optionsAtom: FeatureAttributesOptionsAtom;
-  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 type HeaderFormValues = {
   feature: string | undefined;

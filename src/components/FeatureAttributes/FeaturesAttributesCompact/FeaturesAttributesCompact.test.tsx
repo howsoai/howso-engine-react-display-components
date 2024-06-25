@@ -1,13 +1,13 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { act } from "react";
 import "@testing-library/jest-dom";
+import { act } from "react";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
 import { translations } from "./constants";
 import {
   getFeatureAttributesAreDirtyAtom,
   getInferFeatureAttributesParamsAtom,
   getInferFeatureAttributesParamsSetFeatureAttributesAtom,
-  getFeatureAttributesTimeFeatureAtom,
+  getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
@@ -19,6 +19,7 @@ import {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
 } from "../types/api";
+import { getFeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup/FeatureAttributesTemporalityGroup.test";
 
 describe("FeaturesAttributesCompact", () => {
   const featuresAttributes: FeatureAttributesIndex = {
@@ -70,7 +71,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
     });
@@ -94,6 +95,45 @@ describe("FeaturesAttributesCompact", () => {
     );
   });
 
+  it("should toggle the time feature on exposing temporal options", async () => {
+    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
+    const params: InferFeatureAttributesParams = {
+      features: featuresAttributes,
+    };
+    const inferFeatureAttributesParamsAtom =
+      getInferFeatureAttributesParamsAtom(params);
+    const setFeatureAttributesAtom =
+      getInferFeatureAttributesParamsSetFeatureAttributesAtom({
+        inferFeatureAttributesParamsAtom,
+        featuresDirtyAtom,
+      });
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+      inferFeatureAttributesParamsAtom,
+      featuresDirtyAtom,
+    });
+
+    render(
+      <FeaturesAttributesCompact
+        activeFeatureAtom={getFeatureAttributesActiveFeatureAtom(firstFeature)}
+        inferFeatureAttributesParamsAtom={inferFeatureAttributesParamsAtom}
+        optionsAtom={getFeatureAttributesOptionsAtom({})}
+        setFeatureAttributesAtom={setFeatureAttributesAtom}
+        timeFeatureAtom={timeFeatureAtom}
+      />,
+    );
+
+    const timeFeature = getTimeFeatureField();
+    expect(timeFeature).toBeEnabled();
+    expect(timeFeature).not.toBeChecked();
+    fireEvent(
+      timeFeature,
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
+    expect(timeFeature).toBeChecked();
+    const temporalityGroup = getFeatureAttributesTemporalityGroup();
+    expect(temporalityGroup).toBeVisible();
+  });
+
   it("should disable the features field after any changes to attributes until an update is applied", async () => {
     const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
     const params: InferFeatureAttributesParams = {
@@ -106,7 +146,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
     });
@@ -167,7 +207,7 @@ describe("FeaturesAttributesCompact", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
     });
@@ -227,6 +267,11 @@ describe("FeaturesAttributesCompact", () => {
 const getFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(
     new RegExp(`^${translations.header.fields.feature.label}\\*?$`),
+  );
+
+const getTimeFeatureField = () =>
+  screen.getByLabelText<HTMLSelectElement>(
+    new RegExp(`^${translations.header.fields.timeFeature.label}\\*?$`),
   );
 
 const getConfigurationContainer = () =>

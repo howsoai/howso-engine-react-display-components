@@ -6,7 +6,7 @@ import { InferFeatureAttributesParamsAtom } from "./useInferFeatureAttributesPar
 import { FeaturesAttributesAreDirtyAtom } from "./useFeatureAttributesAreDirtyAtom";
 import { useMemo } from "react";
 
-export type GetTimeFeatureAtomParams = {
+export type GetInferFeatureAttributesParamsTimeFeatureAtom = {
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   featuresDirtyAtom: FeaturesAttributesAreDirtyAtom;
 };
@@ -15,13 +15,13 @@ export type GetTimeFeatureAtomParams = {
  * Memoized derived atom to get/set the time feature in feature attributes
  * Causes dirty atom to be tripped when set.
  */
-export const useFeatureAttributesTimeFeatureAtom = ({
+export const useInferFeatureAttributesParamsTimeFeatureAtom = ({
   inferFeatureAttributesParamsAtom,
   featuresDirtyAtom,
-}: GetTimeFeatureAtomParams) =>
+}: GetInferFeatureAttributesParamsTimeFeatureAtom) =>
   useMemo(
     () =>
-      getFeatureAttributesTimeFeatureAtom({
+      getInferFeatureAttributesParamsTimeFeatureAtom({
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       }),
@@ -32,10 +32,10 @@ export const useFeatureAttributesTimeFeatureAtom = ({
  * Derived atom to get/set the time feature in feature attributes
  * Causes dirty atom to be tripped when set.
  */
-export const getFeatureAttributesTimeFeatureAtom = ({
+export const getInferFeatureAttributesParamsTimeFeatureAtom = ({
   inferFeatureAttributesParamsAtom,
   featuresDirtyAtom,
-}: GetTimeFeatureAtomParams) =>
+}: GetInferFeatureAttributesParamsTimeFeatureAtom) =>
   atom(
     (get) => {
       const params = get(inferFeatureAttributesParamsAtom);
@@ -47,7 +47,7 @@ export const getFeatureAttributesTimeFeatureAtom = ({
       }
     },
     (get, set, featureName: ActiveFeature | undefined) => {
-      const params = { ...get(inferFeatureAttributesParamsAtom) };
+      const params = get(inferFeatureAttributesParamsAtom);
       const features = params?.features || {};
       for (const name of Object.keys(params?.features || {})) {
         const attributes = { ...features[name] };
@@ -63,10 +63,10 @@ export const getFeatureAttributesTimeFeatureAtom = ({
         }
         features[name] = attributes;
       }
-      set(inferFeatureAttributesParamsAtom, features);
+      set(inferFeatureAttributesParamsAtom, { ...params, features });
       set(featuresDirtyAtom, true);
     },
   );
-export type FeatureAttributesTimeFeatureAtom = ReturnType<
-  typeof getFeatureAttributesTimeFeatureAtom
+export type InferFeatureAttributesParamsTimeFeatureAtom = ReturnType<
+  typeof getInferFeatureAttributesParamsTimeFeatureAtom
 >;

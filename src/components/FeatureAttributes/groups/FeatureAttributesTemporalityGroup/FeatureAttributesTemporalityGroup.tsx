@@ -20,6 +20,7 @@ import {
   FeatureTimeSeriesTypeEnum,
 } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { testId, translations } from "./constants";
 
 export type FeatureAttributesTemporalityGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -56,7 +57,8 @@ export const FeatureAttributesTemporalityGroup: FC<
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t("FeatureAttributes.FeatureAttributesTemporalityGroup.title")}
+      data-testid={testId}
+      title={t(translations.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeTimeSeriesTypeField

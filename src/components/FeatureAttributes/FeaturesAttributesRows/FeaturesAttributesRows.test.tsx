@@ -6,7 +6,7 @@ import {
   getFeatureAttributesAreDirtyAtom,
   getInferFeatureAttributesParamsAtom,
   getInferFeatureAttributesParamsSetFeatureAttributesAtom,
-  getFeatureAttributesTimeFeatureAtom,
+  getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
 } from "../hooks";
@@ -66,7 +66,7 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
     });
@@ -103,7 +103,7 @@ describe("FeaturesAttributesRows", () => {
         inferFeatureAttributesParamsAtom,
         featuresDirtyAtom,
       });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
       inferFeatureAttributesParamsAtom,
       featuresDirtyAtom,
     });

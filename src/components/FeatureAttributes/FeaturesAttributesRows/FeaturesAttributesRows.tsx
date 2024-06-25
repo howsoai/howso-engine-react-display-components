@@ -40,7 +40,7 @@ import {
   type InferFeatureAttributesParamsAtom,
   type InferFeatureAttributesParamsSetFeatureAttributesAtom,
   type FeatureAttributesOptionsAtom,
-  type FeatureAttributesTimeFeatureAtom,
+  type InferFeatureAttributesParamsTimeFeatureAtom,
 } from "../hooks";
 import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
@@ -50,7 +50,7 @@ export type FeaturesAttributesRowsProps = {
   inferFeatureAttributesParamsAtom: InferFeatureAttributesParamsAtom;
   setFeatureAttributesAtom: InferFeatureAttributesParamsSetFeatureAttributesAtom;
   optionsAtom: FeatureAttributesOptionsAtom;
-  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
  * A specialized view of all feature attributes at once.

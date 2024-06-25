@@ -7,7 +7,7 @@ import {
   getInferFeatureAttributesParamsAtom,
   getFeatureAttributesOptionsAtom,
   getInferFeatureAttributesParamsSetFeatureAttributesAtom,
-  getFeatureAttributesTimeFeatureAtom,
+  getInferFeatureAttributesParamsTimeFeatureAtom,
 } from "../hooks";
 import { withPadding } from "@/storybook";
 import type { FeatureAttributesIndex } from "../types/api";
@@ -167,7 +167,7 @@ Default.args!.setFeatureAttributesAtom =
       Default.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: defaultAreDirtyAtom,
   });
-Default.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
+Default.args!.timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
   inferFeatureAttributesParamsAtom:
     Default.args!.inferFeatureAttributesParamsAtom!,
   featuresDirtyAtom: defaultAreDirtyAtom,
@@ -187,11 +187,12 @@ NoFeatures.args!.setFeatureAttributesAtom =
       NoFeatures.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: noFeaturesAreDirtyAtom,
   });
-NoFeatures.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  inferFeatureAttributesParamsAtom:
-    NoFeatures.args!.inferFeatureAttributesParamsAtom!,
-  featuresDirtyAtom: noFeaturesAreDirtyAtom,
-});
+NoFeatures.args!.timeFeatureAtom =
+  getInferFeatureAttributesParamsTimeFeatureAtom({
+    inferFeatureAttributesParamsAtom:
+      NoFeatures.args!.inferFeatureAttributesParamsAtom!,
+    featuresDirtyAtom: noFeaturesAreDirtyAtom,
+  });
 
 const configurationAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const Configuration: Story = {
@@ -211,11 +212,12 @@ Configuration.args!.setFeatureAttributesAtom =
       Configuration.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: configurationAreDirtyAtom,
   });
-Configuration.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  inferFeatureAttributesParamsAtom:
-    Configuration.args!.inferFeatureAttributesParamsAtom!,
-  featuresDirtyAtom: configurationAreDirtyAtom,
-});
+Configuration.args!.timeFeatureAtom =
+  getInferFeatureAttributesParamsTimeFeatureAtom({
+    inferFeatureAttributesParamsAtom:
+      Configuration.args!.inferFeatureAttributesParamsAtom!,
+    featuresDirtyAtom: configurationAreDirtyAtom,
+  });
 
 const configurationLastItemAreDirtyAtom = getFeatureAttributesAreDirtyAtom();
 export const ConfigurationLastItem: Story = {
@@ -236,7 +238,7 @@ ConfigurationLastItem.args!.setFeatureAttributesAtom =
     featuresDirtyAtom: configurationLastItemAreDirtyAtom,
   });
 ConfigurationLastItem.args!.timeFeatureAtom =
-  getFeatureAttributesTimeFeatureAtom({
+  getInferFeatureAttributesParamsTimeFeatureAtom({
     inferFeatureAttributesParamsAtom:
       ConfigurationLastItem.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: configurationLastItemAreDirtyAtom,
@@ -258,8 +260,9 @@ TimeSeries.args!.setFeatureAttributesAtom =
       TimeSeries.args!.inferFeatureAttributesParamsAtom!,
     featuresDirtyAtom: timeSeriesAreDirtyAtom,
   });
-TimeSeries.args!.timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-  inferFeatureAttributesParamsAtom:
-    TimeSeries.args!.inferFeatureAttributesParamsAtom!,
-  featuresDirtyAtom: timeSeriesAreDirtyAtom,
-});
+TimeSeries.args!.timeFeatureAtom =
+  getInferFeatureAttributesParamsTimeFeatureAtom({
+    inferFeatureAttributesParamsAtom:
+      TimeSeries.args!.inferFeatureAttributesParamsAtom!,
+    featuresDirtyAtom: timeSeriesAreDirtyAtom,
+  });
