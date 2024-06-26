@@ -175,7 +175,7 @@ describe("FeaturesAttributesCompact", () => {
     expect(featuresField).toBeEnabled();
   });
 
-  it.only("should open a configuration container, save, and load the next", async () => {
+  it("should open a configuration container, save, and load the next", async () => {
     const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
     const params: InferFeatureAttributesParams = {
       features: featuresAttributes,
