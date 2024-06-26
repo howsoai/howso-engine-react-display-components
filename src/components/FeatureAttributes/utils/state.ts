@@ -260,6 +260,17 @@ export const getFeatureAttributesUnbound = (
   return adjustedFeature;
 };
 
+// Tight time bounds
+export const getInferFeatureAttributeParamsWithTightTimeBound = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  tightTimeBounds: boolean | undefined,
+): InferFeatureAttributesParams => {
+  const newParams: InferFeatureAttributesParams = { ...params };
+
+  return newParams;
+};
+
 // Configs
 
 export const getInferFeatureAttributesConfigParameters = (

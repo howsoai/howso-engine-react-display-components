@@ -86,6 +86,7 @@ export const FeatureAttributesConfiguration: FC<
         dataType={dataType}
         boundingMode={boundingMode}
         dateTimeFormat={dateTimeFormat}
+        isTimeFeature={isTimeFeature}
       />
       <FeatureAttributeNullIsDependentField
         dependentFeatures={dependentFeatures}

@@ -1,6 +1,5 @@
 export * from "./FeatureAttributeAllowedValuesField";
 export * from "./FeatureAttributeAllowNullsField";
-export * from "./FeatureAttributeBoundingModeField";
 export * from "./FeatureAttributeCycleLengthField";
 export * from "./FeatureAttributeDataTypeField";
 export * from "./FeatureAttributeDateTimeFormatField";
@@ -14,6 +13,8 @@ export * from "./FeatureAttributeMinMaxFields";
 export * from "./FeatureAttributeNullIsDependentField";
 export * from "./FeatureAttributeObservationalErrorField";
 export * from "./FeatureAttributePostProcessField";
+export * from "./FeatureAttributeReservedBoundingModeField";
+export * from "./FeatureAttributeReservedTightTimeBoundField";
 export * from "./FeatureAttributeSignificantDigitsField";
 export * from "./FeatureAttributeSubtypeField";
 export * from "./FeatureAttributeTimeSeriesLagsField";

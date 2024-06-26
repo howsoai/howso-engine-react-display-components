@@ -8,11 +8,16 @@ import { RegisterOptions } from "react-hook-form";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { options, translations } from "./constants";
 import { twMerge } from "tailwind-merge";
+import { FeatureAttributes } from "@howso/openapi-client";
 
-type FeatureAttributeBoundingModeFieldProps = Partial<FieldRadiosProps> & {};
-export const FeatureAttributeBoundingModeField: FC<
-  FeatureAttributeBoundingModeFieldProps
-> = ({ required = true, ...props }) => {
+type FeatureAttributeReservedBoundingModeFieldProps =
+  Partial<FieldRadiosProps> & {
+    featureType: FeatureAttributes["type"] | undefined;
+    dataType: FeatureAttributes["data_type"];
+  };
+export const FeatureAttributeReservedBoundingModeField: FC<
+  FeatureAttributeReservedBoundingModeFieldProps
+> = ({ featureType, dataType, required = true, ...props }) => {
   const { t } = useDefaultTranslation();
   const { fieldRadiosProps } = useContext(FeaturesAttributesContext);
 
@@ -22,6 +27,19 @@ export const FeatureAttributeBoundingModeField: FC<
     }),
     [required],
   );
+
+  const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
+  const allowedDataTypes: FeatureAttributes["data_type"][] = [
+    "number",
+    "formatted_date_time",
+  ];
+  if (
+    !featureType ||
+    !allowedFeatureTypes.includes(featureType) ||
+    !allowedDataTypes.includes(dataType)
+  ) {
+    return null;
+  }
 
   return (
     <FieldRadios

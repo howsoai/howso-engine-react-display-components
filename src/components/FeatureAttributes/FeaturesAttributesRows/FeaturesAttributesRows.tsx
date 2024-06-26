@@ -166,7 +166,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
       setParams(newParams);
       if (shouldInferAgain({ type: true })) setRunRequired(true);
     },
-    [setRunRequired, params, feature],
+    [setRunRequired, setParams, params, feature],
   );
   const issues = getFeatureAttributeConfigurationIssues(attributes);
 

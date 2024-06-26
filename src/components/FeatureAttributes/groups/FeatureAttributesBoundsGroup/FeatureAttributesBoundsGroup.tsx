@@ -3,7 +3,7 @@ import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributeAllowNullsField,
   FeatureAttributeAllowedValuesField,
-  FeatureAttributeBoundingModeField,
+  FeatureAttributeReservedBoundingModeField,
   FeatureAttributeMinMaxFields,
 } from "../../fields";
 import {
@@ -22,6 +22,7 @@ export type FeatureAttributesBoundsGroupProps = Omit<
   dataType: FeatureAttributes["data_type"];
   boundingMode: InferFeatureAttributesBoundingMode | undefined;
   dateTimeFormat: string | undefined;
+  isTimeFeature: boolean | undefined;
 };
 
 /**
@@ -29,7 +30,14 @@ export type FeatureAttributesBoundsGroupProps = Omit<
  */
 export const FeatureAttributesBoundsGroup: FC<
   FeatureAttributesBoundsGroupProps
-> = ({ featureType, dataType, boundingMode, dateTimeFormat, ...props }) => {
+> = ({
+  featureType,
+  dataType,
+  boundingMode,
+  dateTimeFormat,
+  isTimeFeature,
+  ...props
+}) => {
   const { t } = useDefaultTranslation();
 
   return (
@@ -39,16 +47,19 @@ export const FeatureAttributesBoundsGroup: FC<
       basic={
         <div className={formSpacingYDefault}>
           <FeatureAttributeAllowNullsField />
-          <FeatureAttributeBoundingModeField />
-          <FeatureAttributeAllowedValuesField
+          <FeatureAttributeReservedBoundingModeField
             featureType={featureType}
             dataType={dataType}
-            dateTimeFormat={dateTimeFormat}
           />
           <FeatureAttributeMinMaxFields
             type={featureType}
             dataType={dataType}
             boundingMode={boundingMode}
+            dateTimeFormat={dateTimeFormat}
+          />
+          <FeatureAttributeAllowedValuesField
+            featureType={featureType}
+            dataType={dataType}
             dateTimeFormat={dateTimeFormat}
           />
         </div>

@@ -16,21 +16,11 @@
         "ordinal": "Allowed Values"
       }
     },
+    "FeatureAttributeReservedTightTimeBoundField": {
+      "label": "Tight time bounds"
+    },
     "FeatureAttributeAllowNullsField": {
       "label": "Allow Nulls"
-    },
-    "FeatureAttributeBoundingModeField": {
-      "help": {
-        "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
-        "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
-        "userDefined": "Specify min and max manually (not recommended)"
-      },
-      "label": "Bounding mode",
-      "options": {
-        "auto": "Auto",
-        "tightBounds": "Tight bounds",
-        "userDefined": "User defined"
-      }
     },
     "FeatureAttributeCycleLengthField": {
       "help": "Only required if your feature is cyclical, such as days of the week.",
@@ -105,6 +95,19 @@
     "FeatureAttributePostProcessField": {
       "help": "<0>Amalgam</0> code that is called on resulting values of this feature during `react` operations.",
       "label": "Post Process Code"
+    },
+    "FeatureAttributeReservedBoundingModeField": {
+      "help": {
+        "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
+        "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
+        "userDefined": "Specify min and max manually (not recommended)"
+      },
+      "label": "Bounding mode",
+      "options": {
+        "auto": "Auto",
+        "tightBounds": "Tight bounds",
+        "userDefined": "User defined"
+      }
     },
     "FeatureAttributeSample": {
       "modal": {

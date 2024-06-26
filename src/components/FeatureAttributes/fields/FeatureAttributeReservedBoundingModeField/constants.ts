@@ -1,6 +1,6 @@
 import { InferFeatureAttributesBoundingMode } from "../../utils";
 
-const base = "FeatureAttributes.FeatureAttributeBoundingModeField";
+const base = "FeatureAttributes.FeatureAttributeReservedBoundingModeField";
 export const translations = {
   label: `${base}.label`,
   options: {

@@ -6,8 +6,11 @@ import { getInferFeatureAttributeParamsWithFeatureBoundingMode } from "./state";
 export type InferFeatureAttributeFormValues = Partial<FeatureAttributes> & {
   /** Values are that are not true Feature Attributes but requires user interactions and save handling */
   reserved?: {
+    /** Provides control on the form for InferFeatureAttributesParams.tight_bounds */
     boundingMode?: InferFeatureAttributesBoundingMode;
     isDateTime: boolean;
+    /** Provides control on the form for InferFeatureAttributesParams.tight_time_bounds */
+    tightTimeBounds?: boolean;
   };
 };
 
