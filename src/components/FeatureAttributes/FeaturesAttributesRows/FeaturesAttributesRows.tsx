@@ -29,7 +29,6 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import {
   FeatureAttributeFormValues,
-  getAllFeatureAttributeConfigurationIssues,
   getFeatureAttributeConfigurationIssues,
   getFeatureAttributesForType,
   getFeatureAttributesFromFormData,
