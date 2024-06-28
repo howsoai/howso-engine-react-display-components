@@ -32,7 +32,6 @@ import { translations } from "./constants";
 import {
   type FeatureAttributesActiveFeatureAtom,
   type InferFeatureAttributesParamsAtom,
-  type FeatureAttributesOptionsAtom,
   type InferFeatureAttributesParamsTimeFeatureAtom,
   useFeatureAttributesForm,
   getFeatureAttributesFormDefaultValues,
@@ -47,7 +46,6 @@ import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfig
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
-  optionsAtom: FeatureAttributesOptionsAtom;
   paramsAtom: InferFeatureAttributesParamsAtom;
   runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
@@ -62,7 +60,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   props,
 ) => {
   const { t } = useDefaultTranslation();
-  const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
+  const { activeFeatureAtom, paramsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(paramsAtom);
   const features = Object.keys(params.features || {});
@@ -81,7 +79,6 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
         isCompact={isCompact}
         setIsCompact={setIsCompact}
         toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
-        optionsAtom={optionsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />
       <hr className="my-4" />
@@ -116,7 +113,6 @@ type HeaderProps = {
   setIsCompact: Dispatch<SetStateAction<boolean>>;
   // isMappingOpen
   toggleIsMappingOpen: () => void;
-  optionsAtom: FeatureAttributesOptionsAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 type HeaderFormValues = {
@@ -130,7 +126,6 @@ const Header: FC<HeaderProps> = ({
   isCompact,
   setIsCompact,
   toggleIsMappingOpen,
-  optionsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
@@ -140,7 +135,6 @@ const Header: FC<HeaderProps> = ({
 
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   const [timeFeature, setTimeFeature] = useAtom(timeFeatureAtom);
-  const [options, setOptions] = useAtom(optionsAtom);
 
   const form = useForm<HeaderFormValues>({
     defaultValues: { feature: features.at(0) },
@@ -154,7 +148,6 @@ const Header: FC<HeaderProps> = ({
             required
             label={t(translations.header.fields.feature.label)}
             labelInline
-            // labelProps={{ className: "w-40" }}
             sizing={"sm"}
             name="feature"
             onChange={async (event) => {
@@ -176,7 +169,6 @@ const Header: FC<HeaderProps> = ({
               color={"blue"}
               disabled={!activeFeature}
               onChange={async (event) => {
-                setOptions({ ...options, time_series: event.target.checked });
                 setTimeFeature(
                   event.target.checked ? activeFeature : undefined,
                 );

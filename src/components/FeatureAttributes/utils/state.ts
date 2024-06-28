@@ -116,7 +116,6 @@ export const getFeatureAttributesForType = (
   const data_type = getDataTypeFromFeatureAttributes(attributes);
   return {
     ...attributes,
-    // type: attributes?.type,
     // Reset fields on change
     id_feature: isContinuous ? undefined : attributes?.id_feature,
     data_type,

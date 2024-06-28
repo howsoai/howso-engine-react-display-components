@@ -5,7 +5,6 @@ import {
   getInferFeatureAttributesRunRequiredFields,
   getFeatureAttributesActiveFeatureAtom,
   getInferFeatureAttributesParamsAtom,
-  getFeatureAttributesOptionsAtom,
   getInferFeatureAttributesParamsTimeFeatureAtom,
 } from "../hooks";
 import { withPadding } from "@/storybook";
@@ -156,7 +155,6 @@ export const Default: Story = {
   args: {
     activeFeatureAtom:
       getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
-    optionsAtom: getFeatureAttributesOptionsAtom({}),
     paramsAtom: getInferFeatureAttributesParamsAtom({
       features: sampleFeatureAttributesIndex,
     }),
@@ -172,7 +170,6 @@ const noFeaturesRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
 export const NoFeatures: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
-    optionsAtom: getFeatureAttributesOptionsAtom({}),
     paramsAtom: getInferFeatureAttributesParamsAtom({}),
     runRequiredAtom: noFeaturesRunRequiredAtom,
   },
@@ -187,7 +184,6 @@ const noSelectionRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
 export const NoSelection: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
-    optionsAtom: getFeatureAttributesOptionsAtom({}),
     paramsAtom: getInferFeatureAttributesParamsAtom({
       features: sampleFeatureAttributesIndex,
     }),
@@ -204,7 +200,6 @@ const lastItemRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
 export const LastItem: Story = {
   args: {
     activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(lastActiveFeature),
-    optionsAtom: getFeatureAttributesOptionsAtom({}),
     paramsAtom: getInferFeatureAttributesParamsAtom({
       features: sampleFeatureAttributesIndex,
     }),
@@ -223,7 +218,6 @@ export const TimeSeries: Story = {
   args: {
     activeFeatureAtom:
       getFeatureAttributesActiveFeatureAtom(defaultActiveFeature),
-    optionsAtom: getFeatureAttributesOptionsAtom({ time_series: true }),
     paramsAtom: getInferFeatureAttributesParamsAtom({
       features: {
         timeFeature,

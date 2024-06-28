@@ -13,7 +13,7 @@ export type GetInferFeatureAttributesParamsTimeFeatureAtom = {
 
 /*
  * Memoized derived atom to get/set the time feature in feature attributes
- * Causes dirty atom to be tripped when set.
+ * Causes run required atom to be tripped when set.
  */
 export const useInferFeatureAttributesParamsTimeFeatureAtom = ({
   paramsAtom,
@@ -30,7 +30,7 @@ export const useInferFeatureAttributesParamsTimeFeatureAtom = ({
 
 /*
  * Derived atom to get/set the time feature in feature attributes
- * Causes dirty atom to be tripped when set.
+ * Causes run required atom to be tripped when set.
  */
 export const getInferFeatureAttributesParamsTimeFeatureAtom = ({
   paramsAtom,

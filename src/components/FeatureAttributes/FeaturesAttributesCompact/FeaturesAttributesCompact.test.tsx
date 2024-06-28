@@ -8,7 +8,6 @@ import {
   getInferFeatureAttributesParamsAtom,
   getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
-  getFeatureAttributesOptionsAtom,
 } from "../hooks";
 import { sleep } from "@/utils";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
@@ -71,7 +70,6 @@ describe("FeaturesAttributesCompact", () => {
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={paramsAtom}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
@@ -101,7 +99,6 @@ describe("FeaturesAttributesCompact", () => {
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom(firstFeature)}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={paramsAtom}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
@@ -109,15 +106,29 @@ describe("FeaturesAttributesCompact", () => {
     );
 
     const timeFeature = getTimeFeatureField();
+    const updateButton = getUpdate();
+
     expect(timeFeature).toBeEnabled();
     expect(timeFeature).not.toBeChecked();
+    expect(updateButton).toBeDisabled();
+
     fireEvent(
       timeFeature,
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
     expect(timeFeature).toBeChecked();
+    expect(updateButton).toBeEnabled();
+
     const temporalityGroup = getFeatureAttributesTemporalityGroup();
     expect(temporalityGroup).toBeVisible();
+
+    // Update and inspect
+    fireEvent(
+      updateButton,
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
+    await act(async () => sleep(300));
+    expect(updateButton).toBeDisabled();
   });
 
   it("should disable the features field after any changes to attributes until an update is applied", async () => {
@@ -134,7 +145,6 @@ describe("FeaturesAttributesCompact", () => {
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={paramsAtom}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
@@ -169,9 +179,7 @@ describe("FeaturesAttributesCompact", () => {
       update,
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
-    await act(async () => {
-      await sleep(300);
-    });
+    await act(async () => sleep(300));
     expect(featuresField).toBeEnabled();
   });
 
@@ -189,7 +197,6 @@ describe("FeaturesAttributesCompact", () => {
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={paramsAtom}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
