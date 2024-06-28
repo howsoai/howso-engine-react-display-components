@@ -16,9 +16,6 @@
         "ordinal": "Allowed Values"
       }
     },
-    "FeatureAttributeReservedTightTimeBoundField": {
-      "label": "Tight time bounds"
-    },
     "FeatureAttributeAllowNullsField": {
       "label": "Allow Nulls"
     },
@@ -108,6 +105,9 @@
         "tightBounds": "Tight bounds",
         "userDefined": "User defined"
       }
+    },
+    "FeatureAttributeReservedTightTimeBoundField": {
+      "label": "Tight time bounds"
     },
     "FeatureAttributeSample": {
       "modal": {
@@ -221,6 +221,16 @@
       },
       "form": {
         "label": "Configure feature"
+      },
+      "header": {
+        "fields": {
+          "feature": {
+            "label": "Feature"
+          },
+          "timeFeature": {
+            "label": "Time Feature"
+          }
+        }
       },
       "labels": {
         "density": {
