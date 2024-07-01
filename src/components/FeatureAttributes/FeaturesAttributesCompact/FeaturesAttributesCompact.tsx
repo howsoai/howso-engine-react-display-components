@@ -22,19 +22,20 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  FeatureAttributeFormValues,
+  InferFeatureAttributeFormValues,
   getFeatureAttributeConfigurationIssues,
-  getFeatureAttributesForType,
-  getFeatureAttributesFromFormData,
+  getInferFeatureAttributeParamsFormValuesOnSubmit,
+  shouldInferAgain as shouldInferFeatureAttributesAgain,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
 import { translations } from "./constants";
 import {
   type FeatureAttributesActiveFeatureAtom,
-  type FeatureAttributesIndexAtom,
-  type FeatureAttributesSetAttributesAtom,
-  type FeatureAttributesOptionsAtom,
-  type FeatureAttributesTimeFeatureAtom,
+  type InferFeatureAttributesParamsAtom,
+  type InferFeatureAttributesParamsTimeFeatureAtom,
+  useFeatureAttributesForm,
+  getFeatureAttributesFormDefaultValues,
+  InferFeatureAttributesRunRequiredFieldsAtom,
 } from "../hooks";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import {
@@ -45,10 +46,9 @@ import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfig
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
-  setFeatureAttributesAtom: FeatureAttributesSetAttributesAtom;
-  optionsAtom: FeatureAttributesOptionsAtom;
-  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
+  runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
  * A specialized view of all feature attributes at once.
@@ -60,15 +60,10 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   props,
 ) => {
   const { t } = useDefaultTranslation();
-  const {
-    activeFeatureAtom,
-    featureAttributesIndexAtom,
-    optionsAtom,
-    timeFeatureAtom,
-  } = props;
+  const { activeFeatureAtom, paramsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
-  const features = Object.keys(featuresAttributes);
+  const params = useAtomValue(paramsAtom);
+  const features = Object.keys(params.features || {});
   const [isMappingOpen, setIsMappingOpen] = useState(false);
 
   const [areConfigurationsDirty, setAreConfigurationsDirty] = useState(false);
@@ -79,12 +74,11 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       <Header
         activeFeatureAtom={activeFeatureAtom}
         areConfigurationsDirty={areConfigurationsDirty}
-        featureAttributesIndexAtom={featureAttributesIndexAtom}
+        paramsAtom={paramsAtom}
         // is compact
         isCompact={isCompact}
         setIsCompact={setIsCompact}
         toggleIsMappingOpen={() => setIsMappingOpen((previous) => !previous)}
-        optionsAtom={optionsAtom}
         timeFeatureAtom={timeFeatureAtom}
       />
       <hr className="my-4" />
@@ -102,6 +96,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       ) : (
         <Configuration
           {...props}
+          areConfigurationsDirty={areConfigurationsDirty}
           setAreConfigurationsDirty={setAreConfigurationsDirty}
         />
       )}
@@ -112,14 +107,13 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
 type HeaderProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   areConfigurationsDirty: boolean;
-  featureAttributesIndexAtom: FeatureAttributesIndexAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
   // isCompact
   isCompact: boolean;
   setIsCompact: Dispatch<SetStateAction<boolean>>;
   // isMappingOpen
   toggleIsMappingOpen: () => void;
-  optionsAtom: FeatureAttributesOptionsAtom;
-  timeFeatureAtom: FeatureAttributesTimeFeatureAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 type HeaderFormValues = {
   feature: string | undefined;
@@ -128,20 +122,19 @@ type HeaderFormValues = {
 const Header: FC<HeaderProps> = ({
   activeFeatureAtom,
   areConfigurationsDirty,
-  featureAttributesIndexAtom,
+  paramsAtom: inferFeatureAttributesParamsAtom,
   isCompact,
   setIsCompact,
   toggleIsMappingOpen,
-  optionsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
+  const featuresAttributes = params.features || {};
   const features = Object.keys(featuresAttributes);
 
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   const [timeFeature, setTimeFeature] = useAtom(timeFeatureAtom);
-  const [options, setOptions] = useAtom(optionsAtom);
 
   const form = useForm<HeaderFormValues>({
     defaultValues: { feature: features.at(0) },
@@ -155,13 +148,12 @@ const Header: FC<HeaderProps> = ({
             required
             label={t(translations.header.fields.feature.label)}
             labelInline
-            // labelProps={{ className: "w-40" }}
             sizing={"sm"}
             name="feature"
             onChange={async (event) => {
               setActiveFeature(event.target.value);
             }}
-            defaultValue={activeFeature || undefined}
+            value={activeFeature || ""}
             disabled={areConfigurationsDirty || !features.length}
           >
             <option value=""></option>
@@ -177,7 +169,6 @@ const Header: FC<HeaderProps> = ({
               color={"blue"}
               disabled={!activeFeature}
               onChange={async (event) => {
-                setOptions({ ...options, time_series: event.target.checked });
                 setTimeFeature(
                   event.target.checked ? activeFeature : undefined,
                 );
@@ -222,22 +213,21 @@ const Header: FC<HeaderProps> = ({
 
 type ConfigurationProps = Pick<
   FeaturesAttributesCompactProps,
-  | "activeFeatureAtom"
-  | "featureAttributesIndexAtom"
-  | "setFeatureAttributesAtom"
-  | "timeFeatureAtom"
+  "activeFeatureAtom" | "runRequiredAtom" | "paramsAtom" | "timeFeatureAtom"
 > & {
+  areConfigurationsDirty: boolean;
   setAreConfigurationsDirty: Dispatch<SetStateAction<boolean>>;
 };
 const Configuration: FC<ConfigurationProps> = (props) => {
-  const { activeFeatureAtom, featureAttributesIndexAtom } = props;
+  const { activeFeatureAtom, paramsAtom: inferFeatureAttributesParamsAtom } =
+    props;
 
   const { t } = useDefaultTranslation();
   const theme = getTheme();
   const activeFeature = useAtomValue(activeFeatureAtom);
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
+  const params = useAtomValue(inferFeatureAttributesParamsAtom);
   const attributes = activeFeature
-    ? featuresAttributes[activeFeature]
+    ? params.features?.[activeFeature]
     : undefined;
   if (!attributes) {
     throw new Error(`attributes are not defined for ${activeFeature}`);
@@ -274,58 +264,66 @@ const Configuration: FC<ConfigurationProps> = (props) => {
 };
 
 const Form: FC<ConfigurationProps> = ({
-  featureAttributesIndexAtom,
-  activeFeatureAtom,
-  setFeatureAttributesAtom,
+  areConfigurationsDirty,
   setAreConfigurationsDirty,
+  activeFeatureAtom,
+  runRequiredAtom,
+  paramsAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useDefaultTranslation();
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { buttonProps, fieldTextProps } = useContext(FeaturesAttributesContext);
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
   }
-  const featuresAttributes = useAtomValue(featureAttributesIndexAtom);
-  const attributes = featuresAttributes[activeFeature];
-  const setFeatureAttributes = useSetAtom(setFeatureAttributesAtom);
+  const setRunRequired = useSetAtom(runRequiredAtom);
+  const [params, setParams] = useAtom(paramsAtom);
+  const features = Object.keys(params.features || {});
+  const attributes = params.features?.[activeFeature];
   const timeFeature = useAtomValue(timeFeatureAtom);
+  const form = useFeatureAttributesForm(params, activeFeature);
 
-  const form = useForm<FeatureAttributeFormValues>({
-    defaultValues: {
-      ...getFeatureAttributesForType(attributes),
-      is_datetime: !!attributes.date_time_format,
-    },
-    shouldUnregister: true,
-  });
-
-  const { dirtyFields, isDirty } = form.formState;
+  const { dirtyFields } = form.formState;
+  const values = form.getValues();
   useEffect(() => {
-    setAreConfigurationsDirty(isDirty && Object.keys(dirtyFields).length > 0);
-  }, [setAreConfigurationsDirty, isDirty, dirtyFields]);
+    setAreConfigurationsDirty(
+      // Super weird. Unless the values is a dependency, after the first form.reset() dirty fields stop being tracked
+      values && Object.keys(dirtyFields).length > 0,
+    );
+  }, [setAreConfigurationsDirty, values, dirtyFields]);
 
-  const features = Object.keys(featuresAttributes);
   const nextFeature = features[features.indexOf(activeFeature) + 1];
 
-  const onSave: SubmitHandler<FeatureAttributeFormValues> = (data) => {
+  const onSave: SubmitHandler<InferFeatureAttributeFormValues> = (data) => {
     save(data);
   };
-  const onSaveAndContinue: SubmitHandler<FeatureAttributeFormValues> = (
+  const onSaveAndContinue: SubmitHandler<InferFeatureAttributeFormValues> = (
     data,
   ) => {
     save(data);
     setActiveFeature(nextFeature);
   };
 
-  const save: SubmitHandler<FeatureAttributeFormValues> = (data) => {
-    const attributes = getFeatureAttributesFromFormData(data);
-    setFeatureAttributes(activeFeature, attributes, dirtyFields);
-    form.reset(attributes, { keepDirty: false, keepDefaultValues: false });
+  const save: SubmitHandler<InferFeatureAttributeFormValues> = (data) => {
+    const newParams = getInferFeatureAttributeParamsFormValuesOnSubmit({
+      data,
+      feature: activeFeature,
+      params,
+    });
+    setParams(newParams);
+    if (shouldInferFeatureAttributesAgain(dirtyFields)) setRunRequired(true);
+
+    const newDefaults = getFeatureAttributesFormDefaultValues(
+      newParams,
+      activeFeature,
+    );
+    form.reset(newDefaults);
   };
 
   return (
     <FormProvider {...form}>
-      {attributes.sample && (
+      {attributes?.sample && (
         <FieldStatic
           {...fieldTextProps}
           label={t(translations.labels.sample)}
@@ -346,14 +344,21 @@ const Form: FC<ConfigurationProps> = ({
           />
         </ErrorBoundary>
         <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
-          <Button color="primary" onClick={form.handleSubmit(onSave)}>
+          <Button
+            {...buttonProps}
+            color="primary"
+            onClick={form.handleSubmit(onSave)}
+            disabled={!areConfigurationsDirty}
+          >
             <UpdateIcon className="mr-1 h-5 w-5" />
             <span>{t(translations.actions.update)}</span>
           </Button>
           {nextFeature && (
             <Button
+              {...buttonProps}
               color="primary"
               onClick={form.handleSubmit(onSaveAndContinue)}
+              disabled={!areConfigurationsDirty}
             >
               <UpdateIcon className="mr-1 h-5 w-5" />
               <div className="max-w-60 truncate">

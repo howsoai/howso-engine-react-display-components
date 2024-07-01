@@ -3,8 +3,12 @@ import type {
   FeatureOriginalType,
 } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
-import type { InferFeatureAttributesOptions } from "../types/api";
-import { FeatureAttributesIndex, type DirtyFeatureAttributes } from "../hooks";
+import type {
+  FeatureAttributesIndex,
+  InferFeatureAttributesParams,
+} from "../types";
+import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
+import { InferFeatureAttributesBoundingMode } from "./forms";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -63,28 +67,28 @@ const featureAttributeIssues: Record<
 };
 
 export const getFeatureAttributeConfigurationIssues = (
-  featureAttributes: FeatureAttributes,
+  featureAttributes: FeatureAttributes | undefined,
 ): FeatureAttributesConfigurationIssue[] | undefined => {
   const issues: FeatureAttributesConfigurationIssue[] = [];
 
-  if (!featureAttributes.type) {
+  if (!featureAttributes?.type) {
     issues.push(featureAttributeIssues.typeUndefined);
   }
 
-  if (!featureAttributes.data_type) {
+  if (!featureAttributes?.data_type) {
     issues.push(featureAttributeIssues.dataTypeUndefined);
   }
 
   if (isFeatureAttributeSensitiveAttributeAvailable(featureAttributes)) {
-    const isSensitive = !featureAttributes.non_sensitive;
-    if (isSensitive && !featureAttributes.subtype) {
+    const isSensitive = !featureAttributes?.non_sensitive;
+    if (isSensitive && !featureAttributes?.subtype) {
       issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
     }
   }
 
   if (
-    featureAttributes.data_type === "formatted_date_time" &&
-    !featureAttributes.date_time_format
+    featureAttributes?.data_type === "formatted_date_time" &&
+    !featureAttributes?.date_time_format
   ) {
     issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
   }
@@ -106,18 +110,17 @@ export function isSensitiveNominal(attributes: FeatureAttributes) {
 }
 
 export const getFeatureAttributesForType = (
-  attributes: FeatureAttributes,
-): FeatureAttributes => {
-  const isContinuous = attributes.type === "continuous";
+  attributes: FeatureAttributes | undefined,
+): Partial<FeatureAttributes> => {
+  const isContinuous = attributes?.type === "continuous";
   const data_type = getDataTypeFromFeatureAttributes(attributes);
   return {
     ...attributes,
-    type: attributes.type,
     // Reset fields on change
-    id_feature: isContinuous ? undefined : attributes.id_feature,
+    id_feature: isContinuous ? undefined : attributes?.id_feature,
     data_type,
     decimal_places:
-      data_type === "number" ? attributes.decimal_places : undefined,
+      data_type === "number" ? attributes?.decimal_places : undefined,
   };
 };
 
@@ -153,9 +156,125 @@ const getDataTypeFromOriginalType = (
   }
 };
 
+export const setInferFeatureAttributeParamsFeatureAttributes = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  attributes: FeatureAttributes,
+): InferFeatureAttributesParams => {
+  const newParams = { ...params };
+  newParams.features ||= {};
+  newParams.features[feature] = attributes;
+  return newParams;
+};
+
+// Bounds
+
+// Bounding modes
+
+export const getInferFeatureAttributeParamsWithFeatureBoundingMode = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  mode: InferFeatureAttributesBoundingMode | undefined,
+): InferFeatureAttributesParams => {
+  const tightBoundsSet = new Set(params.tight_bounds);
+
+  let newParams: InferFeatureAttributesParams;
+  switch (mode) {
+    case "userDefined":
+      tightBoundsSet.delete(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        // features: {
+        //   ...params.features,
+        // TODO, can I find the bounds we had originally somewhere...? Probably in the calculated features...
+        // [feature]: getFeatureAttributesCalculatedBounds(
+        //   params.features?.[feature]
+        // ),
+        // },
+      };
+      break;
+    case "tightBounds":
+      tightBoundsSet.add(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        features: {
+          ...params.features,
+          [feature]: getFeatureAttributesUnbound(params.features?.[feature]),
+        },
+      };
+      break;
+    case "auto":
+    case undefined:
+      tightBoundsSet.delete(feature);
+      newParams = {
+        ...params,
+        tight_bounds: Array.from(tightBoundsSet),
+        features: {
+          ...params.features,
+          [feature]: getFeatureAttributesUnbound(params.features?.[feature]),
+        },
+      };
+      break;
+    default:
+      throw new Error(`Unhandled bounding mode: ${mode}`);
+  }
+
+  return newParams;
+};
+
+export const getFeatureAttributesBoundingMode = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+): InferFeatureAttributesBoundingMode => {
+  if (params.tight_bounds?.includes(feature)) {
+    return "tightBounds";
+  }
+
+  const attributes = params.features?.[feature];
+  if (
+    typeof attributes?.bounds?.min === "number" ||
+    typeof attributes?.bounds?.max === "number"
+  ) {
+    return "userDefined";
+  }
+
+  return "auto";
+};
+
+export const getFeatureAttributesUnbound = (
+  featureAttributes?: FeatureAttributes,
+): FeatureAttributes => {
+  const type = featureAttributes?.type || "continuous";
+  const adjustedFeature: FeatureAttributes = {
+    ...featureAttributes,
+    type,
+  };
+  // Remove the bounds
+  if (adjustedFeature.bounds) {
+    delete adjustedFeature.bounds.max;
+    delete adjustedFeature.bounds.min;
+  }
+  return adjustedFeature;
+};
+
+// Tight time bounds
+export const getInferFeatureAttributeParamsWithTightTimeBound = (
+  params: InferFeatureAttributesParams,
+  feature: string,
+  tightTimeBounds: boolean | undefined,
+): InferFeatureAttributesParams => {
+  const newParams: InferFeatureAttributesParams = { ...params };
+
+  return newParams;
+};
+
+// Configs
+
 export const getInferFeatureAttributesConfigParameters = (
-  config: Partial<InferFeatureAttributesOptions> = {},
-): InferFeatureAttributesOptions => ({
+  config: Partial<InferFeatureAttributesParams> = {},
+): InferFeatureAttributesParams => ({
   ...config,
   include_sample: true,
 });
@@ -165,7 +284,9 @@ export const getInferFeatureAttributesConfigParameters = (
  * @param fields Changed fields.
  * @returns True if infer should be re-run.
  */
-export function shouldInferAgain(fields: DirtyFeatureAttributes) {
+export function shouldInferAgain(
+  fields: InferFeatureAttributesRunRequiredFields,
+) {
   if (fields == null) return false;
   for (const field of Object.keys(fields)) {
     // These fields do not require re-run of infer feature attributes

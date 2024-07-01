@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react";
+import { type FC, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import {
   FeatureAttributeTypeField,
@@ -19,24 +19,23 @@ import {
   FeatureAttributesTemporalityGroup,
 } from "../groups";
 import { useFormValues } from "@/hooks/useFormValues";
-import { type FeatureAttributesFieldsValues } from "./constants";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { InferFeatureAttributeFormValues } from "../utils";
 
-export interface FeatureAttributesConfigurationProps extends PropsWithChildren {
+export type FeatureAttributesConfigurationProps = {
   className?: string;
+  children?: ReactNode;
   /** If any feature in the data has a time feature */
   featuresHaveTimeFeature: boolean;
-}
+};
 
 /**
  * Allows the user to manipulate the type, data type, and dependent FeatureAttribute fields.
  */
-export function FeatureAttributesConfiguration({
-  children,
-  className,
-  featuresHaveTimeFeature,
-}: FeatureAttributesConfigurationProps) {
-  const values = useFormValues<FeatureAttributesFieldsValues>();
+export const FeatureAttributesConfiguration: FC<
+  FeatureAttributesConfigurationProps
+> = ({ children, className, featuresHaveTimeFeature }) => {
+  const values = useFormValues<InferFeatureAttributeFormValues>();
   const {
     type: featureType,
     data_type: dataType,
@@ -44,9 +43,11 @@ export function FeatureAttributesConfiguration({
     date_time_format: dateTimeFormat,
     dependent_features: dependentFeatures,
     non_sensitive: nonSensitive,
+    reserved,
     time_series: timeSeries,
   } = values;
   const isTimeFeature = timeSeries?.time_feature;
+  const { boundingMode } = reserved || {};
 
   return (
     <div className={twMerge(formSpacingYDefault, className)}>
@@ -83,7 +84,9 @@ export function FeatureAttributesConfiguration({
       <FeatureAttributesBoundsGroup
         featureType={featureType}
         dataType={dataType}
+        boundingMode={boundingMode}
         dateTimeFormat={dateTimeFormat}
+        isTimeFeature={isTimeFeature}
       />
       <FeatureAttributeNullIsDependentField
         dependentFeatures={dependentFeatures}
@@ -108,4 +111,4 @@ export function FeatureAttributesConfiguration({
       {children}
     </div>
   );
-}
+};

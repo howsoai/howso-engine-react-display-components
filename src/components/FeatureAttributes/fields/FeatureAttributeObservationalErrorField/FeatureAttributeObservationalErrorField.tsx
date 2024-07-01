@@ -7,10 +7,11 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { translations } from "./constants";
 
 export type FeatureAttributeObservationalErrorFieldProps =
   Partial<FieldTextProps> & {
-    featureType: FeatureAttributes["type"];
+    featureType: FeatureAttributes["type"] | undefined;
     dataType: FeatureAttributes["data_type"];
   };
 /**
@@ -30,9 +31,7 @@ export const FeatureAttributeObservationalErrorField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(
-        "FeatureAttributes.FeatureAttributeObservationalErrorField.label",
-      )}
+      label={t(translations.label)}
       inputMode="numeric"
       placeholder="0.0"
       {...props}
@@ -54,13 +53,9 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
 
   switch (true) {
     case featureType === "ordinal":
-      return t(
-        "FeatureAttributes.FeatureAttributeObservationalErrorField.help.ordinal",
-      );
+      return t(translations.help.ordinal);
     case featureType === "nominal":
-      return t(
-        "FeatureAttributes.FeatureAttributeObservationalErrorField.help.nominal",
-      );
+      return t(translations.help.nominal);
     case [
       "string",
       "string_mixable",
@@ -68,12 +63,8 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
       "yaml",
       "formatted_date_time",
     ].includes(dataType || ""):
-      return t(
-        "FeatureAttributes.FeatureAttributeObservationalErrorField.help.string",
-      );
+      return t(translations.help.string);
     default:
-      return t(
-        "FeatureAttributes.FeatureAttributeObservationalErrorField.help.default",
-      );
+      return t(translations.help.default);
   }
 };

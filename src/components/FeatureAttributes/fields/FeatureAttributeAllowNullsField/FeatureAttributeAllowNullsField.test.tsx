@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FeatureAttributeAllowNullsField } from "./FeatureAttributeAllowNullsField";
 import {
@@ -17,7 +17,7 @@ describe("AllowNullsField", () => {
       </Wrapper>,
     );
 
-    const field = getField();
+    const field = getFeatureAttributesAllowNullsField();
     expect(field).toBeTruthy();
     expect(field).toBeChecked();
   });
@@ -33,7 +33,7 @@ describe("AllowNullsField", () => {
       </Wrapper>,
     );
 
-    const field = getField();
+    const field = getFeatureAttributesAllowNullsField();
     expect(field).toBeTruthy();
     expect(field).toBeChecked();
   });
@@ -49,7 +49,7 @@ describe("AllowNullsField", () => {
       </Wrapper>,
     );
 
-    const field = getField();
+    const field = getFeatureAttributesAllowNullsField();
     expect(field).toBeTruthy();
     expect(field).not.toBeChecked();
   });
@@ -67,7 +67,14 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
   );
 };
 
-const getField = () =>
-  screen.queryByLabelText(
+const getFeatureAttributesAllowNullsField = () =>
+  screen.getByLabelText(
+    new RegExp(`^${featureAttributeAllowNullsFieldLabel}.*`),
+  );
+
+export const getFeatureAttributesAllowNullsFieldInContainer = (
+  element: HTMLElement,
+) =>
+  within(element).getByLabelText(
     new RegExp(`^${featureAttributeAllowNullsFieldLabel}.*`),
   );

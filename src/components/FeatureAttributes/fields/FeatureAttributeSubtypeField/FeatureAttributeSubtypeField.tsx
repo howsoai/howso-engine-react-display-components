@@ -6,14 +6,14 @@ import {
   FeatureAttributesDataTypeEnum,
 } from "@howso/openapi-client";
 import {
-  FieldText,
-  FieldTextProps,
+  FieldSelect,
+  FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeSubtypeFieldLabel } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 
-export type FeatureAttributeSubtypeProps = Partial<FieldTextProps> & {
-  featureType: FeatureAttributes["type"];
+export type FeatureAttributeSubtypeProps = Partial<FieldSelectProps> & {
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
   nonSensitive: FeatureAttributes["non_sensitive"];
 };
@@ -43,23 +43,34 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   const { t } = useDefaultTranslation();
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+  const subtype = form.getValues("subtype");
 
   if (featureType === "continuous" || nonSensitive) {
     return null;
   }
 
   const required = true;
+  const isSubtypeValueInOptions =
+    !!dataType && subtypes[dataType] && subtypes[dataType].includes(subtype);
+  const isSubtypeCustom = !!subtype && !isSubtypeValueInOptions;
 
   return (
-    <FieldText
+    <FieldSelect
       {...fieldTextProps}
       required={required}
       label={t(featureAttributeSubtypeFieldLabel)}
       {...props}
       {...form.register("subtype", { required })}
-      options={dataType ? subtypes[dataType] : undefined}
       helperText={t("FeatureAttributes.FeatureAttributeSubtypeField.help")}
-    />
+    >
+      {isSubtypeCustom && <option value={subtype}>{subtype}</option>}
+      {dataType &&
+        subtypes[dataType].map((subtype) => (
+          <option key={subtype} value={subtype}>
+            {subtype}
+          </option>
+        ))}
+    </FieldSelect>
   );
 };
 

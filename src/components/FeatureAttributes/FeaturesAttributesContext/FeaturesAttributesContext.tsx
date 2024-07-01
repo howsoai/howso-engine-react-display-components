@@ -16,8 +16,10 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { FeatureAttributesGroupBaseProps } from "../groups";
+import { ButtonProps } from "flowbite-react";
 
 export type IFeaturesAttributesContext = {
+  buttonProps?: Partial<ButtonProps>;
   fieldCheckboxProps?: Partial<FieldCheckboxProps>;
   fieldRadiosProps?: Pick<FieldRadiosProps, "labelInline" | "labelProps">;
   fieldSelectProps?: Pick<FieldSelectProps, "labelInline" | "labelProps">;
@@ -42,6 +44,10 @@ export type FeaturesAttributesContextProviderProps = {
 export const FeaturesAttributesContextProvider: FC<
   FeaturesAttributesContextProviderProps
 > = ({ children, compact }) => {
+  const buttonProps: IFeaturesAttributesContext["buttonProps"] = useMemo(
+    () => ({ size: compact ? "sm" : undefined }),
+    [compact],
+  );
   const fieldCheckboxProps: IFeaturesAttributesContext["fieldCheckboxProps"] =
     useMemo(
       () => ({
@@ -124,6 +130,7 @@ export const FeaturesAttributesContextProvider: FC<
   return (
     <FeaturesAttributesContext.Provider
       value={{
+        buttonProps,
         fieldCheckboxProps,
         fieldRadiosProps,
         fieldSelectProps,

@@ -13,24 +13,24 @@ export const getFeatureTypeFieldInElement = (element: HTMLElement) =>
 
 export const getFeatureTypeFieldRadios = () => ({
   continuous: screen.getByLabelText(
-    featureAttributeTypeOptions.continuous.translationKey,
+    featureAttributeTypeOptions.continuous.translations.label,
   ),
   nominal: screen.getByLabelText(
-    featureAttributeTypeOptions.nominal.translationKey,
+    featureAttributeTypeOptions.nominal.translations.label,
   ),
   ordinal: screen.getByLabelText(
-    featureAttributeTypeOptions.ordinal.translationKey,
+    featureAttributeTypeOptions.ordinal.translations.label,
   ),
 });
 export const getFeatureTypeFieldRadiosInElement = (element: HTMLElement) => ({
   continuous: within(element).getByLabelText(
-    featureAttributeTypeOptions.continuous.translationKey,
+    featureAttributeTypeOptions.continuous.translations.label,
   ),
   nominal: within(element).getByLabelText(
-    featureAttributeTypeOptions.nominal.translationKey,
+    featureAttributeTypeOptions.nominal.translations.label,
   ),
   ordinal: within(element).getByLabelText(
-    featureAttributeTypeOptions.ordinal.translationKey,
+    featureAttributeTypeOptions.ordinal.translations.label,
   ),
 });
 

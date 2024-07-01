@@ -16,7 +16,7 @@ export type FeatureAttributesContinuousNumbersGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
   "title" | "basic" | "advanced"
 > & {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
 };
 export const FeatureAttributesContinuousNumbersGroup: FC<
@@ -27,6 +27,7 @@ export const FeatureAttributesContinuousNumbersGroup: FC<
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
   if (
+    !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
     !allowedDataTypes.includes(dataType)
   ) {

@@ -1,10 +1,10 @@
 {
   "FeatureAttributes": {
     "ConfigurationIssue": {
-      "typeUndefined": "Type is required",
       "dataTypeUndefined": "Data type is required",
+      "dateTimeFormatUndefined": "Formatted date times require Date Time Format",
       "sensitiveSubtypeUndefined": "Sensitive attributes require a Subtype for substitution",
-      "dateTimeFormatUndefined": "Formatted date times require Date Time Format"
+      "typeUndefined": "Type is required"
     },
     "FeatureAttributeAllowedValuesField": {
       "help": {
@@ -93,6 +93,22 @@
       "help": "<0>Amalgam</0> code that is called on resulting values of this feature during `react` operations.",
       "label": "Post Process Code"
     },
+    "FeatureAttributeReservedBoundingModeField": {
+      "help": {
+        "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
+        "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
+        "userDefined": "Specify min and max manually (not recommended)."
+      },
+      "label": "Bounding mode",
+      "options": {
+        "auto": "Auto",
+        "tightBounds": "Tight bounds",
+        "userDefined": "User defined"
+      }
+    },
+    "FeatureAttributeReservedTightTimeBoundField": {
+      "label": "Tight time bounds"
+    },
     "FeatureAttributeSample": {
       "modal": {
         "title": "Sample"
@@ -118,7 +134,7 @@
       "title": "Temporality"
     },
     "FeatureAttributeSubtypeField": {
-      "help": "Your platform supports a default list of options. You may create your own, supplying the name here instead.",
+      "help": "Your platform supports a default list of options. Refer to documentation for creation of a custom subtype.",
       "label": "Subtype"
     },
     "FeatureAttributeTimeSeriesDeltaMinMaxFields": {
@@ -206,10 +222,20 @@
       "form": {
         "label": "Configure feature"
       },
+      "header": {
+        "fields": {
+          "feature": {
+            "label": "Feature"
+          },
+          "timeFeature": {
+            "label": "Time Feature"
+          }
+        }
+      },
       "labels": {
         "density": {
-          "compact": "Compact",
-          "comfortable": "Comfortable"
+          "comfortable": "Comfortable",
+          "compact": "Compact"
         },
         "sample": "Sample"
       },

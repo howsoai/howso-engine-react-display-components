@@ -3,10 +3,10 @@ export const translations = {
   header: {
     fields: {
       feature: {
-        label: "Feature",
+        label: `${base}.header.fields.feature.label`,
       },
       timeFeature: {
-        label: "Time Feature",
+        label: `${base}.header.fields.timeFeature.label`,
       },
     },
   },

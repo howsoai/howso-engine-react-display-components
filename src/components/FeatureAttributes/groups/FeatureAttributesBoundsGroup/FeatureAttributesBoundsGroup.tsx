@@ -1,7 +1,9 @@
+import { FC } from "react";
 import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributeAllowNullsField,
   FeatureAttributeAllowedValuesField,
+  FeatureAttributeReservedBoundingModeField,
   FeatureAttributeMinMaxFields,
 } from "../../fields";
 import {
@@ -10,25 +12,32 @@ import {
 } from "../FeatureAttributesGroupBase";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
 
 export type FeatureAttributesBoundsGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
   "title" | "basic" | "advanced"
 > & {
-  featureType: FeatureAttributes["type"];
+  featureType: FeatureAttributes["type"] | undefined;
   dataType: FeatureAttributes["data_type"];
+  boundingMode: InferFeatureAttributesBoundingMode | undefined;
   dateTimeFormat: string | undefined;
+  isTimeFeature: boolean | undefined;
 };
 
 /**
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureBounds.html#howso.openapi.models.FeatureBounds
  */
-export function FeatureAttributesBoundsGroup({
+export const FeatureAttributesBoundsGroup: FC<
+  FeatureAttributesBoundsGroupProps
+> = ({
   featureType,
   dataType,
+  boundingMode,
   dateTimeFormat,
+  isTimeFeature,
   ...props
-}: FeatureAttributesBoundsGroupProps) {
+}) => {
   const { t } = useDefaultTranslation();
 
   return (
@@ -38,13 +47,18 @@ export function FeatureAttributesBoundsGroup({
       basic={
         <div className={formSpacingYDefault}>
           <FeatureAttributeAllowNullsField />
-          <FeatureAttributeAllowedValuesField
+          <FeatureAttributeReservedBoundingModeField
             featureType={featureType}
             dataType={dataType}
-            dateTimeFormat={dateTimeFormat}
           />
           <FeatureAttributeMinMaxFields
             type={featureType}
+            dataType={dataType}
+            boundingMode={boundingMode}
+            dateTimeFormat={dateTimeFormat}
+          />
+          <FeatureAttributeAllowedValuesField
+            featureType={featureType}
             dataType={dataType}
             dateTimeFormat={dateTimeFormat}
           />
@@ -52,4 +66,4 @@ export function FeatureAttributesBoundsGroup({
       }
     />
   );
-}
+};

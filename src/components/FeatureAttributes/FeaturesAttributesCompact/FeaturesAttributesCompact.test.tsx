@@ -1,19 +1,22 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { act } from "react";
 import "@testing-library/jest-dom";
+import { act } from "react";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
 import { translations } from "./constants";
 import {
-  type FeatureAttributesIndex,
-  getFeatureAttributesAreDirtyAtom,
-  getFeatureAttributesIndexAtom,
-  getFeatureAttributesSetAttributesAtom,
-  getFeatureAttributesTimeFeatureAtom,
+  getInferFeatureAttributesRunRequiredFields,
+  getInferFeatureAttributesParamsAtom,
+  getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
-  getFeatureAttributesOptionsAtom,
 } from "../hooks";
 import { sleep } from "@/utils";
 import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
+import { getFeatureAttributeObservationalErrorFieldInElement } from "../fields/FeatureAttributeObservationalErrorField/FeatureAttributeObservationalErrorField.test";
+import { getFeatureAttributesAllowNullsFieldInContainer } from "../fields/FeatureAttributeAllowNullsField/FeatureAttributeAllowNullsField.test";
+import { FeatureAttributesIndex, InferFeatureAttributesParams } from "../types";
+import { getFeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup/FeatureAttributesTemporalityGroup.test";
+
+/* eslint jest/no-conditional-expect: "off" */
 
 describe("FeaturesAttributesCompact", () => {
   const featuresAttributes: FeatureAttributesIndex = {
@@ -54,24 +57,21 @@ describe("FeaturesAttributesCompact", () => {
   const firstFeature = featureEntries[0][0];
 
   it("should include an alert to select a feature upon load", () => {
-    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
-    const featureAttributesIndexAtom =
-      getFeatureAttributesIndexAtom(featuresAttributes);
-    const setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
-    });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+    const params: InferFeatureAttributesParams = {
+      features: featuresAttributes,
+    };
+    const paramsAtom = getInferFeatureAttributesParamsAtom(params);
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+      paramsAtom,
+      runRequiredAtom,
     });
 
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        featureAttributesIndexAtom={featureAttributesIndexAtom}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
-        setFeatureAttributesAtom={setFeatureAttributesAtom}
+        paramsAtom={paramsAtom}
+        runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -85,25 +85,65 @@ describe("FeaturesAttributesCompact", () => {
     );
   });
 
-  it("should disable the features field after any changes to attributes until an update is applied", async () => {
-    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
-    const featureAttributesIndexAtom =
-      getFeatureAttributesIndexAtom(featuresAttributes);
-    const setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
+  it("should toggle the time feature on exposing temporal options", async () => {
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+    const params: InferFeatureAttributesParams = {
+      features: featuresAttributes,
+    };
+    const paramsAtom = getInferFeatureAttributesParamsAtom(params);
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+      paramsAtom,
+      runRequiredAtom,
     });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
+
+    render(
+      <FeaturesAttributesCompact
+        activeFeatureAtom={getFeatureAttributesActiveFeatureAtom(firstFeature)}
+        paramsAtom={paramsAtom}
+        runRequiredAtom={runRequiredAtom}
+        timeFeatureAtom={timeFeatureAtom}
+      />,
+    );
+
+    const timeFeature = getTimeFeatureField();
+    const updateButton = getUpdate();
+
+    expect(timeFeature).toBeEnabled();
+    expect(timeFeature).not.toBeChecked();
+    expect(updateButton).toBeDisabled();
+
+    fireEvent(
+      timeFeature,
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
+    expect(timeFeature).toBeChecked();
+
+    const temporalityGroup = getFeatureAttributesTemporalityGroup();
+    expect(temporalityGroup).toBeVisible();
+
+    // Update and inspect
+    fireEvent(
+      updateButton,
+      new MouseEvent("click", { bubbles: true, cancelable: true }),
+    );
+  });
+
+  it("should disable the features field after any changes to attributes until an update is applied", async () => {
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+    const params: InferFeatureAttributesParams = {
+      features: featuresAttributes,
+    };
+    const paramsAtom = getInferFeatureAttributesParamsAtom(params);
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+      paramsAtom,
+      runRequiredAtom,
     });
 
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        featureAttributesIndexAtom={featureAttributesIndexAtom}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
-        setFeatureAttributesAtom={setFeatureAttributesAtom}
+        paramsAtom={paramsAtom}
+        runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -113,21 +153,18 @@ describe("FeaturesAttributesCompact", () => {
     expect(featuresField.value).toBe("");
     fireEvent.change(featuresField, { target: { value: firstFeature } });
     expect(featuresField.value).toBe(firstFeature);
-    const [feature, attributes] = featureEntries[0];
+    const [feature] = featureEntries[0];
 
     const container = getConfigurationContainer();
     await expectFeatureAttributeConfigurationInContainer(
       container,
       feature,
-      attributes,
+      params,
     );
 
     // Change a value in the form
-    const allowNullsField = within(container).getByLabelText<HTMLInputElement>(
-      new RegExp(
-        `^FeatureAttributes.FeatureAttributeAllowNullsField.label\\*?$`,
-      ),
-    );
+    const allowNullsField =
+      getFeatureAttributesAllowNullsFieldInContainer(container);
     fireEvent.click(allowNullsField);
 
     expect(featuresField).not.toBeEnabled();
@@ -139,31 +176,26 @@ describe("FeaturesAttributesCompact", () => {
       update,
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
-    await act(async () => {
-      await sleep(300);
-    });
+    await act(async () => sleep(300));
     expect(featuresField).toBeEnabled();
   });
 
   it("should open a configuration container, save, and load the next", async () => {
-    const featuresDirtyAtom = getFeatureAttributesAreDirtyAtom();
-    const featureAttributesIndexAtom =
-      getFeatureAttributesIndexAtom(featuresAttributes);
-    const setFeatureAttributesAtom = getFeatureAttributesSetAttributesAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
-    });
-    const timeFeatureAtom = getFeatureAttributesTimeFeatureAtom({
-      featureAttributesIndexAtom,
-      featuresDirtyAtom,
+    const runRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+    const params: InferFeatureAttributesParams = {
+      features: featuresAttributes,
+    };
+    const paramsAtom = getInferFeatureAttributesParamsAtom(params);
+    const timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+      paramsAtom,
+      runRequiredAtom,
     });
 
     render(
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
-        featureAttributesIndexAtom={featureAttributesIndexAtom}
-        optionsAtom={getFeatureAttributesOptionsAtom({})}
-        setFeatureAttributesAtom={setFeatureAttributesAtom}
+        paramsAtom={paramsAtom}
+        runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
     );
@@ -174,22 +206,48 @@ describe("FeaturesAttributesCompact", () => {
     expect(featuresField.value).toBe(firstFeature);
 
     for (let i = 0; i <= featureEntries.length - 1; i++) {
-      const [feature, attributes] = featureEntries[i];
+      const [feature] = featureEntries[i];
 
       const container = getConfigurationContainer();
       await expectFeatureAttributeConfigurationInContainer(
         container,
         feature,
-        attributes,
+        params,
       );
+
       if (i <= featureEntries.length - 2) {
-        const updateAndNext = within(container).getByRole("button", {
-          name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
-        });
+        const update = getUpdate();
+        const updateAndNext = getUpdateAndNext();
+
+        expect(update).toBeDisabled();
+        expect(updateAndNext).toBeDisabled();
+        expect(featuresField).toBeEnabled();
+
+        // Make a change to a field present on all forms
+        const value = Math.random().toFixed(2);
+        const observationalErrorField =
+          getFeatureAttributeObservationalErrorFieldInElement(container);
+        fireEvent.change(observationalErrorField, { target: { value } });
+
+        expect(observationalErrorField).toHaveValue(value);
+        expect(update).toBeEnabled();
+        expect(updateAndNext).toBeEnabled();
+        expect(featuresField).toBeDisabled();
+
+        // Save and move on
         fireEvent(
           updateAndNext,
           new MouseEvent("click", { bubbles: true, cancelable: true }),
         );
+        await act(async () => {
+          await sleep(1000);
+        });
+        expect(getUpdate()).toBeDisabled();
+        // Update and next does not appear on the last item
+        if (i <= featureEntries.length - 3) {
+          expect(getUpdateAndNext()).toBeDisabled();
+        }
+        expect(featuresField).toBeEnabled();
       }
     }
   });
@@ -199,6 +257,21 @@ const getFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(
     new RegExp(`^${translations.header.fields.feature.label}\\*?$`),
   );
+
+const getTimeFeatureField = () =>
+  screen.getByLabelText<HTMLSelectElement>(
+    new RegExp(`^${translations.header.fields.timeFeature.label}\\*?$`),
+  );
+
+const getUpdate = () =>
+  screen.getByRole("button", {
+    name: new RegExp(`.*${translations.actions.update}$`),
+  });
+
+const getUpdateAndNext = () =>
+  screen.getByRole("button", {
+    name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
+  });
 
 const getConfigurationContainer = () =>
   screen.getByTestId("configuration-container");

@@ -1,4 +1,4 @@
-import { FC, useContext, useMemo } from "react";
+import { FC, Fragment, useContext, useMemo } from "react";
 import { RegisterOptions, useFormContext } from "react-hook-form";
 import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
@@ -14,10 +14,11 @@ import {
   type FieldRadiosProps,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  FeatureAttributeFormValues,
+  InferFeatureAttributeFormValues,
   getFeatureAttributesForType,
 } from "../../utils";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { twMerge } from "tailwind-merge";
 
 export type FeatureAttributeTypeFieldProps =
   | ({ fieldType: "radios" } & Partial<FieldRadiosProps>)
@@ -33,7 +34,7 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
   required,
   ...props
 }) => {
-  const form = useFormContext<FeatureAttributeFormValues>();
+  const form = useFormContext<InferFeatureAttributeFormValues>();
   const registerOptions: RegisterOptions = useMemo(
     () => ({
       required,
@@ -55,14 +56,11 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
     [form, required, onChange],
   );
 
-  const featureType = form.getValues(featureAttributeTypeName);
-
   switch (fieldType) {
     case "radios":
       return (
         // @ts-expect-error WTB proper infer in 5.5 please.
         <FieldTypeRadios
-          helperText={<FeatureTypeHelperText featureType={featureType} />}
           required={required}
           {...props}
           registerOptions={registerOptions}
@@ -72,7 +70,6 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
       return (
         // @ts-expect-error WTB proper infer in 5.5 please.
         <FieldTypeSelect
-          helperText={<FeatureTypeHelperText featureType={featureType} />}
           required={required}
           {...props}
           registerOptions={registerOptions}
@@ -97,12 +94,17 @@ const FieldTypeRadios: FC<FieldTypeRadiosProps> = ({
       label={t(featureAttributeTypeLabel)}
       labelInline
       {...props}
+      labelProps={{
+        ...fieldRadiosProps?.labelProps,
+        ...props.labelProps,
+        tooltipProps: { content: <TooltipContents /> },
+      }}
       required={required}
       name={featureAttributeTypeName}
       options={Object.values(featureAttributeTypeOptions).map(
-        ({ value, translationKey }) => ({
+        ({ value, translations }) => ({
           value,
-          text: t(translationKey),
+          text: t(translations.label),
         }),
       )}
     />
@@ -119,21 +121,26 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
 }) => {
   const { t } = useDefaultTranslation();
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
-  const form = useFormContext<FeatureAttributeFormValues>();
+  const form = useFormContext<InferFeatureAttributeFormValues>();
 
   return (
     <FieldSelect
       {...fieldSelectProps}
       label={t(featureAttributeTypeLabel)}
       {...props}
+      labelProps={{
+        ...fieldSelectProps?.labelProps,
+        ...props.labelProps,
+        tooltipProps: { content: <TooltipContents /> },
+      }}
       required={required}
       {...form.register(featureAttributeTypeName, registerOptions)}
     >
       <option value="" />
       {Object.values(featureAttributeTypeOptions).map(
-        ({ value, translationKey }) => (
+        ({ value, translations }) => (
           <option key={value} value={value}>
-            {t(translationKey)}
+            {t(translations.label)}
           </option>
         ),
       )}
@@ -141,54 +148,24 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
   );
 };
 
-const FeatureTypeHelperText: FC<{
-  featureType: FeatureAttributes["type"] | undefined;
-}> = ({ featureType }) => {
+const TooltipContents: FC = () => {
   const { t } = useDefaultTranslation();
 
-  switch (featureType) {
-    case "continuous":
-      return (
-        <>
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.continuous.description",
-          )}{" "}
-          (
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.continuous.example",
-          )}
-          )
-        </>
-      );
-    case "nominal":
-      return (
-        <>
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.nominal.description",
-          )}{" "}
-          (
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.nominal.example",
-          )}
-          )
-        </>
-      );
-    case "ordinal":
-      return (
-        <>
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.ordinal.description",
-          )}{" "}
-          (
-          {t(
-            "FeatureAttributes.FeatureAttributeTypeField.help.ordinal.example",
-          )}
-          )
-        </>
-      );
-    default:
-      return t(
-        "FeatureAttributes.FeatureAttributeTypeField.help.empty.description",
-      );
-  }
+  return (
+    <dl>
+      {Object.entries(featureAttributeTypeOptions)
+        .filter(([, { translations }]) => !!translations.help)
+        .map(([type, { translations }], index) => (
+          <Fragment key={type}>
+            <dt className={twMerge(index > 0 && "mt-2")}>
+              {t(translations.label)}
+            </dt>
+            <dd>
+              {t(translations.help.description)} ({t(translations.help.example)}
+              )
+            </dd>
+          </Fragment>
+        ))}
+    </dl>
+  );
 };

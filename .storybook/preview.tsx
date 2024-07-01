@@ -39,7 +39,7 @@ const preview: Preview = {
       },
     },
     i18n,
-    viewport: { defaultViewport: "responsive" },
+    viewport: { defaultViewport: undefined },
   },
   decorators: [
     (Story: StoryFn, context) => {
