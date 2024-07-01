@@ -97,7 +97,7 @@
       "help": {
         "auto": "Extend the bounds of the feature for synthesis. Best for Privacy.",
         "tightBounds": "Use the exact min and max found in the data. Best for Utility.",
-        "userDefined": "Specify min and max manually (not recommended)"
+        "userDefined": "Specify min and max manually (not recommended)."
       },
       "label": "Bounding mode",
       "options": {
