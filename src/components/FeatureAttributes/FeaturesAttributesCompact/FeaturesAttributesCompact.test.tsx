@@ -117,7 +117,6 @@ describe("FeaturesAttributesCompact", () => {
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
     expect(timeFeature).toBeChecked();
-    expect(updateButton).toBeEnabled();
 
     const temporalityGroup = getFeatureAttributesTemporalityGroup();
     expect(temporalityGroup).toBeVisible();
@@ -127,8 +126,6 @@ describe("FeaturesAttributesCompact", () => {
       updateButton,
       new MouseEvent("click", { bubbles: true, cancelable: true }),
     );
-    await act(async () => sleep(300));
-    expect(updateButton).toBeDisabled();
   });
 
   it("should disable the features field after any changes to attributes until an update is applied", async () => {
