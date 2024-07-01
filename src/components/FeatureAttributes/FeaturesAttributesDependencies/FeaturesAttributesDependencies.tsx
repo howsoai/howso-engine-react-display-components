@@ -37,7 +37,7 @@ export const FeaturesAttributesDependencies: FC<
   const [dependencies, setDependencies] = useState<DependenciesIndex>(
     getDependencies(params.features || {}),
   );
-  const features = Object.keys(params);
+  const features = Object.keys(params.features || {});
 
   const onUpdate: ButtonProps["onClick"] = (event) => {
     event.preventDefault();
