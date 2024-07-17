@@ -1,16 +1,15 @@
+import flowbite from "flowbite-react/tailwind";
 import { standardTailwindConfigThemeExtend } from "@howso/react-tailwind-flowbite-components";
-import flowbite from "flowbite/plugin";
 
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
+    flowbite.content(),
     "./src/**/*.{js,ts,jsx,tsx}",
     "./storybook/**/*.{jsx,tsx,html}",
-    "./node_modules/flowbite/**/*.{js,jsx,ts,tsx}",
-    "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
     "./node_modules/@howso/react-tailwind-flowbite-components/lib/index.esm.js",
   ],
-  plugins: [flowbite({ charts: true })],
+  plugins: [flowbite.plugin({ charts: true })],
   theme: {
     extend: standardTailwindConfigThemeExtend,
   },
