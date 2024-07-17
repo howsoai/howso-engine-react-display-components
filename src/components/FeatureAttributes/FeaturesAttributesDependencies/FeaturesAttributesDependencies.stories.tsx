@@ -138,7 +138,9 @@ type Story = StoryObj<typeof FeaturesAttributesDependencies>;
 export const Default: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {
-    paramsAtom: getInferFeatureAttributesParamsAtom(sampleFeaturesAttributes),
+    paramsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeaturesAttributes,
+    }),
   },
 };
 

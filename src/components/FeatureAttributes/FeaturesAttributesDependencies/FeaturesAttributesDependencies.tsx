@@ -9,6 +9,7 @@ import {
   Tooltip,
 } from "flowbite-react";
 import {
+  ExpandCollapseControl,
   PrimaryButton,
   ReadabilityConstraint,
   TableHeadCell,
@@ -18,6 +19,7 @@ import {
 import { useDefaultTranslation } from "@/hooks";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
+import { twMerge } from "tailwind-merge";
 
 export type FeaturesAttributesDependenciesProps = {
   paramsAtom: InferFeatureAttributesParamsAtom;
@@ -38,6 +40,8 @@ export const FeaturesAttributesDependencies: FC<
     getDependencies(params.features || {}),
   );
   const features = Object.keys(params.features || {});
+
+  const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   const onUpdate: ButtonProps["onClick"] = (event) => {
     event.preventDefault();
@@ -73,7 +77,7 @@ export const FeaturesAttributesDependencies: FC<
 
   return (
     <>
-      <ReadabilityConstraint>
+      <ReadabilityConstraint className="mx-auto">
         <HelperText className="mb-4" color={"gray"}>
           {t("FeatureAttributes.FeaturesAttributesDependencies.help")}
         </HelperText>
@@ -143,16 +147,53 @@ export const FeaturesAttributesDependencies: FC<
               </Table.Body>
             </Table>
           </div>
-          <div className="flex justify-end">
-            <PrimaryButton disabled={!features.length} onClick={onUpdate}>
-              <UpdateIcon className="mr-1 h-5 w-5" />
-              <span>
-                {t(
-                  "FeatureAttributes.FeaturesAttributesDependencies.actions.update",
+          <ReadabilityConstraint className="mx-auto">
+            <div className="flex justify-between mb-4">
+              <div>
+                <ExpandCollapseControl
+                  isExpanded={isInfoOpen}
+                  // className={twMerge("mb-4 p-0 text-sm font-normal")}
+                  onClick={() => {
+                    setIsInfoOpen((previous) => !previous);
+                  }}
+                >
+                  {t(
+                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.expandControl",
+                  )}
+                </ExpandCollapseControl>
+              </div>
+              <div>
+                <PrimaryButton disabled={!features.length} onClick={onUpdate}>
+                  <UpdateIcon className="mr-1 h-5 w-5" />
+                  <span>
+                    {t(
+                      "FeatureAttributes.FeaturesAttributesDependencies.actions.update",
+                    )}
+                  </span>
+                </PrimaryButton>
+              </div>
+            </div>
+
+            <div>
+              <div
+                className={twMerge(
+                  "max-h-0 overflow-hidden transition-[max-height] duration-200 ease-in-out",
+                  isInfoOpen && "max-h-[99rem]", // I wonder if this is enough...
                 )}
-              </span>
-            </PrimaryButton>
-          </div>
+              >
+                <HelperText className="mb-4" color={"gray"}>
+                  {t(
+                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.1",
+                  )}
+                </HelperText>
+                <HelperText color={"gray"}>
+                  {t(
+                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.2",
+                  )}
+                </HelperText>
+              </div>
+            </div>
+          </ReadabilityConstraint>
         </>
       ) : (
         <Alert color="warning" icon={WarningIcon}>
