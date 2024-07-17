@@ -425,6 +425,10 @@ type MapDependenciesControlProps = Pick<
 >;
 const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
   const { t } = useDefaultTranslation();
+  const params = useAtomValue(props.paramsAtom);
+  const featuresAttributes = params.features || {};
+  const features = Object.keys(featuresAttributes);
+
   const [isOpen, setIsOpen] = useState(false);
   const onOpen = () => {
     setIsOpen(true);
@@ -434,9 +438,10 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
   };
 
   const label = t(translations.actions.mapDependents);
+
   return (
     <>
-      <Button color={"light"} onClick={onOpen}>
+      <Button color={"light"} onClick={onOpen} disabled={!features.length}>
         <MapDependentFeatureAttributesIcon className={"mr-1"} />
         {label}
       </Button>
