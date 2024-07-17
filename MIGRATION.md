@@ -1,5 +1,31 @@
 # Migration guide
 
+## 2.x
+
+Flowbite updates 0.7 - 0.10
+
+`tailwind.config.js` content path:
+
+old: "node\*modules/flowbite-react/lib/esm/\*\*/\_.js"
+
+new: "node\*modules/flowbite-react/dist/esm/\*\*/\_.mjs" - Please use (`flowbite.content()`)
+
+```js
+const flowbite = require("flowbite-react/tailwind");
+
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    // ...
+    flowbite.content(),
+  ],
+  plugins: [
+    // ...
+    flowbite.plugin(),
+  ],
+};
+```
+
 ## 1.x Feature Attributes updated to include Infer params
 
 This breaking change modifies the data structures for FeatureAttributes.
