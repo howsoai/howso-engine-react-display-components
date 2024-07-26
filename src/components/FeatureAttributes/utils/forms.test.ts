@@ -24,6 +24,7 @@ describe("getInferFeatureAttributeParamsFormValuesOnSubmit", () => {
         },
       },
     };
+
     const data: InferFeatureAttributeFormValues = {
       ...params.features?.[feature],
       reserved: {
@@ -31,15 +32,14 @@ describe("getInferFeatureAttributeParamsFormValuesOnSubmit", () => {
         isDateTime: true,
       },
     };
+    // Remove the time_series.time_feature property as it is not part of the form's elements
+    delete data.time_series?.time_feature;
 
     const updatedParams = getInferFeatureAttributeParamsFormValuesOnSubmit({
       data,
       feature,
       params,
     });
-    expect(
-      updatedParams.features?.[feature].time_series?.time_feature,
-    ).toBeTruthy();
     expect(updatedParams.features?.[feature].time_series).toStrictEqual(
       params.features?.[feature].time_series,
     );
