@@ -128,6 +128,14 @@ const getParamsWithUpdatedFeatureAttributes = (
     [feature]: {
       ...params.features?.[feature],
       ...attributes,
+      time_series:
+        params.features?.[feature].time_series || attributes.time_series
+          ? ({
+              type: "rate",
+              ...params.features?.[feature].time_series,
+              ...attributes.time_series,
+            } satisfies FeatureAttributes["time_series"])
+          : undefined,
     },
   },
 });
