@@ -1,5 +1,4 @@
 import { within, screen } from "@testing-library/react";
-import { FeatureAttributeDataTypeFieldIl8nBundle as il8n } from "./FeatureAttributeDataTypeField.il8n";
 
 export const getDataTypeField = () =>
   screen.getByTestId("FeatureAttributeDataTypeField");
