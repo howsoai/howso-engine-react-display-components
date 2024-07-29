@@ -26,7 +26,7 @@ export const FeatureAttributeNullIsDependentField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t("FeatureAttributes.FeatureAttributeNullIsDependentField.label")}
+      label={t(il8n.strings.label)}
       {...form.register("null_is_dependent")}
       helperText={
         <>

@@ -27,7 +27,7 @@ export const FeatureAttributePostProcessField: FC<
     <FieldTextArea
       {...fieldTextAreaProps}
       label={t("FeatureAttributes.FeatureAttributePostProcessField.label")}
-      placeholder={il8n.strings.placeholder}
+      placeholder={t(il8n.strings.placeholder)}
       rows={7}
       {...props}
       {...form.register("post_process")}

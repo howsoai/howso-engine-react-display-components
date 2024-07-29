@@ -188,7 +188,7 @@ export const FeaturesAttributesDependencies: FC<
         </>
       ) : (
         <Alert color="warning" icon={WarningIcon}>
-          {t("FeatureAttributes.FeaturesAttributesDependencies.state.empty")}
+          {t(il8n.strings.state.empty)}
         </Alert>
       )}
     </>

@@ -29,7 +29,7 @@ export const FeatureAttributeDerivedFeatureCodeField: FC<
     <FieldTextArea
       {...fieldTextAreaProps}
       label={t(il8n.strings.label)}
-      placeholder={il8n.strings.placeholder}
+      placeholder={t(il8n.strings.placeholder)}
       rows={7}
       {...props}
       className={twMerge("font-mono", props.className)}
