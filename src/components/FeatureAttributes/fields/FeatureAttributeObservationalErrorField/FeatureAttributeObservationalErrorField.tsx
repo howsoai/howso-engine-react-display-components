@@ -1,13 +1,13 @@
 import { FC, ReactNode, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { translations } from "./constants";
+import { FeatureAttributeObservationalErrorFieldIl8nBundle as il8n } from "./FeatureAttributeObservationalErrorField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeObservationalErrorFieldProps =
   Partial<FieldTextProps> & {
@@ -22,7 +22,7 @@ export type FeatureAttributeObservationalErrorFieldProps =
 export const FeatureAttributeObservationalErrorField: FC<
   FeatureAttributeObservationalErrorFieldProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -31,9 +31,10 @@ export const FeatureAttributeObservationalErrorField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(translations.label)}
+      label={t(il8n.strings.label)}
       inputMode="numeric"
       placeholder="0.0"
+      data-testid="FeatureAttributeObservationalErrorField"
       {...props}
       {...form.register("observational_error", {
         min: 0,
@@ -49,13 +50,13 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
   featureType,
   dataType,
 }): ReactNode => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
 
   switch (true) {
     case featureType === "ordinal":
-      return t(translations.help.ordinal);
+      return t(il8n.strings.help.ordinal);
     case featureType === "nominal":
-      return t(translations.help.nominal);
+      return t(il8n.strings.help.nominal);
     case [
       "string",
       "string_mixable",
@@ -63,8 +64,8 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
       "yaml",
       "formatted_date_time",
     ].includes(dataType || ""):
-      return t(translations.help.string);
+      return t(il8n.strings.help.string);
     default:
-      return t(translations.help.default);
+      return t(il8n.strings.help.default);
   }
 };

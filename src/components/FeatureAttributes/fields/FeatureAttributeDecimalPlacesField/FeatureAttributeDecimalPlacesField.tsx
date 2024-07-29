@@ -1,12 +1,13 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeDecimalPlacesFieldIl8nBundle as il8n } from "./FeatureAttributeDecimalPlacesField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -27,7 +28,7 @@ export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
 export const FeatureAttributeDecimalPlacesField: FC<
   FeatureAttributeDecimalPlacesProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -43,15 +44,13 @@ export const FeatureAttributeDecimalPlacesField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t("FeatureAttributes.FeatureAttributeDecimalPlacesField.label")}
+      label={t(il8n.strings.label)}
       type="number"
       step="1"
       placeholder="2; 3; 17"
       {...props}
       {...form.register("decimal_places", { min: 0, valueAsNumber: true })}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeDecimalPlacesField.help",
-      )}
+      helperText={t(il8n.strings.help)}
     />
   );
 };

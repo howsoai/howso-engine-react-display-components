@@ -1,12 +1,9 @@
 import { within, screen } from "@testing-library/react";
-import { translations } from "./constants";
-
-const labelRegex = new RegExp(`^${translations.label}.*`);
 
 export const getFeatureAttributeObservationalErrorField = () =>
-  screen.getByLabelText(labelRegex);
+  screen.getByTestId("FeatureAttributeObservationalErrorField");
 export const getFeatureAttributeObservationalErrorFieldInElement = (
   element: HTMLElement,
-) => within(element).getByLabelText(labelRegex);
+) => within(element).getByTestId("FeatureAttributeObservationalErrorField");
 
 test.todo("Write a test");

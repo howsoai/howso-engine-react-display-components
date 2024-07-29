@@ -14,13 +14,14 @@ import {
   FeatureAttributeTimeSeriesStopOnTerminatorsField,
   FeatureAttributeTimeSeriesTypeField,
 } from "../../fields";
-import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributes,
   FeatureTimeSeriesTypeEnum,
 } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { testId, translations } from "./constants";
+import { testId } from "./constants";
+import { FeatureAttributesTemporalityGroupIl8nBundle as il8n } from "./FeatureAttributesTemporalityGroup.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesTemporalityGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -48,7 +49,7 @@ export const FeatureAttributesTemporalityGroup: FC<
   timeSeriesType,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
 
   if (!featuresHaveTimeFeature) {
     return null;
@@ -58,7 +59,7 @@ export const FeatureAttributesTemporalityGroup: FC<
     <FeatureAttributesGroupBase
       {...props}
       data-testid={testId}
-      title={t(translations.title)}
+      title={t(il8n.strings.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeTimeSeriesTypeField

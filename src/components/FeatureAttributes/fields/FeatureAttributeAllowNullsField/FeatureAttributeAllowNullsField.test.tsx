@@ -1,10 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FeatureAttributeAllowNullsField } from "./FeatureAttributeAllowNullsField";
-import {
-  featureAttributeAllowNullsFieldName,
-  featureAttributeAllowNullsFieldLabel,
-} from "./constants";
+import { featureAttributeAllowNullsFieldName } from "./constants";
 import { useForm, FormProvider, UseFormProps } from "react-hook-form";
 import { FC, ReactNode } from "react";
 import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
@@ -68,13 +65,8 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
 };
 
 const getFeatureAttributesAllowNullsField = () =>
-  screen.getByLabelText(
-    new RegExp(`^${featureAttributeAllowNullsFieldLabel}.*`),
-  );
+  screen.getByTestId("FeatureAttributeAllowNullsField");
 
 export const getFeatureAttributesAllowNullsFieldInContainer = (
   element: HTMLElement,
-) =>
-  within(element).getByLabelText(
-    new RegExp(`^${featureAttributeAllowNullsFieldLabel}.*`),
-  );
+) => within(element).getByTestId("FeatureAttributeAllowNullsField");

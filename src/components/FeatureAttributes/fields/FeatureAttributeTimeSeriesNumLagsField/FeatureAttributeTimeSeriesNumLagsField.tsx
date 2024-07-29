@@ -4,8 +4,9 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesNumLagsFieldIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesNumLagsField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesNumLagsFieldProps =
   Partial<FieldTextProps> & {
@@ -17,7 +18,7 @@ export type FeatureAttributeTimeSeriesNumLagsFieldProps =
 export const FeatureAttributeTimeSeriesNumLagsField: FC<
   FeatureAttributeTimeSeriesNumLagsFieldProps
 > = ({ timeSeriesLags, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -25,9 +26,7 @@ export const FeatureAttributeTimeSeriesNumLagsField: FC<
     <FieldText
       {...fieldTextProps}
       type="number"
-      label={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesNumLagsField.label",
-      )}
+      label={t(il8n.strings.label)}
       placeholder="1"
       {...props}
       {...form.register("time_series.num_lags", {
@@ -35,9 +34,7 @@ export const FeatureAttributeTimeSeriesNumLagsField: FC<
         valueAsNumber: true,
       })}
       disabled={!!timeSeriesLags?.length}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesNumLagsField.help",
-      )}
+      helperText={t(il8n.strings.help)}
     />
   );
 };

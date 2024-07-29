@@ -16,10 +16,11 @@ import {
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
-import { useDefaultTranslation } from "@/hooks";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
 import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesDependenciesIl8nBundle as il8n } from "./FeaturesAttributesDependencies.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesDependenciesProps = {
   paramsAtom: InferFeatureAttributesParamsAtom;
@@ -34,7 +35,7 @@ export type FeaturesAttributesDependenciesProps = {
 export const FeaturesAttributesDependencies: FC<
   FeaturesAttributesDependenciesProps
 > = (props) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const [params, setParams] = useAtom(props.paramsAtom);
   const [dependencies, setDependencies] = useState<DependenciesIndex>(
     getDependencies(params.features || {}),
@@ -79,7 +80,7 @@ export const FeaturesAttributesDependencies: FC<
     <>
       <ReadabilityConstraint className="mx-auto">
         <HelperText className="mb-4" color={"gray"}>
-          {t("FeatureAttributes.FeaturesAttributesDependencies.help")}
+          {t(il8n.strings.help)}
         </HelperText>
       </ReadabilityConstraint>
       {features.length > 0 ? (
@@ -157,19 +158,13 @@ export const FeaturesAttributesDependencies: FC<
                     setIsInfoOpen((previous) => !previous);
                   }}
                 >
-                  {t(
-                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.expandControl",
-                  )}
+                  {t(il8n.strings.guidance.expandControl)}
                 </ExpandCollapseControl>
               </div>
               <div>
                 <PrimaryButton disabled={!features.length} onClick={onUpdate}>
                   <UpdateIcon className="mr-1 h-5 w-5" />
-                  <span>
-                    {t(
-                      "FeatureAttributes.FeaturesAttributesDependencies.actions.update",
-                    )}
-                  </span>
+                  <span>{t(il8n.strings.actions.update)}</span>
                 </PrimaryButton>
               </div>
             </div>
@@ -182,14 +177,10 @@ export const FeaturesAttributesDependencies: FC<
                 )}
               >
                 <HelperText className="mb-4" color={"gray"}>
-                  {t(
-                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.1",
-                  )}
+                  {t(il8n.strings.guidance[1])}
                 </HelperText>
                 <HelperText color={"gray"}>
-                  {t(
-                    "FeatureAttributes.FeaturesAttributesDependencies.guidance.2",
-                  )}
+                  {t(il8n.strings.guidance[2])}
                 </HelperText>
               </div>
             </div>

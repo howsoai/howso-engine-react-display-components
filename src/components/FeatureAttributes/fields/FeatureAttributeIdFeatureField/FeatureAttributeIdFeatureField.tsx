@@ -1,9 +1,10 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeIdFeatureFieldIl8nBundle as il8n } from "./FeatureAttributeIdFeatureField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeIdFeatureFieldProps = {
   featureType: FeatureAttributes["type"] | undefined;
@@ -19,7 +20,7 @@ export type FeatureAttributeIdFeatureFieldProps = {
 export const FeatureAttributeIdFeatureField: FC<
   FeatureAttributeIdFeatureFieldProps
 > = ({ featureType, dataType }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -39,9 +40,9 @@ export const FeatureAttributeIdFeatureField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t("FeatureAttributes.FeatureAttributeIdFeatureField.label")}
+      label={t(il8n.strings.label)}
       {...form.register("id_feature")}
-      helperText={t("FeatureAttributes.FeatureAttributeIdFeatureField.help")}
+      helperText={t(il8n.strings.help)}
     />
   );
 };

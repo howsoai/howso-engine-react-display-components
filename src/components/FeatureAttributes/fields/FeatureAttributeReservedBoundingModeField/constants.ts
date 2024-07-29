@@ -1,19 +1,5 @@
 import { InferFeatureAttributesBoundingMode } from "../../utils";
-
-const base = "FeatureAttributes.FeatureAttributeReservedBoundingModeField";
-export const translations = {
-  label: `${base}.label`,
-  options: {
-    auto: `${base}.options.auto`,
-    tightBounds: `${base}.options.tightBounds`,
-    userDefined: `${base}.options.userDefined`,
-  },
-  help: {
-    auto: `${base}.help.auto`,
-    tightBounds: `${base}.help.tightBounds`,
-    userDefined: `${base}.help.userDefined`,
-  },
-};
+import { FeatureAttributeReservedBoundingModeFieldIl8nBundle as il8n } from "./FeatureAttributeReservedBoundingModeField.il8n";
 
 export const options: {
   value: InferFeatureAttributesBoundingMode;
@@ -25,22 +11,22 @@ export const options: {
   {
     value: "auto",
     translations: {
-      label: translations.options.auto,
-      help: translations.help.auto,
+      label: il8n.strings.options.auto,
+      help: il8n.strings.help.auto,
     },
   },
   {
     value: "tightBounds",
     translations: {
-      label: translations.options.tightBounds,
-      help: translations.help.tightBounds,
+      label: il8n.strings.options.tightBounds,
+      help: il8n.strings.help.tightBounds,
     },
   },
   {
     value: "userDefined",
     translations: {
-      label: translations.options.userDefined,
-      help: translations.help.userDefined,
+      label: il8n.strings.options.userDefined,
+      help: il8n.strings.help.userDefined,
     },
   },
 ];

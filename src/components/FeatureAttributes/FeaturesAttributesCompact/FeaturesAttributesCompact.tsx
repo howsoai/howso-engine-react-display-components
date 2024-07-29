@@ -12,7 +12,6 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { twMerge } from "tailwind-merge";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
-import { useDefaultTranslation } from "@/hooks";
 import {
   ErrorBoundary,
   FieldLabel,
@@ -28,7 +27,6 @@ import {
   shouldInferAgain as shouldInferFeatureAttributesAgain,
 } from "../utils";
 import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
-import { translations } from "./constants";
 import {
   type FeatureAttributesActiveFeatureAtom,
   type InferFeatureAttributesParamsAtom,
@@ -43,6 +41,8 @@ import {
   FeaturesAttributesContextProvider,
 } from "../FeaturesAttributesContext";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
+import { FeaturesAttributesCompactIl8nBundle as il8n } from "./FeaturesAttributesCompact.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesCompactProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
@@ -59,7 +59,7 @@ export type FeaturesAttributesCompactProps = {
 export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   props,
 ) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { activeFeatureAtom, paramsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(paramsAtom);
@@ -84,7 +84,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
       <hr className="my-4" />
       {!features.length ? (
         <Alert color="warning" icon={WarningIcon}>
-          {t(translations.state.empty)}
+          {t(il8n.strings.state.empty)}
         </Alert>
       ) : isMappingOpen ? (
         <FeaturesAttributesDependencies
@@ -92,7 +92,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
           onUpdate={() => setIsMappingOpen(false)}
         />
       ) : !activeFeature ? (
-        <Alert color="info">{t(translations.state.unselected)}</Alert>
+        <Alert color="info">{t(il8n.strings.state.unselected)}</Alert>
       ) : (
         <Configuration
           {...props}
@@ -128,7 +128,7 @@ const Header: FC<HeaderProps> = ({
   toggleIsMappingOpen,
   timeFeatureAtom,
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const params = useAtomValue(inferFeatureAttributesParamsAtom);
   const featuresAttributes = params.features || {};
   const features = Object.keys(featuresAttributes);
@@ -146,7 +146,7 @@ const Header: FC<HeaderProps> = ({
         <FormProvider {...form}>
           <FieldSelect
             required
-            label={t(translations.header.fields.feature.label)}
+            label={t(il8n.strings.header.fields.feature.label)}
             labelInline
             sizing={"sm"}
             name="feature"
@@ -175,7 +175,7 @@ const Header: FC<HeaderProps> = ({
               }}
               checked={activeFeature === timeFeature?.name}
             />{" "}
-            {t(translations.header.fields.timeFeature.label)}
+            {t(il8n.strings.header.fields.timeFeature.label)}
           </FieldLabel>
         </FormProvider>
       </div>
@@ -188,7 +188,7 @@ const Header: FC<HeaderProps> = ({
           onClick={toggleIsMappingOpen}
         >
           <MapDependentFeatureAttributesIcon className={"mr-1"} />
-          {t(translations.actions.mapDependents)}
+          {t(il8n.strings.actions.mapDependents)}
         </Button>
         <Button.Group>
           <Button
@@ -196,14 +196,14 @@ const Header: FC<HeaderProps> = ({
             color={isCompact ? "info" : "gray"}
             onClick={() => setIsCompact(true)}
           >
-            {t(translations.labels.density.compact)}
+            {t(il8n.strings.labels.density.compact)}
           </Button>
           <Button
             size={"sm"}
             color={!isCompact ? "info" : "gray"}
             onClick={() => setIsCompact(false)}
           >
-            {t(translations.labels.density.comfortable)}
+            {t(il8n.strings.labels.density.comfortable)}
           </Button>
         </Button.Group>
       </div>
@@ -222,7 +222,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   const { activeFeatureAtom, paramsAtom: inferFeatureAttributesParamsAtom } =
     props;
 
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const theme = getTheme();
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(inferFeatureAttributesParamsAtom);
@@ -239,7 +239,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
       <header className="mb-2 flex gap-4 items-baseline justify-between">
         <div className="flex gap-1 items-center">
           <h3 className="text-lg">
-            {t(translations.actions.configureName, {
+            {t(il8n.strings.actions["configure_{{name}}"], {
               name: activeFeature,
             })}
           </h3>
@@ -271,7 +271,7 @@ const Form: FC<ConfigurationProps> = ({
   paramsAtom,
   timeFeatureAtom,
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { buttonProps, fieldTextProps } = useContext(FeaturesAttributesContext);
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
@@ -326,7 +326,7 @@ const Form: FC<ConfigurationProps> = ({
       {attributes?.sample && (
         <FieldStatic
           {...fieldTextProps}
-          label={t(translations.labels.sample)}
+          label={t(il8n.strings.labels.sample)}
           value={
             <FeatureAttributeSample attributes={attributes} disableModal />
           }
@@ -336,7 +336,7 @@ const Form: FC<ConfigurationProps> = ({
       <form
         noValidate
         data-feature={activeFeature}
-        aria-label={t(translations.form.label)}
+        aria-label={t(il8n.strings.form.label)}
       >
         <ErrorBoundary>
           <FeatureAttributesConfiguration
@@ -351,7 +351,7 @@ const Form: FC<ConfigurationProps> = ({
             disabled={!areConfigurationsDirty}
           >
             <UpdateIcon className="mr-1 h-5 w-5" />
-            <span>{t(translations.actions.update)}</span>
+            <span>{t(il8n.strings.actions.update)}</span>
           </Button>
           {nextFeature && (
             <Button
@@ -362,7 +362,7 @@ const Form: FC<ConfigurationProps> = ({
             >
               <UpdateIcon className="mr-1 h-5 w-5" />
               <div className="max-w-60 truncate">
-                {t(translations.actions.updateAndGoToTarget, {
+                {t(il8n.strings.actions["updateAndGoTo_{{target}}"], {
                   target: nextFeature,
                 })}
               </div>

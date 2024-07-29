@@ -1,5 +1,7 @@
+import { FeatureAttributeAllowedValuesFieldIl8nBundle as il8n } from "./FeatureAttributeAllowedValuesField.il8n";
+
 export const featureAttributeAllowedValuesFieldNominalLabel =
-  "FeatureAttributes.FeatureAttributeAllowedValuesField.label.nominal";
+  il8n.strings.label.nominal;
 export const featureAttributeAllowedValuesFieldOrdinalLabel =
-  "FeatureAttributes.FeatureAttributeAllowedValuesField.label.ordinal";
+  il8n.strings.label.ordinal;
 export const featureAttributeAllowedValuesFieldName = "bounds.allowed";

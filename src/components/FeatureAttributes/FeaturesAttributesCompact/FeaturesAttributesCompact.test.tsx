@@ -2,7 +2,7 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { act } from "react";
 import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
-import { translations } from "./constants";
+import { FeaturesAttributesCompactIl8nBundle as il8n } from "./FeaturesAttributesCompact.il8n";
 import {
   getInferFeatureAttributesRunRequiredFields,
   getInferFeatureAttributesParamsAtom,
@@ -81,7 +81,7 @@ describe("FeaturesAttributesCompact", () => {
     expect(featuresField.value).toBe("");
 
     expect(screen.getByRole("alert")).toHaveTextContent(
-      translations.state.unselected,
+      il8n.strings.state.unselected,
     );
   });
 
@@ -170,7 +170,7 @@ describe("FeaturesAttributesCompact", () => {
     expect(featuresField).not.toBeEnabled();
 
     const update = within(container).getByRole("button", {
-      name: new RegExp(`.*${translations.actions.update}$`),
+      name: new RegExp(`.*${il8n.strings.actions.update}$`),
     });
     fireEvent(
       update,
@@ -255,22 +255,22 @@ describe("FeaturesAttributesCompact", () => {
 
 const getFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(
-    new RegExp(`^${translations.header.fields.feature.label}\\*?$`),
+    new RegExp(`^${il8n.strings.header.fields.feature.label}\\*?$`),
   );
 
 const getTimeFeatureField = () =>
   screen.getByLabelText<HTMLSelectElement>(
-    new RegExp(`^${translations.header.fields.timeFeature.label}\\*?$`),
+    new RegExp(`^${il8n.strings.header.fields.timeFeature.label}\\*?$`),
   );
 
 const getUpdate = () =>
   screen.getByRole("button", {
-    name: new RegExp(`.*${translations.actions.update}$`),
+    name: new RegExp(`.*${il8n.strings.actions.update}$`),
   });
 
 const getUpdateAndNext = () =>
   screen.getByRole("button", {
-    name: new RegExp(`.*${translations.actions.updateAndGoToTarget}.*`),
+    name: new RegExp(`.*${il8n.strings.actions["updateAndGoTo_{{target}}"]}.*`),
   });
 
 const getConfigurationContainer = () =>

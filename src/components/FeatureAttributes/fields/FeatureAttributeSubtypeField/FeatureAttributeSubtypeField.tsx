@@ -1,6 +1,5 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributes,
   FeatureAttributesDataTypeEnum,
@@ -11,6 +10,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeSubtypeFieldLabel } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeSubtypeFieldIl8nBundle as il8n } from "./FeatureAttributeSubtypeField.il8n";
 
 export type FeatureAttributeSubtypeProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributes["type"] | undefined;
@@ -40,7 +41,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   nonSensitive,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const subtype = form.getValues("subtype");
@@ -61,7 +62,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
       label={t(featureAttributeSubtypeFieldLabel)}
       {...props}
       {...form.register("subtype", { required })}
-      helperText={t("FeatureAttributes.FeatureAttributeSubtypeField.help")}
+      helperText={t(il8n.strings.help)}
     >
       {isSubtypeCustom && <option value={subtype}>{subtype}</option>}
       {dataType &&

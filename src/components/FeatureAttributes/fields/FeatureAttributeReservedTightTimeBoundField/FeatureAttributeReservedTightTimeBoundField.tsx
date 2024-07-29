@@ -5,8 +5,9 @@ import {
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributeReservedTightTimeBoundFieldIl8nBundle as il8n } from "./FeatureAttributeReservedTightTimeBoundField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeReservedTightTimeBoundFieldProps =
   Partial<FieldCheckboxProps> & {
@@ -17,7 +18,7 @@ export type FeatureAttributeReservedTightTimeBoundFieldProps =
 export const FeatureAttributeReservedTightTimeBoundField: FC<
   FeatureAttributeReservedTightTimeBoundFieldProps
 > = ({ featureType, isTimeFeature }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
 
   const form = useFormContext();
@@ -29,9 +30,7 @@ export const FeatureAttributeReservedTightTimeBoundField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t(
-        "FeatureAttributes.FeatureAttributeReservedTightTimeBoundField.label",
-      )}
+      label={t(il8n.strings.label)}
       {...form.register("reserved.tightTimeBounds")}
     />
   );

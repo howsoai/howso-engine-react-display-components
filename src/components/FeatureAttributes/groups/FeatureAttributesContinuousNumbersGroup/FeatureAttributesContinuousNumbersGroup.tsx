@@ -9,8 +9,9 @@ import {
   FeatureAttributeSignificantDigitsField,
 } from "../../fields";
 import { FeatureAttributes } from "@howso/openapi-client";
-import { useDefaultTranslation } from "@/hooks";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributesContinuousNumbersGroupIl8nBundle as il8n } from "./FeatureAttributesContinuousNumbersGroup.il8n";
 
 export type FeatureAttributesContinuousNumbersGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -22,7 +23,7 @@ export type FeatureAttributesContinuousNumbersGroupProps = Omit<
 export const FeatureAttributesContinuousNumbersGroup: FC<
   FeatureAttributesContinuousNumbersGroupProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
@@ -37,9 +38,7 @@ export const FeatureAttributesContinuousNumbersGroup: FC<
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t(
-        "FeatureAttributes.FeatureAttributesContinuousNumbersGroup.title",
-      )}
+      title={t(il8n.strings.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeCycleLengthField

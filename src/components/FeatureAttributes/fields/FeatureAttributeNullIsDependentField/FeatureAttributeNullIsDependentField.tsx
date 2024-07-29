@@ -2,8 +2,9 @@ import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeNullIsDependentFieldIl8nBundle as il8n } from "./FeatureAttributeNullIsDependentField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeNullIsDependentFieldProps = {
   dependentFeatures: FeatureAttributes["dependent_features"];
@@ -14,7 +15,7 @@ export type FeatureAttributeNullIsDependentFieldProps = {
 export const FeatureAttributeNullIsDependentField: FC<
   FeatureAttributeNullIsDependentFieldProps
 > = ({ dependentFeatures }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -29,14 +30,9 @@ export const FeatureAttributeNullIsDependentField: FC<
       {...form.register("null_is_dependent")}
       helperText={
         <>
-          {t(
-            "FeatureAttributes.FeatureAttributeNullIsDependentField.help.dependencies",
-          )}
-          : {dependentFeatures.join(", ")}
+          {t(il8n.strings.help.dependencies)}: {dependentFeatures.join(", ")}
           <br />
-          {t(
-            "FeatureAttributes.FeatureAttributeNullIsDependentField.help.description",
-          )}
+          {t(il8n.strings.help.description)}
         </>
       }
     />

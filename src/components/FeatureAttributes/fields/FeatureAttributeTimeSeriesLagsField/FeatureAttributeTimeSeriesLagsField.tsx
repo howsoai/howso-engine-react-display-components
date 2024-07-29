@@ -3,8 +3,9 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesLagsFieldIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesLagsField.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesLagsFieldProps = Partial<FieldTextProps>;
 /**
@@ -13,7 +14,7 @@ export type FeatureAttributeTimeSeriesLagsFieldProps = Partial<FieldTextProps>;
 export const FeatureAttributeTimeSeriesLagsField: FC<
   FeatureAttributeTimeSeriesLagsFieldProps
 > = (props) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   return (
@@ -21,12 +22,10 @@ export const FeatureAttributeTimeSeriesLagsField: FC<
       {...fieldTextProps}
       name={"time_series.lags"}
       containerProps={{ className: "basis-1/2" }}
-      label={t("FeatureAttributes.FeatureAttributeTimeSeriesLagsField.label")}
+      label={t(il8n.strings.label)}
       placeholder="1,2,3,5,7"
       valueAsNumber={true}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesLagsField.help",
-      )}
+      helperText={t(il8n.strings.help)}
       {...props}
     />
   );

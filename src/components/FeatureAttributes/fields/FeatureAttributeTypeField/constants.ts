@@ -1,37 +1,37 @@
-const base = "FeatureAttributes.FeatureAttributeTypeField";
+import { FeatureAttributeTypeFieldIl8nBundle as il8n } from "./FeatureAttributeTypeField.il8n";
 
 export const featureAttributeTypeName = "type";
 
-export const featureAttributeTypeLabel = `${base}.label`;
+export const featureAttributeTypeLabel = il8n.strings.label;
 
 export const featureAttributeTypeOptions = {
   continuous: {
     value: "continuous",
     translations: {
-      label: `${base}.options.continuous`,
+      label: il8n.strings.options.continuous,
       help: {
-        description: `${base}.help.continuous.description`,
-        example: `${base}.help.continuous.example`,
+        description: il8n.strings.help.continuous.description,
+        example: il8n.strings.help.continuous.example,
       },
     },
   },
   nominal: {
     value: "nominal",
     translations: {
-      label: `${base}.options.nominal`,
+      label: il8n.strings.options.nominal,
       help: {
-        description: `${base}.help.nominal.description`,
-        example: `${base}.help.nominal.example`,
+        description: il8n.strings.help.nominal.description,
+        example: il8n.strings.help.nominal.example,
       },
     },
   },
   ordinal: {
     value: "ordinal",
     translations: {
-      label: `${base}.options.ordinal`,
+      label: il8n.strings.options.ordinal,
       help: {
-        description: `${base}.help.ordinal.description`,
-        example: `${base}.help.ordinal.example`,
+        description: il8n.strings.help.ordinal.description,
+        example: il8n.strings.help.ordinal.example,
       },
     },
   },

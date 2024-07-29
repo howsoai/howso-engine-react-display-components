@@ -1,7 +1,6 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
-import { Trans } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import {
   FieldTextArea,
   FieldTextAreaProps,
@@ -9,6 +8,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributePostProcessFieldIl8nBundle as il8n } from "./FeatureAttributePostProcessField.il8n";
 
 export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 /**
@@ -19,7 +19,7 @@ export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 export const FeatureAttributePostProcessField: FC<
   FeatureAttributePostProcessProps
 > = (props) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -27,22 +27,13 @@ export const FeatureAttributePostProcessField: FC<
     <FieldTextArea
       {...fieldTextAreaProps}
       label={t("FeatureAttributes.FeatureAttributePostProcessField.label")}
-      placeholder={`; Simple example: Included standard text prefixing 'target'.
-(concat "PROCESSED: " #target 0)
-; Complex example: Generate a nickname using 'name' based on 'age' feature.
-(if (< #age 0 18) ; If the person is under 18
-  (concat "Lil " #name 0) ; Prefix with a Diminutive
-  #name 0 ; Don't adjust other names
-)`}
+      placeholder={il8n.strings.placeholder}
       rows={7}
       {...props}
       {...form.register("post_process")}
       className={twMerge("font-mono", props.className)}
       helperText={
-        <Trans
-          t={t}
-          i18nKey={"FeatureAttributes.FeatureAttributePostProcessField.help"}
-        >
+        <Trans t={t} i18nKey={il8n.strings.help}>
           <Link
             href="https://howsoai.github.io/amalgam/"
             target="_blank"

@@ -1,12 +1,13 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeCycleLengthFieldIl8nBundle as il8n } from "./FeatureAttributeCycleLengthField.il8n";
 
 export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -25,7 +26,7 @@ export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
 export const FeatureAttributeCycleLengthField: FC<
   FeatureAttributeCycleLengthProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const form = useFormContext();
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
@@ -41,13 +42,13 @@ export const FeatureAttributeCycleLengthField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t("FeatureAttributes.FeatureAttributeCycleLengthField.label")}
+      label={t(il8n.strings.label)}
       type="number"
       step="1"
       placeholder="1; 7; 365"
       {...props}
       {...form.register("cycle_length", { min: 0, valueAsNumber: true })}
-      helperText={t("FeatureAttributes.FeatureAttributeCycleLengthField.help")}
+      helperText={t(il8n.strings.help)}
     />
   );
 };

@@ -1,4 +1,3 @@
-import { useDefaultTranslation } from "@/hooks";
 import {
   ExpandCollapseControl,
   ExpandCollapseControlProps,
@@ -8,6 +7,8 @@ import type { ComponentProps } from "react";
 import { FC, ReactNode, useContext, useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributesGroupBaseIl8nBundle as il8n } from "./FeatureAttributesGroupBase.il8n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesGroupBaseProps = Omit<
   ComponentProps<"section">,
@@ -27,7 +28,7 @@ export type FeatureAttributesGroupBaseProps = Omit<
 export const FeatureAttributesGroupBase: FC<
   FeatureAttributesGroupBaseProps
 > = ({ title, sectionProps, basic, advanced, isAdvancedOpen, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(il8n.namespace);
   const { groupBaseProps: contextProps } = useContext(
     FeaturesAttributesContext,
   );
@@ -95,7 +96,7 @@ export const FeatureAttributesGroupBase: FC<
                 : undefined
             }
           >
-            {t("FeatureAttributes.FeatureAttributesGroupBase.expandControl")}
+            {t(il8n.strings.expandControl)}
           </ExpandCollapseControl>
           <div
             className={twMerge(
