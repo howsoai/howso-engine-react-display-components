@@ -7,7 +7,7 @@ import {
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeAllowNullsFieldIl8nBundle as il8n } from "./FeatureAttributeAllowNullsField.il8n";
+import { FeatureAttributeAllowNullsFieldI18nBundle as i18n } from "./FeatureAttributeAllowNullsField.i18n";
 
 export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
 /**
@@ -18,7 +18,7 @@ export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
 export const FeatureAttributeAllowNullsField: FC<
   FeatureAttributeAllowNullsFieldProps
 > = () => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 

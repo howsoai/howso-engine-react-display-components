@@ -1,2 +1,2 @@
 export * from "./FeaturesAttributesDependencies";
-export * from "./FeaturesAttributesDependencies.il8n";
+export * from "./FeaturesAttributesDependencies.i18n";

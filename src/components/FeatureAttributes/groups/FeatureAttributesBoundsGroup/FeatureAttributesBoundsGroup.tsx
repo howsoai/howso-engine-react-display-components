@@ -12,7 +12,7 @@ import {
 import { FeatureAttributes } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { InferFeatureAttributesBoundingMode } from "../../utils";
-import { FeatureAttributesBoundsGroupIl8nBundle as il8n } from "./FeatureAttributesBoundsGroup.il8n";
+import { FeatureAttributesBoundsGroupI18nBundle as i18n } from "./FeatureAttributesBoundsGroup.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesBoundsGroupProps = Omit<
@@ -39,12 +39,12 @@ export const FeatureAttributesBoundsGroup: FC<
   isTimeFeature,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t(il8n.strings.title)}
+      title={t(i18n.strings.title)}
       basic={
         <div className={formSpacingYDefault}>
           <FeatureAttributeAllowNullsField />

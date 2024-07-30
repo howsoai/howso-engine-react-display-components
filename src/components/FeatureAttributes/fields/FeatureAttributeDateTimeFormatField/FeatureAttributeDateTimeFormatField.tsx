@@ -9,7 +9,7 @@ import {
 import { FeatureAttributes } from "@howso/openapi-client";
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeDateTimeFormatFieldIl8nBundle as il8n } from "./FeatureAttributeDateTimeFormatField.il8n";
+import { FeatureAttributeDateTimeFormatFieldI18nBundle as i18n } from "./FeatureAttributeDateTimeFormatField.i18n";
 
 export type FeatureAttributeDateTimeFormatProps = Partial<FieldTextProps> & {
   dataType: FeatureAttributes["data_type"];
@@ -25,7 +25,7 @@ export type FeatureAttributeDateTimeFormatProps = Partial<FieldTextProps> & {
 export const FeatureAttributeDateTimeFormatField: FC<
   FeatureAttributeDateTimeFormatProps
 > = ({ dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -40,14 +40,14 @@ export const FeatureAttributeDateTimeFormatField: FC<
 
   return (
     <FieldText
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       placeholder={featureAttributeDateTimeFormatFieldPlaceholder}
       required={required}
       {...fieldTextProps}
       {...props}
       {...form.register("date_time_format", { required })}
       helperText={
-        <Trans t={t} i18nKey={il8n.strings.help}>
+        <Trans t={t} i18nKey={i18n.strings.help}>
           Any valid
           <Link
             href="https://en.cppreference.com/w/cpp/chrono/system_clock/formatter"

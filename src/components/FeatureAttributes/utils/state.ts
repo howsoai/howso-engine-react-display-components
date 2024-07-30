@@ -9,7 +9,7 @@ import type {
 } from "../types";
 import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
 import { InferFeatureAttributesBoundingMode } from "./forms";
-import { FeatureAttributesConfigurationIssuesIl8nBundle } from "../FeatureAttributesConfigurationIssues";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "../FeatureAttributesConfigurationIssues";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -56,20 +56,20 @@ const featureAttributeIssues: Record<
 > = {
   typeUndefined: {
     translationKey:
-      FeatureAttributesConfigurationIssuesIl8nBundle.strings.typeUndefined,
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.typeUndefined,
   },
   dataTypeUndefined: {
     translationKey:
-      FeatureAttributesConfigurationIssuesIl8nBundle.strings.dataTypeUndefined,
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.dataTypeUndefined,
   },
   sensitiveSubtypeUndefined: {
     translationKey:
-      FeatureAttributesConfigurationIssuesIl8nBundle.strings
+      FeatureAttributesConfigurationIssuesI18nBundle.strings
         .sensitiveSubtypeUndefined,
   },
   dateTimeFormatUndefined: {
     translationKey:
-      FeatureAttributesConfigurationIssuesIl8nBundle.strings.dataTypeUndefined,
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.dataTypeUndefined,
   },
 };
 

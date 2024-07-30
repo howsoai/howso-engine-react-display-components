@@ -8,7 +8,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributePostProcessFieldIl8nBundle as il8n } from "./FeatureAttributePostProcessField.il8n";
+import { FeatureAttributePostProcessFieldI18nBundle as i18n } from "./FeatureAttributePostProcessField.i18n";
 
 export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 /**
@@ -19,21 +19,21 @@ export type FeatureAttributePostProcessProps = Partial<FieldTextAreaProps>;
 export const FeatureAttributePostProcessField: FC<
   FeatureAttributePostProcessProps
 > = (props) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   return (
     <FieldTextArea
       {...fieldTextAreaProps}
-      label={t(il8n.strings.label)}
-      placeholder={t(il8n.strings.placeholder)}
+      label={t(i18n.strings.label)}
+      placeholder={t(i18n.strings.placeholder)}
       rows={7}
       {...props}
       {...form.register("post_process")}
       className={twMerge("font-mono", props.className)}
       helperText={
-        <Trans t={t} i18nKey={il8n.strings.help}>
+        <Trans t={t} i18nKey={i18n.strings.help}>
           <Link
             href="https://howsoai.github.io/amalgam/"
             target="_blank"

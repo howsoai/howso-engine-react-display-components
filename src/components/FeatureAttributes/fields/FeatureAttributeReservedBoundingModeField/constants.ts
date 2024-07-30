@@ -1,5 +1,5 @@
 import { InferFeatureAttributesBoundingMode } from "../../utils";
-import { FeatureAttributeReservedBoundingModeFieldIl8nBundle as il8n } from "./FeatureAttributeReservedBoundingModeField.il8n";
+import { FeatureAttributeReservedBoundingModeFieldI18nBundle as i18n } from "./FeatureAttributeReservedBoundingModeField.i18n";
 
 export const options: {
   value: InferFeatureAttributesBoundingMode;
@@ -11,22 +11,22 @@ export const options: {
   {
     value: "auto",
     translations: {
-      label: il8n.strings.options.auto,
-      help: il8n.strings.help.auto,
+      label: i18n.strings.options.auto,
+      help: i18n.strings.help.auto,
     },
   },
   {
     value: "tightBounds",
     translations: {
-      label: il8n.strings.options.tightBounds,
-      help: il8n.strings.help.tightBounds,
+      label: i18n.strings.options.tightBounds,
+      help: i18n.strings.help.tightBounds,
     },
   },
   {
     value: "userDefined",
     translations: {
-      label: il8n.strings.options.userDefined,
-      help: il8n.strings.help.userDefined,
+      label: i18n.strings.options.userDefined,
+      help: i18n.strings.help.userDefined,
     },
   },
 ];

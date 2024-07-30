@@ -19,7 +19,7 @@ import {
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
 import { twMerge } from "tailwind-merge";
-import { FeaturesAttributesDependenciesIl8nBundle as il8n } from "./FeaturesAttributesDependencies.il8n";
+import { FeaturesAttributesDependenciesI18nBundle as i18n } from "./FeaturesAttributesDependencies.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesDependenciesProps = {
@@ -35,7 +35,7 @@ export type FeaturesAttributesDependenciesProps = {
 export const FeaturesAttributesDependencies: FC<
   FeaturesAttributesDependenciesProps
 > = (props) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const [params, setParams] = useAtom(props.paramsAtom);
   const [dependencies, setDependencies] = useState<DependenciesIndex>(
     getDependencies(params.features || {}),
@@ -80,7 +80,7 @@ export const FeaturesAttributesDependencies: FC<
     <>
       <ReadabilityConstraint className="mx-auto">
         <HelperText className="mb-4" color={"gray"}>
-          {t(il8n.strings.help)}
+          {t(i18n.strings.help)}
         </HelperText>
       </ReadabilityConstraint>
       {features.length > 0 ? (
@@ -158,13 +158,13 @@ export const FeaturesAttributesDependencies: FC<
                     setIsInfoOpen((previous) => !previous);
                   }}
                 >
-                  {t(il8n.strings.guidance.expandControl)}
+                  {t(i18n.strings.guidance.expandControl)}
                 </ExpandCollapseControl>
               </div>
               <div>
                 <PrimaryButton disabled={!features.length} onClick={onUpdate}>
                   <UpdateIcon className="mr-1 h-5 w-5" />
-                  <span>{t(il8n.strings.actions.update)}</span>
+                  <span>{t(i18n.strings.actions.update)}</span>
                 </PrimaryButton>
               </div>
             </div>
@@ -177,10 +177,10 @@ export const FeaturesAttributesDependencies: FC<
                 )}
               >
                 <HelperText className="mb-4" color={"gray"}>
-                  {t(il8n.strings.guidance[1])}
+                  {t(i18n.strings.guidance[1])}
                 </HelperText>
                 <HelperText color={"gray"}>
-                  {t(il8n.strings.guidance[2])}
+                  {t(i18n.strings.guidance[2])}
                 </HelperText>
               </div>
             </div>
@@ -188,7 +188,7 @@ export const FeaturesAttributesDependencies: FC<
         </>
       ) : (
         <Alert color="warning" icon={WarningIcon}>
-          {t(il8n.strings.state.empty)}
+          {t(i18n.strings.state.empty)}
         </Alert>
       )}
     </>

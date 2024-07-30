@@ -12,7 +12,7 @@ module.exports = {
   },
   rootDir: "src",
   setupFiles: [
-    "<rootDir>/../jest/setup/il8n.js",
+    "<rootDir>/../jest/setup/i18n.js",
     "<rootDir>/../jest/setup/config.js",
   ],
   testEnvironment: "jsdom",

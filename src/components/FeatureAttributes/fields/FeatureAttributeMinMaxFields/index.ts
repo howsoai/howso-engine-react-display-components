@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeMinMaxFields";
-export * from "./FeatureAttributeMinMaxFields.il8n";
+export * from "./FeatureAttributeMinMaxFields.i18n";

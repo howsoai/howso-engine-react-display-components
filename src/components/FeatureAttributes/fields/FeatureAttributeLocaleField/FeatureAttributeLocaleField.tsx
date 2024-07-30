@@ -9,7 +9,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { featureAttributeLocaleFieldLabel } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeLocaleFieldIl8nBundle as il8n } from "./FeatureAttributeLocaleField.il8n";
+import { FeatureAttributeLocaleFieldI18nBundle as i18n } from "./FeatureAttributeLocaleField.i18n";
 
 export type FeatureAttributeLocaleFieldProps = Partial<FieldTextProps> & {
   dataType: FeatureAttributes["data_type"];
@@ -26,7 +26,7 @@ export type FeatureAttributeLocaleFieldProps = Partial<FieldTextProps> & {
 export const FeatureAttributeLocaleField: FC<
   FeatureAttributeLocaleFieldProps
 > = ({ dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const required = false;
@@ -45,7 +45,7 @@ export const FeatureAttributeLocaleField: FC<
       {...props}
       {...form.register("locale", { required })}
       helperText={
-        <Trans t={t} i18nKey={il8n.strings.help}>
+        <Trans t={t} i18nKey={i18n.strings.help}>
           The
           <Link
             href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes"

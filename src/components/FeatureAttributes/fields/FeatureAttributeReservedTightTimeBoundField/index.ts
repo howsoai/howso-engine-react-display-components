@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeReservedTightTimeBoundField";
-export * from "./FeatureAttributeReservedTightTimeBoundField.il8n";
+export * from "./FeatureAttributeReservedTightTimeBoundField.i18n";

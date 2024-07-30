@@ -1,3 +1,3 @@
 export * from "./FeatureAttributeDateTimeFormatField";
-export * from "./FeatureAttributeDateTimeFormatField.il8n";
+export * from "./FeatureAttributeDateTimeFormatField.i18n";
 export * from "./constants";

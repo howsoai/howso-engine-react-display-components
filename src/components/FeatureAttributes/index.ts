@@ -1,12 +1,12 @@
-import { Il8nBundle } from "@howso/ui-internationalization-utils";
+import { I18nBundle } from "@howso/ui-internationalization-utils";
 import { Languages } from "@/constants";
-import { FeatureAttributesFieldsIl8nBundles } from "./fields";
-import { FeatureAttributesGroupsIl8nBundles } from "./groups";
-import { FeatureAttributeSampleIl8nBundle } from "./FeatureAttributeSample";
-import { FeaturesAttributesCompactIl8nBundle } from "./FeaturesAttributesCompact";
-import { FeaturesAttributesDependenciesIl8nBundle } from "./FeaturesAttributesDependencies";
-import { FeaturesAttributesRowsIl8nBundle } from "./FeaturesAttributesRows";
-import { FeatureAttributesConfigurationIssuesIl8nBundle } from "./FeatureAttributesConfigurationIssues";
+import { FeatureAttributesFieldsI18nBundles } from "./fields";
+import { FeatureAttributesGroupsI18nBundles } from "./groups";
+import { FeatureAttributeSampleI18nBundle } from "./FeatureAttributeSample";
+import { FeaturesAttributesCompactI18nBundle } from "./FeaturesAttributesCompact";
+import { FeaturesAttributesDependenciesI18nBundle } from "./FeaturesAttributesDependencies";
+import { FeaturesAttributesRowsI18nBundle } from "./FeaturesAttributesRows";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "./FeatureAttributesConfigurationIssues";
 
 export * from "./FeatureAttributeSample";
 export * from "./FeatureAttributesConfiguration";
@@ -15,19 +15,19 @@ export * from "./FeaturesAttributesContext";
 export * from "./FeaturesAttributesCompact";
 export * from "./FeaturesAttributesDependencies";
 export * from "./FeaturesAttributesRows";
-export * from "./FeatureAttributesConfigurationIssues/FeatureAttributesConfigurationIssues.il8n";
+export * from "./FeatureAttributesConfigurationIssues/FeatureAttributesConfigurationIssues.i18n";
 export * from "./hooks";
 export * from "./fields";
 export * from "./groups";
 export * from "./types";
 export * from "./utils";
 
-export const FeatureAttributesIl8nBundles: Il8nBundle<Languages, any>[] = [
-  ...FeatureAttributesFieldsIl8nBundles,
-  ...FeatureAttributesGroupsIl8nBundles,
-  FeatureAttributeSampleIl8nBundle,
-  FeaturesAttributesCompactIl8nBundle,
-  FeaturesAttributesDependenciesIl8nBundle,
-  FeaturesAttributesRowsIl8nBundle,
-  FeatureAttributesConfigurationIssuesIl8nBundle,
+export const FeatureAttributesI18nBundles: I18nBundle<Languages, any>[] = [
+  ...FeatureAttributesFieldsI18nBundles,
+  ...FeatureAttributesGroupsI18nBundles,
+  FeatureAttributeSampleI18nBundle,
+  FeaturesAttributesCompactI18nBundle,
+  FeaturesAttributesDependenciesI18nBundle,
+  FeaturesAttributesRowsI18nBundle,
+  FeatureAttributesConfigurationIssuesI18nBundle,
 ];

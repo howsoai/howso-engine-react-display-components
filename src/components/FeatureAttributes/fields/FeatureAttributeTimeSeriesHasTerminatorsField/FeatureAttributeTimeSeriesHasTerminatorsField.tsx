@@ -3,7 +3,7 @@ import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeTimeSeriesHasTerminatorsFieldIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesHasTerminatorsField.il8n";
+import { FeatureAttributeTimeSeriesHasTerminatorsFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesHasTerminatorsField.i18n";
 
 export type FeatureAttributeTimeSeriesHasTerminatorsFieldProps = {
   isIdFeature: boolean | undefined;
@@ -14,7 +14,7 @@ export type FeatureAttributeTimeSeriesHasTerminatorsFieldProps = {
 export const FeatureAttributeTimeSeriesHasTerminatorsField: FC<
   FeatureAttributeTimeSeriesHasTerminatorsFieldProps
 > = ({ isIdFeature }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -25,9 +25,9 @@ export const FeatureAttributeTimeSeriesHasTerminatorsField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       {...form.register("time_series.series_has_terminators")}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeTimeSeriesRateMinMaxFields";
-export * from "./FeatureAttributeTimeSeriesRateMinMaxFields.il8n";
+export * from "./FeatureAttributeTimeSeriesRateMinMaxFields.i18n";

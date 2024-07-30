@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeNullIsDependentField";
-export * from "./FeatureAttributeNullIsDependentField.il8n";
+export * from "./FeatureAttributeNullIsDependentField.i18n";

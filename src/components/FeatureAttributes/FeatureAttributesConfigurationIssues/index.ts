@@ -1,2 +1,2 @@
 export * from "./FeatureAttributesConfigurationIssues";
-export * from "./FeatureAttributesConfigurationIssues.il8n";
+export * from "./FeatureAttributesConfigurationIssues.i18n";

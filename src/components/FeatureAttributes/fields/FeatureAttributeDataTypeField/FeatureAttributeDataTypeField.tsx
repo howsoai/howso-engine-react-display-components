@@ -10,7 +10,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeDataTypeFieldIl8nBundle as il8n } from "./FeatureAttributeDataTypeField.il8n";
+import { FeatureAttributeDataTypeFieldI18nBundle as i18n } from "./FeatureAttributeDataTypeField.i18n";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributesTypeEnum | undefined;
@@ -23,7 +23,7 @@ export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
 export const FeatureAttributeDataTypeField: FC<
   FeatureAttributeDataTypeFieldProps
 > = ({ featureType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const dataType = form.getValues("data_type");
@@ -31,7 +31,7 @@ export const FeatureAttributeDataTypeField: FC<
 
   return (
     <FieldSelect
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       required={required}
       helperText={<HelperText dataType={dataType} />}
       data-testid={"FeatureAttributeDataTypeField"}
@@ -39,30 +39,30 @@ export const FeatureAttributeDataTypeField: FC<
       {...props}
       {...form.register("data_type", { required })}
     >
-      <option value="string">{t(il8n.strings.options.string)}</option>
-      <option value="number">{t(il8n.strings.options.number)}</option>
+      <option value="string">{t(i18n.strings.options.string)}</option>
+      <option value="number">{t(i18n.strings.options.number)}</option>
       <option value="formatted_date_time">
-        {t(il8n.strings.options.formattedDateTime)}
+        {t(i18n.strings.options.formattedDateTime)}
       </option>
       <option value="json" disabled={featureType === "ordinal"}>
-        {t(il8n.strings.options.json)}
+        {t(i18n.strings.options.json)}
       </option>
       <option value="yaml" disabled={featureType === "ordinal"}>
-        {t(il8n.strings.options.yaml)}
+        {t(i18n.strings.options.yaml)}
       </option>
       <option value="amalgam" disabled={featureType === "ordinal"}>
-        {t(il8n.strings.options.amalgam)}
+        {t(i18n.strings.options.amalgam)}
       </option>
 
-      <optgroup label={t(il8n.strings.options.groups.continuous)}>
+      <optgroup label={t(i18n.strings.options.groups.continuous)}>
         <option value="string_mixable" disabled={featureType !== "continuous"}>
-          {t(il8n.strings.options.stringMixable)}
+          {t(i18n.strings.options.stringMixable)}
         </option>
       </optgroup>
 
-      <optgroup label={t(il8n.strings.options.groups.nominal)}>
+      <optgroup label={t(i18n.strings.options.groups.nominal)}>
         <option value="boolean" disabled={featureType !== "nominal"}>
-          {t(il8n.strings.options.boolean)}
+          {t(i18n.strings.options.boolean)}
         </option>
       </optgroup>
     </FieldSelect>
@@ -72,11 +72,11 @@ export const FeatureAttributeDataTypeField: FC<
 const HelperText: FC<{
   dataType: FeatureAttributesDataTypeEnum | undefined;
 }> = ({ dataType }): ReactNode => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   switch (dataType) {
     case "formatted_date_time":
-      return t(il8n.strings.help.formattedDateTime);
+      return t(i18n.strings.help.formattedDateTime);
     default:
       return null;
   }

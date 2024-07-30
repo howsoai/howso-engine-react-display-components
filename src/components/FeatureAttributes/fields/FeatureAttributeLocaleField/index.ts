@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeLocaleField";
-export * from "./FeatureAttributeLocaleField.il8n";
+export * from "./FeatureAttributeLocaleField.i18n";

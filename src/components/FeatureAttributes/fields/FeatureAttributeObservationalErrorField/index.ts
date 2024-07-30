@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeObservationalErrorField";
-export * from "./FeatureAttributeObservationalErrorField.il8n";
+export * from "./FeatureAttributeObservationalErrorField.i18n";

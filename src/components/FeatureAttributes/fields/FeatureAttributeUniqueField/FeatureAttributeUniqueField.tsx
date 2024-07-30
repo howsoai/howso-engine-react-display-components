@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeUniqueFieldIl8nBundle as il8n } from "./FeatureAttributeUniqueField.il8n";
+import { FeatureAttributeUniqueFieldI18nBundle as i18n } from "./FeatureAttributeUniqueField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeUniqueFieldProps = {
@@ -22,7 +22,7 @@ export type FeatureAttributeUniqueFieldProps = {
 export const FeatureAttributeUniqueField: FC<
   FeatureAttributeUniqueFieldProps
 > = ({ featureType, dataType }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
 
   const form = useFormContext();
@@ -40,7 +40,7 @@ export const FeatureAttributeUniqueField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       {...form.register("unique")}
     />
   );

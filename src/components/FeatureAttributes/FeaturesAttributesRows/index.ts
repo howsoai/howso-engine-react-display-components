@@ -1,2 +1,2 @@
 export * from "./FeaturesAttributesRows";
-export * from "./FeaturesAttributesRows.il8n";
+export * from "./FeaturesAttributesRows.i18n";

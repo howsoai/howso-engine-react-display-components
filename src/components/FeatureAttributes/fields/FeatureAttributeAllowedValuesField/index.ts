@@ -1,3 +1,3 @@
 export * from "./FeatureAttributeAllowedValuesField";
-export * from "./FeatureAttributeAllowedValuesField.il8n";
+export * from "./FeatureAttributeAllowedValuesField.i18n";
 export * from "./constants";

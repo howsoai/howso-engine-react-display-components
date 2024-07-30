@@ -6,7 +6,7 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeObservationalErrorFieldIl8nBundle as il8n } from "./FeatureAttributeObservationalErrorField.il8n";
+import { FeatureAttributeObservationalErrorFieldI18nBundle as i18n } from "./FeatureAttributeObservationalErrorField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeObservationalErrorFieldProps =
@@ -22,7 +22,7 @@ export type FeatureAttributeObservationalErrorFieldProps =
 export const FeatureAttributeObservationalErrorField: FC<
   FeatureAttributeObservationalErrorFieldProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -31,7 +31,7 @@ export const FeatureAttributeObservationalErrorField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       inputMode="numeric"
       placeholder="0.0"
       data-testid="FeatureAttributeObservationalErrorField"
@@ -50,13 +50,13 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
   featureType,
   dataType,
 }): ReactNode => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   switch (true) {
     case featureType === "ordinal":
-      return t(il8n.strings.help.ordinal);
+      return t(i18n.strings.help.ordinal);
     case featureType === "nominal":
-      return t(il8n.strings.help.nominal);
+      return t(i18n.strings.help.nominal);
     case [
       "string",
       "string_mixable",
@@ -64,8 +64,8 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
       "yaml",
       "formatted_date_time",
     ].includes(dataType || ""):
-      return t(il8n.strings.help.string);
+      return t(i18n.strings.help.string);
     default:
-      return t(il8n.strings.help.default);
+      return t(i18n.strings.help.default);
   }
 };

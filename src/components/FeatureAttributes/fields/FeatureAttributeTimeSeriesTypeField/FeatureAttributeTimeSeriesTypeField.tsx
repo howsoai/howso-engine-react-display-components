@@ -7,7 +7,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeTimeSeriesTypeFieldIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesTypeField.il8n";
+import { FeatureAttributeTimeSeriesTypeFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesTypeField.i18n";
 
 export type FeatureAttributeTimeSeriesTypeFieldProps =
   Partial<FieldSelectProps> & {
@@ -21,7 +21,7 @@ export type FeatureAttributeTimeSeriesTypeFieldProps =
 export const FeatureAttributeTimeSeriesTypeField: FC<
   FeatureAttributeTimeSeriesTypeFieldProps
 > = ({ featureType, isTimeFeature, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const required = false;
@@ -36,7 +36,7 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
   return (
     <FieldSelect
       {...fieldSelectProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       required={required}
       {...props}
       {...form.register("time_series.type", {
@@ -44,14 +44,14 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
         value: isTimeFeature ? "delta" : "rate",
       })}
       disabled={isTimeFeature}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     >
       <option value=""></option>
       {featureType && rateTypes.includes(featureType) && (
-        <option value="rate">{t(il8n.strings.options.rate)}</option>
+        <option value="rate">{t(i18n.strings.options.rate)}</option>
       )}
       {featureType && deltaTypes.includes(featureType) && (
-        <option value="delta">{t(il8n.strings.options.delta)}</option>
+        <option value="delta">{t(i18n.strings.options.delta)}</option>
       )}
     </FieldSelect>
   );

@@ -6,7 +6,7 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeDecimalPlacesFieldIl8nBundle as il8n } from "./FeatureAttributeDecimalPlacesField.il8n";
+import { FeatureAttributeDecimalPlacesFieldI18nBundle as i18n } from "./FeatureAttributeDecimalPlacesField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
@@ -28,7 +28,7 @@ export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
 export const FeatureAttributeDecimalPlacesField: FC<
   FeatureAttributeDecimalPlacesProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -44,13 +44,13 @@ export const FeatureAttributeDecimalPlacesField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       type="number"
       step="1"
       placeholder="2; 3; 17"
       {...props}
       {...form.register("decimal_places", { min: 0, valueAsNumber: true })}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

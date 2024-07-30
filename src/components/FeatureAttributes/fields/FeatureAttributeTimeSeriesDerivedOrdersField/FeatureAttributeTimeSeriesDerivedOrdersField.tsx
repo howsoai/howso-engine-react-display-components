@@ -5,7 +5,7 @@ import {
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeTimeSeriesDerivedOrdersFieldIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesDerivedOrdersField.il8n";
+import { FeatureAttributeTimeSeriesDerivedOrdersFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesDerivedOrdersField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesDerivedOrdersFieldProps =
@@ -18,7 +18,7 @@ export type FeatureAttributeTimeSeriesDerivedOrdersFieldProps =
 export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
   FeatureAttributeTimeSeriesDerivedOrdersFieldProps
 > = ({ timeSeriesOrder, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -26,7 +26,7 @@ export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
     <FieldText
       {...fieldTextProps}
       type="number"
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       placeholder="1"
       {...props}
       {...form.register("time_series.derived_orders", {
@@ -34,7 +34,7 @@ export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
         valueAsNumber: true,
       })}
       disabled={!!timeSeriesOrder}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

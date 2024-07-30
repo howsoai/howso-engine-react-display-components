@@ -1,3 +1,3 @@
-import { FeatureAttributeLocaleFieldIl8nBundle as il8n } from "./FeatureAttributeLocaleField.il8n";
+import { FeatureAttributeLocaleFieldI18nBundle as i18n } from "./FeatureAttributeLocaleField.i18n";
 
-export const featureAttributeLocaleFieldLabel = il8n.strings.label;
+export const featureAttributeLocaleFieldLabel = i18n.strings.label;

@@ -1,4 +1,4 @@
-import { FeatureAttributeAllowNullsFieldIl8nBundle as il8n } from "./FeatureAttributeAllowNullsField.il8n";
+import { FeatureAttributeAllowNullsFieldI18nBundle as i18n } from "./FeatureAttributeAllowNullsField.i18n";
 
-export const featureAttributeAllowNullsFieldLabel = il8n.strings.label;
+export const featureAttributeAllowNullsFieldLabel = i18n.strings.label;
 export const featureAttributeAllowNullsFieldName = "bounds.allow_null";

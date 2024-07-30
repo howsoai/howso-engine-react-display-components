@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeSignificantDigitsField";
-export * from "./FeatureAttributeSignificantDigitsField.il8n";
+export * from "./FeatureAttributeSignificantDigitsField.i18n";

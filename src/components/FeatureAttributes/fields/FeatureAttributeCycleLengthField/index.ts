@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeCycleLengthField";
-export * from "./FeatureAttributeCycleLengthField.il8n";
+export * from "./FeatureAttributeCycleLengthField.i18n";

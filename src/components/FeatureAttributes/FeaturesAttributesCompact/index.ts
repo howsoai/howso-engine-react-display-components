@@ -1,2 +1,2 @@
 export * from "./FeaturesAttributesCompact";
-export * from "./FeaturesAttributesCompact.il8n";
+export * from "./FeaturesAttributesCompact.i18n";

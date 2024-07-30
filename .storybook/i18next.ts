@@ -1,9 +1,9 @@
 import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import { addIl8nBundlesToResources } from "@howso/ui-internationalization-utils";
-import { Il8nBundles as ReactTailwindFlowbiteComponentsIl8nBundles } from "@howso/react-tailwind-flowbite-components";
-import { Il8nBundles } from "../src";
+import { addI18nBundlesToResources } from "@howso/ui-internationalization-utils";
+import { I18nBundles as ReactTailwindFlowbiteComponentsI18nBundles } from "@howso/react-tailwind-flowbite-components";
+import { I18nBundles } from "../src";
 
 const supportedLngs = ["en"];
 
@@ -15,8 +15,8 @@ export default i18n
     interpolation: { escapeValue: false },
     // react: { useSuspense: true },
     supportedLngs,
-    resources: addIl8nBundlesToResources({}, [
-      ...ReactTailwindFlowbiteComponentsIl8nBundles,
-      ...Il8nBundles,
+    resources: addI18nBundlesToResources({}, [
+      ...ReactTailwindFlowbiteComponentsI18nBundles,
+      ...I18nBundles,
     ]),
   });

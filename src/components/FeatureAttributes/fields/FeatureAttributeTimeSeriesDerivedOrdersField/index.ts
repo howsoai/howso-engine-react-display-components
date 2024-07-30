@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeTimeSeriesDerivedOrdersField";
-export * from "./FeatureAttributeTimeSeriesDerivedOrdersField.il8n";
+export * from "./FeatureAttributeTimeSeriesDerivedOrdersField.i18n";

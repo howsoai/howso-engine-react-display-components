@@ -19,7 +19,7 @@ import {
 import { Textarea, TextareaProps } from "flowbite-react";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeAllowedValuesFieldIl8nBundle as il8n } from "./FeatureAttributeAllowedValuesField.il8n";
+import { FeatureAttributeAllowedValuesFieldI18nBundle as i18n } from "./FeatureAttributeAllowedValuesField.i18n";
 
 export type FeatureAttributeAllowedValuesFieldProps =
   Partial<FieldTextAreaProps> & {
@@ -40,7 +40,7 @@ export const FeatureAttributeAllowedValuesField: FC<
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
     "nominal",
@@ -65,8 +65,8 @@ export const FeatureAttributeAllowedValuesField: FC<
       : t(featureAttributeAllowedValuesFieldNominalLabel);
   const helperText =
     featureType === "ordinal"
-      ? t(il8n.strings.help.ordinal)
-      : t(il8n.strings.help.nominal);
+      ? t(i18n.strings.help.ordinal)
+      : t(i18n.strings.help.nominal);
   const placeholder = getPlaceholder({ featureType, dataType, dateTimeFormat });
 
   return (

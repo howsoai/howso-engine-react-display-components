@@ -11,7 +11,7 @@ import {
 import { featureAttributeSubtypeFieldLabel } from "./constants";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeSubtypeFieldIl8nBundle as il8n } from "./FeatureAttributeSubtypeField.il8n";
+import { FeatureAttributeSubtypeFieldI18nBundle as i18n } from "./FeatureAttributeSubtypeField.i18n";
 
 export type FeatureAttributeSubtypeProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributes["type"] | undefined;
@@ -41,7 +41,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   nonSensitive,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const subtype = form.getValues("subtype");
@@ -62,7 +62,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
       label={t(featureAttributeSubtypeFieldLabel)}
       {...props}
       {...form.register("subtype", { required })}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     >
       {isSubtypeCustom && <option value={subtype}>{subtype}</option>}
       {dataType &&

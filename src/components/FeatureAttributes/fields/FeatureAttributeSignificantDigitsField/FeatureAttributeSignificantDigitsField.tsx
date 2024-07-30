@@ -6,7 +6,7 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeSignificantDigitsFieldIl8nBundle as il8n } from "./FeatureAttributeSignificantDigitsField.il8n";
+import { FeatureAttributeSignificantDigitsFieldI18nBundle as i18n } from "./FeatureAttributeSignificantDigitsField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeSignificantDigitsFieldProps =
@@ -29,7 +29,7 @@ export type FeatureAttributeSignificantDigitsFieldProps =
 export const FeatureAttributeSignificantDigitsField: FC<
   FeatureAttributeSignificantDigitsFieldProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -45,13 +45,13 @@ export const FeatureAttributeSignificantDigitsField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       type="number"
       step="1"
       placeholder="2; 3; 17"
       {...props}
       {...form.register("significant_digits", { min: 0, valueAsNumber: true })}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

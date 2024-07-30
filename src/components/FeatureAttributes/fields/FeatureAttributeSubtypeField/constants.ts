@@ -1,4 +1,4 @@
-import { FeatureAttributeSubtypeFieldIl8nBundle as il8n } from "./FeatureAttributeSubtypeField.il8n";
+import { FeatureAttributeSubtypeFieldI18nBundle as i18n } from "./FeatureAttributeSubtypeField.i18n";
 
-export const featureAttributeSubtypeFieldLabel = il8n.strings.label;
+export const featureAttributeSubtypeFieldLabel = i18n.strings.label;
 export const featureAttributeSubtypeFieldName = "subtype";

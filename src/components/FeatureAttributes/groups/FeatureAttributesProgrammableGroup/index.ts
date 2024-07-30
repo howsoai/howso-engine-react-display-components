@@ -1,2 +1,2 @@
 export * from "./FeatureAttributesProgrammableGroup";
-export * from "./FeatureAttributesProgrammableGroup.il8n";
+export * from "./FeatureAttributesProgrammableGroup.i18n";

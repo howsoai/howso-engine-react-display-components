@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeTimeSeriesStopOnTerminatorsField";
-export * from "./FeatureAttributeTimeSeriesStopOnTerminatorsField.il8n";
+export * from "./FeatureAttributeTimeSeriesStopOnTerminatorsField.i18n";

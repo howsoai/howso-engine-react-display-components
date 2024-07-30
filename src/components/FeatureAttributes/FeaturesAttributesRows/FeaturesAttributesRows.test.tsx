@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
-import { FeaturesAttributesRowsIl8nBundle as il8n } from "./FeaturesAttributesRows.il8n";
+import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
 import {
   getInferFeatureAttributesRunRequiredFields,
   getInferFeatureAttributesParamsAtom,
@@ -110,7 +110,7 @@ describe("FeaturesAttributesRows", () => {
     expect(featureRows.length).toBe(featureEntries.length);
 
     const configure = within(featureRows[0]).getByRole("button", {
-      name: new RegExp(`.*${il8n.strings.actions.configure}.*`),
+      name: new RegExp(`.*${i18n.strings.actions.configure}.*`),
     });
     fireEvent(
       configure,
@@ -129,7 +129,7 @@ describe("FeaturesAttributesRows", () => {
       if (i <= featureEntries.length - 2) {
         const updateAndNext = within(modal).getByRole("button", {
           name: new RegExp(
-            `.*${il8n.strings.actions["updateAndGoTo_{{target}}"]}.*`,
+            `.*${i18n.strings.actions["updateAndGoTo_{{target}}"]}.*`,
           ),
         });
         // eslint-disable-next-line jest/no-conditional-expect

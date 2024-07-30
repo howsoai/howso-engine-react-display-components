@@ -11,7 +11,7 @@ import {
 import { FeatureAttributes } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributesContinuousNumbersGroupIl8nBundle as il8n } from "./FeatureAttributesContinuousNumbersGroup.il8n";
+import { FeatureAttributesContinuousNumbersGroupI18nBundle as i18n } from "./FeatureAttributesContinuousNumbersGroup.i18n";
 
 export type FeatureAttributesContinuousNumbersGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -23,7 +23,7 @@ export type FeatureAttributesContinuousNumbersGroupProps = Omit<
 export const FeatureAttributesContinuousNumbersGroup: FC<
   FeatureAttributesContinuousNumbersGroupProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
@@ -38,7 +38,7 @@ export const FeatureAttributesContinuousNumbersGroup: FC<
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t(il8n.strings.title)}
+      title={t(i18n.strings.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeCycleLengthField

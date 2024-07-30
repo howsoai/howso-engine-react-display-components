@@ -7,7 +7,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { useTranslation } from "react-i18next";
-import { FeatureAttributeCycleLengthFieldIl8nBundle as il8n } from "./FeatureAttributeCycleLengthField.il8n";
+import { FeatureAttributeCycleLengthFieldI18nBundle as i18n } from "./FeatureAttributeCycleLengthField.i18n";
 
 export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];
@@ -26,7 +26,7 @@ export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {
 export const FeatureAttributeCycleLengthField: FC<
   FeatureAttributeCycleLengthProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const form = useFormContext();
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
@@ -42,13 +42,13 @@ export const FeatureAttributeCycleLengthField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(il8n.strings.label)}
+      label={t(i18n.strings.label)}
       type="number"
       step="1"
       placeholder="1; 7; 365"
       {...props}
       {...form.register("cycle_length", { min: 0, valueAsNumber: true })}
-      helperText={t(il8n.strings.help)}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

@@ -2,17 +2,17 @@
 
 ## 3.x
 
-Refactored translation system to use `@howso/ui-internationalization-utils` `Il8nBundle`s.
+Refactored translation system to use `@howso/ui-internationalization-utils` `I18nBundle`s.
 
-To reduce overall bundle size, you are advised to specify components' bundles you use selectively in your `il8n` service:
+To reduce overall bundle size, you are advised to specify components' bundles you use selectively in your `i18n` service:
 
 ```ts
-import { FeatureAttributeSampleIl8nBundle } from "@howso/howso-engine-react-display-components";
+import { FeatureAttributeSampleI18nBundle } from "@howso/howso-engine-react-display-components";
 
 i18n
   // ...
   .init({
-    resources: addIl8nBundlesToResources(resources, [SkeletonIl8nBundle]),
+    resources: addI18nBundlesToResources(resources, [SkeletonI18nBundle]),
     // ...
   });
 ```
@@ -21,12 +21,12 @@ A naive export is available from this package that contains all bundles, though
 its use is discouraged:
 
 ```ts
-import { Il8nBundles } from "@howso/howso-engine-react-display-components";
+import { I18nBundles } from "@howso/howso-engine-react-display-components";
 
 i18n
   // ...
   .init({
-    resources: addIl8nBundlesToResources(resources, [...Il8nBundles]),
+    resources: addI18nBundlesToResources(resources, [...I18nBundles]),
     // ...
   });
 ```

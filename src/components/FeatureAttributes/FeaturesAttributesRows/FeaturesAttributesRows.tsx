@@ -45,7 +45,7 @@ import {
 } from "../hooks";
 import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
-import { FeaturesAttributesRowsIl8nBundle as il8n } from "./FeaturesAttributesRows.il8n";
+import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesRowsProps = {
@@ -64,7 +64,7 @@ export type FeaturesAttributesRowsProps = {
 export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   props,
 ) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(paramsAtom);
@@ -85,10 +85,10 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
         <Table striped>
           <Table.Head>
             <Table.HeadCell className="whitespace-nowrap">
-              {t(il8n.strings.headings.feature)}
+              {t(i18n.strings.headings.feature)}
             </Table.HeadCell>
             <Table.HeadCell className="whitespace-nowrap">
-              {t(il8n.strings.headings.sample)}
+              {t(i18n.strings.headings.sample)}
             </Table.HeadCell>
             <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
               {t(featureAttributeTypeLabel)}
@@ -96,8 +96,8 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
             <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
               <div className="flex items-center gap-2">
                 {options.time_series
-                  ? t(il8n.strings.headings.timeFeature)
-                  : t(il8n.strings.headings.timeSeries)}
+                  ? t(i18n.strings.headings.timeFeature)
+                  : t(i18n.strings.headings.timeSeries)}
                 <ToggleInput
                   onChange={onChangeTimeSeries}
                   checked={options.time_series || false}
@@ -105,7 +105,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
               </div>
             </Table.HeadCell>
             <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-              {t(il8n.strings.headings.configuration)}
+              {t(i18n.strings.headings.configuration)}
             </Table.HeadCell>
           </Table.Head>
           <Table.Body className="divide-y">
@@ -121,7 +121,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
       </div>
       {!features.length && (
         <Alert color="warning" icon={WarningIcon}>
-          {t(il8n.strings.state.empty)}
+          {t(i18n.strings.state.empty)}
         </Alert>
       )}
       <Controls {...props} containerProps={{ className: "mt-4" }} />
@@ -148,7 +148,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
   optionsAtom,
   timeFeatureAtom,
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const theme = getTheme();
   const setActiveFeature = useSetAtom(activeFeatureAtom);
   const setRunRequired = useSetAtom(runRequiredAtom);
@@ -199,7 +199,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
       <Table.Cell className="w-[1%] whitespace-nowrap text-center">
         <div className="flex items-center">
           <Button color={"light"} onClick={() => setActiveFeature(feature)}>
-            <span>{t(il8n.strings.actions.configure)}</span>
+            <span>{t(i18n.strings.actions.configure)}</span>
           </Button>
 
           {issues && (
@@ -319,7 +319,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   timeFeatureAtom,
   onClose,
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const [activeFeature, setActiveFeature] = useAtom(activeFeatureAtom);
   if (!activeFeature) {
     throw new Error("activeFeature is undefined");
@@ -365,10 +365,10 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
       <form
         noValidate
         data-feature={activeFeature}
-        aria-label={t(il8n.strings.form.label)}
+        aria-label={t(i18n.strings.form.label)}
       >
         <Modal.Header>
-          {t(il8n.strings.actions["configure_{{name}}"], {
+          {t(i18n.strings.actions["configure_{{name}}"], {
             name: activeFeature,
           })}
         </Modal.Header>
@@ -383,7 +383,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
           <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
-              <span>{t(il8n.strings.actions.update)}</span>
+              <span>{t(i18n.strings.actions.update)}</span>
             </Button>
             {nextFeature && (
               <Button
@@ -392,7 +392,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
               >
                 <UpdateIcon className="mr-1 h-5 w-5" />
                 <div className="max-w-60 truncate">
-                  {t(il8n.strings.actions["updateAndGoTo_{{target}}"], {
+                  {t(i18n.strings.actions["updateAndGoTo_{{target}}"], {
                     target: nextFeature,
                   })}
                 </div>
@@ -424,7 +424,7 @@ type MapDependenciesControlProps = Pick<
   "paramsAtom"
 >;
 const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const params = useAtomValue(props.paramsAtom);
   const featuresAttributes = params.features || {};
   const features = Object.keys(featuresAttributes);
@@ -437,7 +437,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
     setIsOpen(false);
   };
 
-  const label = t(il8n.strings.actions.mapDependents);
+  const label = t(i18n.strings.actions.mapDependents);
 
   return (
     <>

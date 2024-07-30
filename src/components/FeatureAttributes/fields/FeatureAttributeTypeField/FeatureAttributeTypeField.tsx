@@ -18,7 +18,7 @@ import {
 } from "../../utils";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { twMerge } from "tailwind-merge";
-import { FeatureAttributeTypeFieldIl8nBundle as il8n } from "./FeatureAttributeTypeField.il8n";
+import { FeatureAttributeTypeFieldI18nBundle as i18n } from "./FeatureAttributeTypeField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTypeFieldProps =
@@ -86,7 +86,7 @@ const FieldTypeRadios: FC<FieldTypeRadiosProps> = ({
   required = true,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldRadiosProps } = useContext(FeaturesAttributesContext);
 
   return (
@@ -120,7 +120,7 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
   registerOptions,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext<InferFeatureAttributeFormValues>();
 
@@ -150,7 +150,7 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
 };
 
 const TooltipContents: FC = () => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   return (
     <dl>

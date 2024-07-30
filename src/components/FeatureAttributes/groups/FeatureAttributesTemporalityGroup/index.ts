@@ -1,2 +1,2 @@
 export * from "./FeatureAttributesTemporalityGroup";
-export * from "./FeatureAttributesTemporalityGroup.il8n";
+export * from "./FeatureAttributesTemporalityGroup.i18n";

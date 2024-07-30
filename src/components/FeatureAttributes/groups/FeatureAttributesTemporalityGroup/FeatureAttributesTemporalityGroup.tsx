@@ -20,7 +20,7 @@ import {
 } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { testId } from "./constants";
-import { FeatureAttributesTemporalityGroupIl8nBundle as il8n } from "./FeatureAttributesTemporalityGroup.il8n";
+import { FeatureAttributesTemporalityGroupI18nBundle as i18n } from "./FeatureAttributesTemporalityGroup.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesTemporalityGroupProps = Omit<
@@ -49,7 +49,7 @@ export const FeatureAttributesTemporalityGroup: FC<
   timeSeriesType,
   ...props
 }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
 
   if (!featuresHaveTimeFeature) {
     return null;
@@ -59,7 +59,7 @@ export const FeatureAttributesTemporalityGroup: FC<
     <FeatureAttributesGroupBase
       {...props}
       data-testid={testId}
-      title={t(il8n.strings.title)}
+      title={t(i18n.strings.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeTimeSeriesTypeField

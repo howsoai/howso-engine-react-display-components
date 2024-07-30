@@ -1,2 +1,2 @@
 export * from "./FeatureAttributePostProcessField";
-export * from "./FeatureAttributePostProcessField.il8n";
+export * from "./FeatureAttributePostProcessField.i18n";

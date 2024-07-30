@@ -8,7 +8,7 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeDerivedFeatureCodeFieldIl8nBundle as il8n } from "./FeatureAttributeDerivedFeatureCodeField.il8n";
+import { FeatureAttributeDerivedFeatureCodeFieldI18nBundle as i18n } from "./FeatureAttributeDerivedFeatureCodeField.i18n";
 
 export type FeatureAttributeDerivedFeatureCodeProps =
   Partial<FieldTextAreaProps>;
@@ -21,21 +21,21 @@ export type FeatureAttributeDerivedFeatureCodeProps =
 export const FeatureAttributeDerivedFeatureCodeField: FC<
   FeatureAttributeDerivedFeatureCodeProps
 > = (props) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   return (
     <FieldTextArea
       {...fieldTextAreaProps}
-      label={t(il8n.strings.label)}
-      placeholder={t(il8n.strings.placeholder)}
+      label={t(i18n.strings.label)}
+      placeholder={t(i18n.strings.placeholder)}
       rows={7}
       {...props}
       className={twMerge("font-mono", props.className)}
       {...form.register("derived_feature_code")}
       helperText={
-        <Trans t={t} i18nKey={il8n.strings.help}>
+        <Trans t={t} i18nKey={i18n.strings.help}>
           <Link
             href="https://howsoai.github.io/amalgam/"
             target="_blank"

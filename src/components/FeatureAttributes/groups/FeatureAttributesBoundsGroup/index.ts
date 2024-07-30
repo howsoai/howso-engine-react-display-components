@@ -1,2 +1,2 @@
 export * from "./FeatureAttributesBoundsGroup";
-export * from "./FeatureAttributesBoundsGroup.il8n";
+export * from "./FeatureAttributesBoundsGroup.i18n";

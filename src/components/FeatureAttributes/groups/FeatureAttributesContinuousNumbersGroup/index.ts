@@ -1,2 +1,2 @@
 export * from "./FeatureAttributesContinuousNumbersGroup";
-export * from "./FeatureAttributesContinuousNumbersGroup.il8n";
+export * from "./FeatureAttributesContinuousNumbersGroup.i18n";

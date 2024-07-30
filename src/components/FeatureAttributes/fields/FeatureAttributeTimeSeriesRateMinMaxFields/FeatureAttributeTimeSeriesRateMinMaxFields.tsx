@@ -5,7 +5,7 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeTimeSeriesRateMinMaxFieldsIl8nBundle as il8n } from "./FeatureAttributeTimeSeriesRateMinMaxFields.il8n";
+import { FeatureAttributeTimeSeriesRateMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeTimeSeriesRateMinMaxFields.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
@@ -19,7 +19,7 @@ export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
 export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
   FeatureAttributeTimeSeriesRateMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   if (timeSeriesType !== "rate") {
@@ -33,7 +33,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.rate_min"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(il8n.strings.label.min)}
+          label={t(i18n.strings.label.min)}
           placeholder="-1,-2,-3,-5,-7"
           valueAsNumber={true}
           {...props}
@@ -43,13 +43,13 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.rate_max"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(il8n.strings.label.max)}
+          label={t(i18n.strings.label.max)}
           placeholder="1,2,3,5,7"
           valueAsNumber={true}
           {...props}
         />
       </div>
-      <HelperText color={"gray"}>{t(il8n.strings.help)}</HelperText>
+      <HelperText color={"gray"}>{t(i18n.strings.help)}</HelperText>
     </div>
   );
 };

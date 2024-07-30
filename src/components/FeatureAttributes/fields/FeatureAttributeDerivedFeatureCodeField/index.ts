@@ -1,2 +1,2 @@
 export * from "./FeatureAttributeDerivedFeatureCodeField";
-export * from "./FeatureAttributeDerivedFeatureCodeField.il8n";
+export * from "./FeatureAttributeDerivedFeatureCodeField.i18n";

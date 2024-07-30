@@ -2,7 +2,7 @@ import { FeatureAttributes } from "@howso/openapi-client";
 import { Modal } from "flowbite-react";
 import { FC, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { FeatureAttributeSampleIl8nBundle as il8n } from "./FeatureAttributeSample.il8n";
+import { FeatureAttributeSampleI18nBundle as i18n } from "./FeatureAttributeSample.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeSampleProps = {
@@ -77,14 +77,14 @@ export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
 const FeatureAttributeSampleModal: FC<
   FeatureAttributeSampleProps & { onClose: () => void }
 > = ({ attributes, onClose }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   if (!attributes) {
     return null;
   }
 
   return (
     <Modal show onClose={onClose} dismissible>
-      <Modal.Header>{t(il8n.strings.modal.title)}</Modal.Header>
+      <Modal.Header>{t(i18n.strings.modal.title)}</Modal.Header>
       <Modal.Body>
         <pre>
           <code>

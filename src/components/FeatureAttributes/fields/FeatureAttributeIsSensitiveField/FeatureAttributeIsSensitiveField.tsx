@@ -4,7 +4,7 @@ import { FeatureAttributes } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "./FeatureAttributeIsSensitiveField.utils";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributeIsSensitiveFieldIl8nBundle as il8n } from "./FeatureAttributeIsSensitiveField.il8n";
+import { FeatureAttributeIsSensitiveFieldI18nBundle as i18n } from "./FeatureAttributeIsSensitiveField.i18n";
 import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeIsSensitiveFieldProps = {
@@ -28,7 +28,7 @@ export type FeatureAttributeIsSensitiveFieldProps = {
 export const FeatureAttributeIsSensitiveField: FC<
   FeatureAttributeIsSensitiveFieldProps
 > = ({ featureType, dataType }) => {
-  const { t } = useTranslation(il8n.namespace);
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -50,11 +50,11 @@ export const FeatureAttributeIsSensitiveField: FC<
         // @ts-expect-error Minimal typing differences
         <FieldCheckbox
           {...fieldCheckboxProps}
-          label={t(il8n.strings.label)}
+          label={t(i18n.strings.label)}
           {...field}
           checked={!value}
           onChange={async (evt) => onChange(!evt.target.checked)}
-          helperText={t(il8n.strings.help)}
+          helperText={t(i18n.strings.help)}
         />
       )}
     />

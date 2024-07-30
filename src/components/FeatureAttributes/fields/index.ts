@@ -1,34 +1,34 @@
-import { Il8nBundle } from "@howso/ui-internationalization-utils";
+import { I18nBundle } from "@howso/ui-internationalization-utils";
 import { Languages } from "@/constants";
-import { FeatureAttributeAllowedValuesFieldIl8nBundle } from "./FeatureAttributeAllowedValuesField";
-import { FeatureAttributeAllowNullsFieldIl8nBundle } from "./FeatureAttributeAllowNullsField";
-import { FeatureAttributeCycleLengthFieldIl8nBundle } from "./FeatureAttributeCycleLengthField";
-import { FeatureAttributeDataTypeFieldIl8nBundle } from "./FeatureAttributeDataTypeField";
-import { FeatureAttributeDateTimeFormatFieldIl8nBundle } from "./FeatureAttributeDateTimeFormatField";
-import { FeatureAttributeDecimalPlacesFieldIl8nBundle } from "./FeatureAttributeDecimalPlacesField";
-import { FeatureAttributeDerivedFeatureCodeFieldIl8nBundle } from "./FeatureAttributeDerivedFeatureCodeField";
-import { FeatureAttributeTypeFieldIl8nBundle } from "./FeatureAttributeTypeField";
-import { FeatureAttributeIdFeatureFieldIl8nBundle } from "./FeatureAttributeIdFeatureField";
-import { FeatureAttributeIsSensitiveFieldIl8nBundle } from "./FeatureAttributeIsSensitiveField";
-import { FeatureAttributeLocaleFieldIl8nBundle } from "./FeatureAttributeLocaleField";
-import { FeatureAttributeMinMaxFieldsIl8nBundle } from "./FeatureAttributeMinMaxFields";
-import { FeatureAttributeNullIsDependentFieldIl8nBundle } from "./FeatureAttributeNullIsDependentField";
-import { FeatureAttributeObservationalErrorFieldIl8nBundle } from "./FeatureAttributeObservationalErrorField";
-import { FeatureAttributePostProcessFieldIl8nBundle } from "./FeatureAttributePostProcessField";
-import { FeatureAttributeReservedBoundingModeFieldIl8nBundle } from "./FeatureAttributeReservedBoundingModeField";
-import { FeatureAttributeReservedTightTimeBoundFieldIl8nBundle } from "./FeatureAttributeReservedTightTimeBoundField";
-import { FeatureAttributeSignificantDigitsFieldIl8nBundle } from "./FeatureAttributeSignificantDigitsField";
-import { FeatureAttributeSubtypeFieldIl8nBundle } from "./FeatureAttributeSubtypeField";
-import { FeatureAttributeTimeSeriesLagsFieldIl8nBundle } from "./FeatureAttributeTimeSeriesLagsField";
-import { FeatureAttributeTimeSeriesDerivedOrdersFieldIl8nBundle } from "./FeatureAttributeTimeSeriesDerivedOrdersField";
-import { FeatureAttributeTimeSeriesDeltaMinMaxFieldsIl8nBundle } from "./FeatureAttributeTimeSeriesDeltaMinMaxFields";
-import { FeatureAttributeTimeSeriesHasTerminatorsFieldIl8nBundle } from "./FeatureAttributeTimeSeriesHasTerminatorsField";
-import { FeatureAttributeTimeSeriesStopOnTerminatorsFieldIl8nBundle } from "./FeatureAttributeTimeSeriesStopOnTerminatorsField";
-import { FeatureAttributeTimeSeriesNumLagsFieldIl8nBundle } from "./FeatureAttributeTimeSeriesNumLagsField";
-import { FeatureAttributeTimeSeriesOrderFieldIl8nBundle } from "./FeatureAttributeTimeSeriesOrderField";
-import { FeatureAttributeTimeSeriesRateMinMaxFieldsIl8nBundle } from "./FeatureAttributeTimeSeriesRateMinMaxFields";
-import { FeatureAttributeTimeSeriesTypeFieldIl8nBundle } from "./FeatureAttributeTimeSeriesTypeField";
-import { FeatureAttributeUniqueFieldIl8nBundle } from "./FeatureAttributeUniqueField";
+import { FeatureAttributeAllowedValuesFieldI18nBundle } from "./FeatureAttributeAllowedValuesField";
+import { FeatureAttributeAllowNullsFieldI18nBundle } from "./FeatureAttributeAllowNullsField";
+import { FeatureAttributeCycleLengthFieldI18nBundle } from "./FeatureAttributeCycleLengthField";
+import { FeatureAttributeDataTypeFieldI18nBundle } from "./FeatureAttributeDataTypeField";
+import { FeatureAttributeDateTimeFormatFieldI18nBundle } from "./FeatureAttributeDateTimeFormatField";
+import { FeatureAttributeDecimalPlacesFieldI18nBundle } from "./FeatureAttributeDecimalPlacesField";
+import { FeatureAttributeDerivedFeatureCodeFieldI18nBundle } from "./FeatureAttributeDerivedFeatureCodeField";
+import { FeatureAttributeTypeFieldI18nBundle } from "./FeatureAttributeTypeField";
+import { FeatureAttributeIdFeatureFieldI18nBundle } from "./FeatureAttributeIdFeatureField";
+import { FeatureAttributeIsSensitiveFieldI18nBundle } from "./FeatureAttributeIsSensitiveField";
+import { FeatureAttributeLocaleFieldI18nBundle } from "./FeatureAttributeLocaleField";
+import { FeatureAttributeMinMaxFieldsI18nBundle } from "./FeatureAttributeMinMaxFields";
+import { FeatureAttributeNullIsDependentFieldI18nBundle } from "./FeatureAttributeNullIsDependentField";
+import { FeatureAttributeObservationalErrorFieldI18nBundle } from "./FeatureAttributeObservationalErrorField";
+import { FeatureAttributePostProcessFieldI18nBundle } from "./FeatureAttributePostProcessField";
+import { FeatureAttributeReservedBoundingModeFieldI18nBundle } from "./FeatureAttributeReservedBoundingModeField";
+import { FeatureAttributeReservedTightTimeBoundFieldI18nBundle } from "./FeatureAttributeReservedTightTimeBoundField";
+import { FeatureAttributeSignificantDigitsFieldI18nBundle } from "./FeatureAttributeSignificantDigitsField";
+import { FeatureAttributeSubtypeFieldI18nBundle } from "./FeatureAttributeSubtypeField";
+import { FeatureAttributeTimeSeriesLagsFieldI18nBundle } from "./FeatureAttributeTimeSeriesLagsField";
+import { FeatureAttributeTimeSeriesDerivedOrdersFieldI18nBundle } from "./FeatureAttributeTimeSeriesDerivedOrdersField";
+import { FeatureAttributeTimeSeriesDeltaMinMaxFieldsI18nBundle } from "./FeatureAttributeTimeSeriesDeltaMinMaxFields";
+import { FeatureAttributeTimeSeriesHasTerminatorsFieldI18nBundle } from "./FeatureAttributeTimeSeriesHasTerminatorsField";
+import { FeatureAttributeTimeSeriesStopOnTerminatorsFieldI18nBundle } from "./FeatureAttributeTimeSeriesStopOnTerminatorsField";
+import { FeatureAttributeTimeSeriesNumLagsFieldI18nBundle } from "./FeatureAttributeTimeSeriesNumLagsField";
+import { FeatureAttributeTimeSeriesOrderFieldI18nBundle } from "./FeatureAttributeTimeSeriesOrderField";
+import { FeatureAttributeTimeSeriesRateMinMaxFieldsI18nBundle } from "./FeatureAttributeTimeSeriesRateMinMaxFields";
+import { FeatureAttributeTimeSeriesTypeFieldI18nBundle } from "./FeatureAttributeTimeSeriesTypeField";
+import { FeatureAttributeUniqueFieldI18nBundle } from "./FeatureAttributeUniqueField";
 
 export * from "./FeatureAttributeAllowedValuesField";
 export * from "./FeatureAttributeAllowNullsField";
@@ -60,35 +60,35 @@ export * from "./FeatureAttributeTimeSeriesRateMinMaxFields";
 export * from "./FeatureAttributeTimeSeriesTypeField";
 export * from "./FeatureAttributeUniqueField";
 
-export const FeatureAttributesFieldsIl8nBundles: Il8nBundle<Languages, any>[] =
+export const FeatureAttributesFieldsI18nBundles: I18nBundle<Languages, any>[] =
   [
-    FeatureAttributeAllowedValuesFieldIl8nBundle,
-    FeatureAttributeAllowNullsFieldIl8nBundle,
-    FeatureAttributeCycleLengthFieldIl8nBundle,
-    FeatureAttributeDataTypeFieldIl8nBundle,
-    FeatureAttributeDateTimeFormatFieldIl8nBundle,
-    FeatureAttributeDecimalPlacesFieldIl8nBundle,
-    FeatureAttributeDerivedFeatureCodeFieldIl8nBundle,
-    FeatureAttributeTypeFieldIl8nBundle,
-    FeatureAttributeIdFeatureFieldIl8nBundle,
-    FeatureAttributeIsSensitiveFieldIl8nBundle,
-    FeatureAttributeLocaleFieldIl8nBundle,
-    FeatureAttributeMinMaxFieldsIl8nBundle,
-    FeatureAttributeNullIsDependentFieldIl8nBundle,
-    FeatureAttributeObservationalErrorFieldIl8nBundle,
-    FeatureAttributePostProcessFieldIl8nBundle,
-    FeatureAttributeReservedBoundingModeFieldIl8nBundle,
-    FeatureAttributeReservedTightTimeBoundFieldIl8nBundle,
-    FeatureAttributeSignificantDigitsFieldIl8nBundle,
-    FeatureAttributeSubtypeFieldIl8nBundle,
-    FeatureAttributeTimeSeriesLagsFieldIl8nBundle,
-    FeatureAttributeTimeSeriesDerivedOrdersFieldIl8nBundle,
-    FeatureAttributeTimeSeriesDeltaMinMaxFieldsIl8nBundle,
-    FeatureAttributeTimeSeriesHasTerminatorsFieldIl8nBundle,
-    FeatureAttributeTimeSeriesStopOnTerminatorsFieldIl8nBundle,
-    FeatureAttributeTimeSeriesNumLagsFieldIl8nBundle,
-    FeatureAttributeTimeSeriesOrderFieldIl8nBundle,
-    FeatureAttributeTimeSeriesRateMinMaxFieldsIl8nBundle,
-    FeatureAttributeTimeSeriesTypeFieldIl8nBundle,
-    FeatureAttributeUniqueFieldIl8nBundle,
+    FeatureAttributeAllowedValuesFieldI18nBundle,
+    FeatureAttributeAllowNullsFieldI18nBundle,
+    FeatureAttributeCycleLengthFieldI18nBundle,
+    FeatureAttributeDataTypeFieldI18nBundle,
+    FeatureAttributeDateTimeFormatFieldI18nBundle,
+    FeatureAttributeDecimalPlacesFieldI18nBundle,
+    FeatureAttributeDerivedFeatureCodeFieldI18nBundle,
+    FeatureAttributeTypeFieldI18nBundle,
+    FeatureAttributeIdFeatureFieldI18nBundle,
+    FeatureAttributeIsSensitiveFieldI18nBundle,
+    FeatureAttributeLocaleFieldI18nBundle,
+    FeatureAttributeMinMaxFieldsI18nBundle,
+    FeatureAttributeNullIsDependentFieldI18nBundle,
+    FeatureAttributeObservationalErrorFieldI18nBundle,
+    FeatureAttributePostProcessFieldI18nBundle,
+    FeatureAttributeReservedBoundingModeFieldI18nBundle,
+    FeatureAttributeReservedTightTimeBoundFieldI18nBundle,
+    FeatureAttributeSignificantDigitsFieldI18nBundle,
+    FeatureAttributeSubtypeFieldI18nBundle,
+    FeatureAttributeTimeSeriesLagsFieldI18nBundle,
+    FeatureAttributeTimeSeriesDerivedOrdersFieldI18nBundle,
+    FeatureAttributeTimeSeriesDeltaMinMaxFieldsI18nBundle,
+    FeatureAttributeTimeSeriesHasTerminatorsFieldI18nBundle,
+    FeatureAttributeTimeSeriesStopOnTerminatorsFieldI18nBundle,
+    FeatureAttributeTimeSeriesNumLagsFieldI18nBundle,
+    FeatureAttributeTimeSeriesOrderFieldI18nBundle,
+    FeatureAttributeTimeSeriesRateMinMaxFieldsI18nBundle,
+    FeatureAttributeTimeSeriesTypeFieldI18nBundle,
+    FeatureAttributeUniqueFieldI18nBundle,
   ];
