@@ -57,7 +57,7 @@
     "@hookform/error-message": "^2.0.1",
     "@howso/openapi-client": "^1.0.0",
     "@howso/react-tailwind-flowbite-components": "^5.0.0",
-    "@howso/ui-internationalization-utils": "^1.0.0",
+    "@howso/ui-internationalization-utils": "^1.0.1",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-a11y": "^8.1.10",
     "@storybook/addon-actions": "^8.1.10",
