@@ -4,8 +4,9 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesDerivedOrdersFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesDerivedOrdersField.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesDerivedOrdersFieldProps =
   Partial<FieldTextProps> & {
@@ -17,7 +18,7 @@ export type FeatureAttributeTimeSeriesDerivedOrdersFieldProps =
 export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
   FeatureAttributeTimeSeriesDerivedOrdersFieldProps
 > = ({ timeSeriesOrder, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -25,9 +26,7 @@ export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
     <FieldText
       {...fieldTextProps}
       type="number"
-      label={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesDerivedOrdersField.label",
-      )}
+      label={t(i18n.strings.label)}
       placeholder="1"
       {...props}
       {...form.register("time_series.derived_orders", {
@@ -35,9 +34,7 @@ export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
         valueAsNumber: true,
       })}
       disabled={!!timeSeriesOrder}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesDerivedOrdersField.help",
-      )}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

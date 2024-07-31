@@ -1,37 +1,37 @@
-const base = "FeatureAttributes.FeatureAttributeTypeField";
+import { FeatureAttributeTypeFieldI18nBundle as i18n } from "./FeatureAttributeTypeField.i18n";
 
 export const featureAttributeTypeName = "type";
 
-export const featureAttributeTypeLabel = `${base}.label`;
+export const featureAttributeTypeLabel = i18n.strings.label;
 
 export const featureAttributeTypeOptions = {
   continuous: {
     value: "continuous",
     translations: {
-      label: `${base}.options.continuous`,
+      label: i18n.strings.options.continuous,
       help: {
-        description: `${base}.help.continuous.description`,
-        example: `${base}.help.continuous.example`,
+        description: i18n.strings.help.continuous.description,
+        example: i18n.strings.help.continuous.example,
       },
     },
   },
   nominal: {
     value: "nominal",
     translations: {
-      label: `${base}.options.nominal`,
+      label: i18n.strings.options.nominal,
       help: {
-        description: `${base}.help.nominal.description`,
-        example: `${base}.help.nominal.example`,
+        description: i18n.strings.help.nominal.description,
+        example: i18n.strings.help.nominal.example,
       },
     },
   },
   ordinal: {
     value: "ordinal",
     translations: {
-      label: `${base}.options.ordinal`,
+      label: i18n.strings.options.ordinal,
       help: {
-        description: `${base}.help.ordinal.description`,
-        example: `${base}.help.ordinal.example`,
+        description: i18n.strings.help.ordinal.description,
+        example: i18n.strings.help.ordinal.example,
       },
     },
   },

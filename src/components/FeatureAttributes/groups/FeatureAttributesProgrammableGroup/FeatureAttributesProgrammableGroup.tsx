@@ -7,8 +7,9 @@ import {
   FeatureAttributeDerivedFeatureCodeField,
   FeatureAttributePostProcessField,
 } from "../../fields";
-import { useDefaultTranslation } from "@/hooks";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { FeatureAttributesProgrammableGroupI18nBundle as i18n } from "./FeatureAttributesProgrammableGroup.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesProgrammableGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -17,12 +18,12 @@ export type FeatureAttributesProgrammableGroupProps = Omit<
 export const FeatureAttributesProgrammableGroup: FC<
   FeatureAttributesProgrammableGroupProps
 > = ({ ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
 
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t("FeatureAttributes.FeatureAttributesProgrammableGroup.title")}
+      title={t(i18n.strings.title)}
       advanced={
         <div className={formSpacingYDefault}>
           <FeatureAttributeDerivedFeatureCodeField />

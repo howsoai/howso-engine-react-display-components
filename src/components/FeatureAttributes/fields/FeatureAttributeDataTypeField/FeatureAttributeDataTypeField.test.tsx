@@ -1,10 +1,8 @@
 import { within, screen } from "@testing-library/react";
-import { featureAttributeDataTypeFieldLabel } from "./constants";
 
-const regex = new RegExp(`^${featureAttributeDataTypeFieldLabel}.*`);
-
-export const getDataTypeField = () => screen.getByLabelText(regex);
+export const getDataTypeField = () =>
+  screen.getByTestId("FeatureAttributeDataTypeField");
 export const getDataTypeFieldInElement = (element: HTMLElement) =>
-  within(element).getByLabelText(regex);
+  within(element).getByTestId("FeatureAttributeDataTypeField");
 
 test.todo("Write a test");

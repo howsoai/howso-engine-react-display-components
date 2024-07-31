@@ -1,6 +1,5 @@
 import { FC, Fragment, useContext, useMemo } from "react";
 import { RegisterOptions, useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   featureAttributeTypeLabel,
@@ -19,6 +18,8 @@ import {
 } from "../../utils";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { twMerge } from "tailwind-merge";
+import { FeatureAttributeTypeFieldI18nBundle as i18n } from "./FeatureAttributeTypeField.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTypeFieldProps =
   | ({ fieldType: "radios" } & Partial<FieldRadiosProps>)
@@ -85,7 +86,7 @@ const FieldTypeRadios: FC<FieldTypeRadiosProps> = ({
   required = true,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldRadiosProps } = useContext(FeaturesAttributesContext);
 
   return (
@@ -119,7 +120,7 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
   registerOptions,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext<InferFeatureAttributeFormValues>();
 
@@ -149,7 +150,7 @@ const FieldTypeSelect: FC<FieldTypeSelectProps> = ({
 };
 
 const TooltipContents: FC = () => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
 
   return (
     <dl>

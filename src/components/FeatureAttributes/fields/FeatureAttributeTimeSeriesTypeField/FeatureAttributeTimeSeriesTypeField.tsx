@@ -1,5 +1,4 @@
 import { FC, useContext } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import { useFormContext } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
@@ -7,6 +6,8 @@ import {
   FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeTimeSeriesTypeFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesTypeField.i18n";
 
 export type FeatureAttributeTimeSeriesTypeFieldProps =
   Partial<FieldSelectProps> & {
@@ -20,7 +21,7 @@ export type FeatureAttributeTimeSeriesTypeFieldProps =
 export const FeatureAttributeTimeSeriesTypeField: FC<
   FeatureAttributeTimeSeriesTypeFieldProps
 > = ({ featureType, isTimeFeature, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const required = false;
@@ -35,7 +36,7 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
   return (
     <FieldSelect
       {...fieldSelectProps}
-      label={t("FeatureAttributes.FeatureAttributeTimeSeriesTypeField.label")}
+      label={t(i18n.strings.label)}
       required={required}
       {...props}
       {...form.register("time_series.type", {
@@ -43,24 +44,14 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
         value: isTimeFeature ? "delta" : "rate",
       })}
       disabled={isTimeFeature}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesTypeField.help",
-      )}
+      helperText={t(i18n.strings.help)}
     >
       <option value=""></option>
       {featureType && rateTypes.includes(featureType) && (
-        <option value="rate">
-          {t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesTypeField.options.rate",
-          )}
-        </option>
+        <option value="rate">{t(i18n.strings.options.rate)}</option>
       )}
       {featureType && deltaTypes.includes(featureType) && (
-        <option value="delta">
-          {t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesTypeField.options.delta",
-          )}
-        </option>
+        <option value="delta">{t(i18n.strings.options.delta)}</option>
       )}
     </FieldSelect>
   );

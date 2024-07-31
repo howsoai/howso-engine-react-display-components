@@ -5,7 +5,6 @@ import {
   useCallback,
   useContext,
 } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   featureAttributeAllowedValuesFieldName,
@@ -19,6 +18,8 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { Textarea, TextareaProps } from "flowbite-react";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeAllowedValuesFieldI18nBundle as i18n } from "./FeatureAttributeAllowedValuesField.i18n";
 
 export type FeatureAttributeAllowedValuesFieldProps =
   Partial<FieldTextAreaProps> & {
@@ -39,7 +40,7 @@ export const FeatureAttributeAllowedValuesField: FC<
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
     "nominal",
@@ -64,8 +65,8 @@ export const FeatureAttributeAllowedValuesField: FC<
       : t(featureAttributeAllowedValuesFieldNominalLabel);
   const helperText =
     featureType === "ordinal"
-      ? t("FeatureAttributes.FeatureAttributeAllowedValuesField.help.ordinal")
-      : t("FeatureAttributes.FeatureAttributeAllowedValuesField.help.nominal");
+      ? t(i18n.strings.help.ordinal)
+      : t(i18n.strings.help.nominal);
   const placeholder = getPlaceholder({ featureType, dataType, dateTimeFormat });
 
   return (

@@ -1,5 +1,4 @@
 import { FC, useContext } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import { HelperText } from "flowbite-react";
 import { type FeatureTimeSeriesTypeEnum } from "@howso/openapi-client";
 import {
@@ -7,6 +6,8 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesDeltaMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeTimeSeriesDeltaMinMaxFields.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps =
   Partial<FieldTextProps> & {
@@ -19,7 +20,7 @@ export type FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps =
 export const FeatureAttributeTimeSeriesDeltaMinMaxFields: FC<
   FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   if (timeSeriesType !== "delta") {
@@ -33,9 +34,7 @@ export const FeatureAttributeTimeSeriesDeltaMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.delta_min"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesDeltaMinMaxFields.label.min",
-          )}
+          label={t(i18n.strings.label.min)}
           placeholder="-1,-2,-3,-5,-7"
           valueAsNumber={true}
           {...props}
@@ -45,19 +44,13 @@ export const FeatureAttributeTimeSeriesDeltaMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.delta_max"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesDeltaMinMaxFields.label.max",
-          )}
+          label={t(i18n.strings.label.max)}
           placeholder="1,2,3,5,7"
           valueAsNumber={true}
           {...props}
         />
       </div>
-      <HelperText color={"gray"}>
-        {t(
-          "FeatureAttributes.FeatureAttributeTimeSeriesDeltaMinMaxFields.help",
-        )}
-      </HelperText>
+      <HelperText color={"gray"}>{t(i18n.strings.help)}</HelperText>
     </div>
   );
 };

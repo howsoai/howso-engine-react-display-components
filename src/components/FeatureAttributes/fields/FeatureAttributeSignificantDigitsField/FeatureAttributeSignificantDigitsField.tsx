@@ -1,12 +1,13 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeSignificantDigitsFieldI18nBundle as i18n } from "./FeatureAttributeSignificantDigitsField.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeSignificantDigitsFieldProps =
   Partial<FieldTextProps> & {
@@ -28,7 +29,7 @@ export type FeatureAttributeSignificantDigitsFieldProps =
 export const FeatureAttributeSignificantDigitsField: FC<
   FeatureAttributeSignificantDigitsFieldProps
 > = ({ featureType, dataType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -44,17 +45,13 @@ export const FeatureAttributeSignificantDigitsField: FC<
   return (
     <FieldText
       {...fieldTextProps}
-      label={t(
-        "FeatureAttributes.FeatureAttributeSignificantDigitsField.label",
-      )}
+      label={t(i18n.strings.label)}
       type="number"
       step="1"
       placeholder="2; 3; 17"
       {...props}
       {...form.register("significant_digits", { min: 0, valueAsNumber: true })}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeSignificantDigitsField.help",
-      )}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

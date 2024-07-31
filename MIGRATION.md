@@ -1,5 +1,36 @@
 # Migration guide
 
+## 3.x
+
+Refactored translation system to use `@howso/ui-internationalization-utils` `I18nBundle`s.
+
+To reduce overall bundle size, you are advised to specify components' bundles you use selectively in your `i18n` service:
+
+```ts
+import { FeatureAttributeSampleI18nBundle } from "@howso/howso-engine-react-display-components";
+
+i18n
+  // ...
+  .init({
+    resources: addI18nBundlesToResources(resources, [SkeletonI18nBundle]),
+    // ...
+  });
+```
+
+A naive export is available from this package that contains all bundles, though
+its use is discouraged:
+
+```ts
+import { I18nBundles } from "@howso/howso-engine-react-display-components";
+
+i18n
+  // ...
+  .init({
+    resources: addI18nBundlesToResources(resources, [...I18nBundles]),
+    // ...
+  });
+```
+
 ## 2.x
 
 Flowbite updates 0.7 - 0.10

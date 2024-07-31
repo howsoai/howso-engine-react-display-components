@@ -6,14 +6,14 @@ const config: StorybookConfig = {
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
     "@storybook/addon-a11y",
-    "@chromatic-com/storybook"
+    "@chromatic-com/storybook",
   ],
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
   docs: {},
-  staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
+  // staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
   refs: {
     "react-tailwind-flowbite-components": {
       title: "Howso components",

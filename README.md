@@ -53,8 +53,35 @@ The suggested integration is trough setting up React I8ln's using `backend`:
 
 You will need the translation files from:
 
-- This package
 - [@howso/react-tailwind-flowbite-components](https://github.com/howsoai/react-tailwind-flowbite-components)
+
+Translation files from this package must be included into your `i18n` `resources`:
+To reduce overall bundle size, you are advised to specify components' bundles you use selectively in your `i18n` service:
+
+```ts
+import { FeatureAttributeSampleI18nBundle } from "@howso/howso-engine-react-display-components";
+
+i18n
+  // ...
+  .init({
+    resources: addI18nBundlesToResources(resources, [SkeletonI18nBundle]),
+    // ...
+  });
+```
+
+A naive export is available from this package that contains all bundles, though
+its use is discouraged:
+
+```ts
+import { I18nBundles } from "@howso/howso-engine-react-display-components";
+
+i18n
+  // ...
+  .init({
+    resources: addI18nBundlesToResources(resources, [...I18nBundles]),
+    // ...
+  });
+```
 
 ## Contributing
 
@@ -64,15 +91,6 @@ You may start the UI for inspection with hot reloading using:
 ```bash
 npm run storybook
 ```
-
-### Translations
-
-This package produces a number of components that expose translations.
-Any usages of translation should use the `useDefaultTranslation` function instead of `useTranslation`.
-This will ensure translations are in the correct namespace for this package to be copied into implementing systems.
-
-Using translations should be done sparingly. Copying the updated translation file is a manual process.
-Translation changes should be considered breaking releases to signal this step and include a note in the [migration](./MIGRATION.md) file.
 
 ## Publishing
 

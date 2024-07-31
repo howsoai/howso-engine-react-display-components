@@ -1,16 +1,16 @@
 import { FC, ReactNode, useContext } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributesDataTypeEnum,
   FeatureAttributesTypeEnum,
 } from "@howso/openapi-client";
 import { useFormContext } from "react-hook-form";
-import { featureAttributeDataTypeFieldLabel } from "./constants";
 import {
   FieldSelect,
   FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeDataTypeFieldI18nBundle as i18n } from "./FeatureAttributeDataTypeField.i18n";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
   featureType: FeatureAttributesTypeEnum | undefined;
@@ -23,7 +23,7 @@ export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
 export const FeatureAttributeDataTypeField: FC<
   FeatureAttributeDataTypeFieldProps
 > = ({ featureType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldSelectProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
   const dataType = form.getValues("data_type");
@@ -31,53 +31,38 @@ export const FeatureAttributeDataTypeField: FC<
 
   return (
     <FieldSelect
-      label={t(featureAttributeDataTypeFieldLabel)}
+      label={t(i18n.strings.label)}
       required={required}
       helperText={<HelperText dataType={dataType} />}
+      data-testid={"FeatureAttributeDataTypeField"}
       {...fieldSelectProps}
       {...props}
       {...form.register("data_type", { required })}
     >
-      <option value="string">
-        {t("FeatureAttributes.FeatureAttributeDataTypeField.options.string")}
-      </option>
-      <option value="number">
-        {t("FeatureAttributes.FeatureAttributeDataTypeField.options.number")}
-      </option>
+      <option value="string">{t(i18n.strings.options.string)}</option>
+      <option value="number">{t(i18n.strings.options.number)}</option>
       <option value="formatted_date_time">
-        {t(
-          "FeatureAttributes.FeatureAttributeDataTypeField.options.formatted_date_time",
-        )}
+        {t(i18n.strings.options.formattedDateTime)}
       </option>
       <option value="json" disabled={featureType === "ordinal"}>
-        {t("FeatureAttributes.FeatureAttributeDataTypeField.options.json")}
+        {t(i18n.strings.options.json)}
       </option>
       <option value="yaml" disabled={featureType === "ordinal"}>
-        {t("FeatureAttributes.FeatureAttributeDataTypeField.options.yaml")}
+        {t(i18n.strings.options.yaml)}
       </option>
       <option value="amalgam" disabled={featureType === "ordinal"}>
-        {t("FeatureAttributes.FeatureAttributeDataTypeField.options.amalgam")}
+        {t(i18n.strings.options.amalgam)}
       </option>
 
-      <optgroup
-        label={t(
-          "FeatureAttributes.FeatureAttributeDataTypeField.options.groups.continuous",
-        )}
-      >
+      <optgroup label={t(i18n.strings.options.groups.continuous)}>
         <option value="string_mixable" disabled={featureType !== "continuous"}>
-          {t(
-            "FeatureAttributes.FeatureAttributeDataTypeField.options.string_mixable",
-          )}
+          {t(i18n.strings.options.stringMixable)}
         </option>
       </optgroup>
 
-      <optgroup
-        label={t(
-          "FeatureAttributes.FeatureAttributeDataTypeField.options.groups.nominal",
-        )}
-      >
+      <optgroup label={t(i18n.strings.options.groups.nominal)}>
         <option value="boolean" disabled={featureType !== "nominal"}>
-          {t("FeatureAttributes.FeatureAttributeDataTypeField.options.boolean")}
+          {t(i18n.strings.options.boolean)}
         </option>
       </optgroup>
     </FieldSelect>
@@ -87,13 +72,11 @@ export const FeatureAttributeDataTypeField: FC<
 const HelperText: FC<{
   dataType: FeatureAttributesDataTypeEnum | undefined;
 }> = ({ dataType }): ReactNode => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
 
   switch (dataType) {
     case "formatted_date_time":
-      return t(
-        "FeatureAttributes.FeatureAttributeDataTypeField.help.formattedDateTime",
-      );
+      return t(i18n.strings.help.formattedDateTime);
     default:
       return null;
   }

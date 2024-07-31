@@ -1,12 +1,13 @@
 import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import {
   featureAttributeAllowNullsFieldLabel,
   featureAttributeAllowNullsFieldName,
 } from "./constants";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeAllowNullsFieldI18nBundle as i18n } from "./FeatureAttributeAllowNullsField.i18n";
 
 export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
 /**
@@ -17,7 +18,7 @@ export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
 export const FeatureAttributeAllowNullsField: FC<
   FeatureAttributeAllowNullsFieldProps
 > = () => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -32,6 +33,7 @@ export const FeatureAttributeAllowNullsField: FC<
           {...fieldCheckboxProps}
           {...field}
           label={t(featureAttributeAllowNullsFieldLabel)}
+          data-testid="FeatureAttributeAllowNullsField"
           checked={field.value ?? true}
         />
       )}

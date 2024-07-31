@@ -1,8 +1,9 @@
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { useTranslation } from "react-i18next";
+import { FeatureAttributeTimeSeriesHasTerminatorsFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesHasTerminatorsField.i18n";
 
 export type FeatureAttributeTimeSeriesHasTerminatorsFieldProps = {
   isIdFeature: boolean | undefined;
@@ -13,7 +14,7 @@ export type FeatureAttributeTimeSeriesHasTerminatorsFieldProps = {
 export const FeatureAttributeTimeSeriesHasTerminatorsField: FC<
   FeatureAttributeTimeSeriesHasTerminatorsFieldProps
 > = ({ isIdFeature }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -24,13 +25,9 @@ export const FeatureAttributeTimeSeriesHasTerminatorsField: FC<
   return (
     <FieldCheckbox
       {...fieldCheckboxProps}
-      label={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesHasTerminatorsField.label",
-      )}
+      label={t(i18n.strings.label)}
       {...form.register("time_series.series_has_terminators")}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesHasTerminatorsField.help",
-      )}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

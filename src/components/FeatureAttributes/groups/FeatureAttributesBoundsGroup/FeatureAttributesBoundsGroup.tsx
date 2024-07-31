@@ -1,5 +1,4 @@
 import { FC } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import {
   FeatureAttributeAllowNullsField,
   FeatureAttributeAllowedValuesField,
@@ -13,6 +12,8 @@ import {
 import { FeatureAttributes } from "@howso/openapi-client";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { InferFeatureAttributesBoundingMode } from "../../utils";
+import { FeatureAttributesBoundsGroupI18nBundle as i18n } from "./FeatureAttributesBoundsGroup.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesBoundsGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -38,12 +39,12 @@ export const FeatureAttributesBoundsGroup: FC<
   isTimeFeature,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
 
   return (
     <FeatureAttributesGroupBase
       {...props}
-      title={t("FeatureAttributes.FeatureAttributesBoundsGroup.title")}
+      title={t(i18n.strings.title)}
       basic={
         <div className={formSpacingYDefault}>
           <FeatureAttributeAllowNullsField />

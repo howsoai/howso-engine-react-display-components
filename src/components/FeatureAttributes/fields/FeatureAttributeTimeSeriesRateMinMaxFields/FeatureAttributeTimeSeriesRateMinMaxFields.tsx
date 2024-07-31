@@ -1,11 +1,12 @@
 import { FC, useContext } from "react";
-import { useDefaultTranslation } from "@/hooks";
 import { HelperText } from "flowbite-react";
 import {
   FieldTextList,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesRateMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeTimeSeriesRateMinMaxFields.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
   Partial<FieldTextProps> & {
@@ -18,7 +19,7 @@ export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
 export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
   FeatureAttributeTimeSeriesRateMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   if (timeSeriesType !== "rate") {
@@ -32,9 +33,7 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.rate_min"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesRateMinMaxFields.label.min",
-          )}
+          label={t(i18n.strings.label.min)}
           placeholder="-1,-2,-3,-5,-7"
           valueAsNumber={true}
           {...props}
@@ -44,17 +43,13 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
           {...fieldTextProps}
           name={"time_series.rate_max"}
           containerProps={{ className: "basis-1/2" }}
-          label={t(
-            "FeatureAttributes.FeatureAttributeTimeSeriesRateMinMaxFields.label.max",
-          )}
+          label={t(i18n.strings.label.max)}
           placeholder="1,2,3,5,7"
           valueAsNumber={true}
           {...props}
         />
       </div>
-      <HelperText color={"gray"}>
-        {t("FeatureAttributes.FeatureAttributeTimeSeriesRateMinMaxFields.help")}
-      </HelperText>
+      <HelperText color={"gray"}>{t(i18n.strings.help)}</HelperText>
     </div>
   );
 };

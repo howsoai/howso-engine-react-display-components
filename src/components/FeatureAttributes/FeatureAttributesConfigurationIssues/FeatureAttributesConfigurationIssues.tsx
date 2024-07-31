@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { FeatureAttributesConfigurationIssue } from "../utils";
-import { useDefaultTranslation } from "@/hooks";
+import { FeatureAttributesConfigurationIssuesI18nBundle as i18n } from "./FeatureAttributesConfigurationIssues.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesConfigurationIssuesProps = {
   issues: FeatureAttributesConfigurationIssue[] | undefined;
@@ -8,7 +9,7 @@ export type FeatureAttributesConfigurationIssuesProps = {
 export const FeatureAttributesConfigurationIssues: FC<
   FeatureAttributesConfigurationIssuesProps
 > = ({ issues }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
 
   if (!issues?.length) {
     return null;

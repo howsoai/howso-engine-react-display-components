@@ -4,8 +4,9 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeTimeSeriesOrderFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesOrderField.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesOrderFieldProps = Partial<FieldTextProps>;
 /**
@@ -14,7 +15,7 @@ export type FeatureAttributeTimeSeriesOrderFieldProps = Partial<FieldTextProps>;
 export const FeatureAttributeTimeSeriesOrderField: FC<
   FeatureAttributeTimeSeriesOrderFieldProps
 > = (props) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -22,13 +23,11 @@ export const FeatureAttributeTimeSeriesOrderField: FC<
     <FieldText
       {...fieldTextProps}
       type="number"
-      label={t("FeatureAttributes.FeatureAttributeTimeSeriesOrderField.label")}
+      label={t(i18n.strings.label)}
       placeholder="1"
       {...props}
       {...form.register("time_series.order", { min: 0, valueAsNumber: true })}
-      helperText={t(
-        "FeatureAttributes.FeatureAttributeTimeSeriesOrderField.help",
-      )}
+      helperText={t(i18n.strings.help)}
     />
   );
 };

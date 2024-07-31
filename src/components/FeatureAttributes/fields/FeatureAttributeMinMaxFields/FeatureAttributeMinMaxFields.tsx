@@ -1,6 +1,5 @@
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
 import {
@@ -10,6 +9,8 @@ import {
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { twMerge } from "tailwind-merge";
 import { InferFeatureAttributesBoundingMode } from "../../utils";
+import { FeatureAttributeMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeMinMaxFields.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
   type: FeatureAttributes["type"] | undefined;
@@ -37,7 +38,7 @@ export const FeatureAttributeMinMaxFields: FC<
   dateTimeFormat = featureAttributeDateTimeFormatFieldPlaceholder,
   ...props
 }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldStackProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -63,7 +64,7 @@ export const FeatureAttributeMinMaxFields: FC<
       <FieldText
         {...fieldStackProps?.fieldTextProps}
         containerProps={{ className: "basis-1/2" }}
-        label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.min")}
+        label={t(i18n.strings.label.min)}
         type={inputType}
         placeholder={isContinuousDateTime ? dateTimeFormat : "-100"}
         {...props}
@@ -73,7 +74,7 @@ export const FeatureAttributeMinMaxFields: FC<
       <FieldText
         {...fieldStackProps?.fieldTextProps}
         containerProps={{ className: "basis-1/2" }}
-        label={t("FeatureAttributes.FeatureAttributeMinMaxFields.label.max")}
+        label={t(i18n.strings.label.max)}
         type={inputType}
         placeholder={isContinuousDateTime ? dateTimeFormat : "100"}
         {...props}

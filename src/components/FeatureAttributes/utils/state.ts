@@ -9,6 +9,7 @@ import type {
 } from "../types";
 import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
 import { InferFeatureAttributesBoundingMode } from "./forms";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "../FeatureAttributesConfigurationIssues";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,
@@ -45,7 +46,8 @@ export const areAllFeatureAttributesValid = (
 };
 
 export type FeatureAttributesConfigurationIssue = {
-  translationKey: `FeatureAttributes.ConfigurationIssue.${string}`;
+  /** These translations will include their namespace, along with key. */
+  translationKey: string;
 };
 
 const featureAttributeIssues: Record<
@@ -53,16 +55,21 @@ const featureAttributeIssues: Record<
   FeatureAttributesConfigurationIssue
 > = {
   typeUndefined: {
-    translationKey: `FeatureAttributes.ConfigurationIssue.typeUndefined`,
+    translationKey:
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.typeUndefined,
   },
   dataTypeUndefined: {
-    translationKey: `FeatureAttributes.ConfigurationIssue.dataTypeUndefined`,
+    translationKey:
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.dataTypeUndefined,
   },
   sensitiveSubtypeUndefined: {
-    translationKey: `FeatureAttributes.ConfigurationIssue.sensitiveSubtypeUndefined`,
+    translationKey:
+      FeatureAttributesConfigurationIssuesI18nBundle.strings
+        .sensitiveSubtypeUndefined,
   },
   dateTimeFormatUndefined: {
-    translationKey: `FeatureAttributes.ConfigurationIssue.dateTimeFormatUndefined`,
+    translationKey:
+      FeatureAttributesConfigurationIssuesI18nBundle.strings.dataTypeUndefined,
   },
 };
 

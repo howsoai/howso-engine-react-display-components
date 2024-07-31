@@ -1,10 +1,11 @@
 import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { useDefaultTranslation } from "@/hooks";
 import { FeatureAttributes } from "@howso/openapi-client";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "./FeatureAttributeIsSensitiveField.utils";
 import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeIsSensitiveFieldI18nBundle as i18n } from "./FeatureAttributeIsSensitiveField.i18n";
+import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeIsSensitiveFieldProps = {
   featureType: FeatureAttributes["type"] | undefined;
@@ -27,7 +28,7 @@ export type FeatureAttributeIsSensitiveFieldProps = {
 export const FeatureAttributeIsSensitiveField: FC<
   FeatureAttributeIsSensitiveFieldProps
 > = ({ featureType, dataType }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
@@ -49,13 +50,11 @@ export const FeatureAttributeIsSensitiveField: FC<
         // @ts-expect-error Minimal typing differences
         <FieldCheckbox
           {...fieldCheckboxProps}
-          label={t("FeatureAttributes.FeatureAttributeIsSensitiveField.label")}
+          label={t(i18n.strings.label)}
           {...field}
           checked={!value}
           onChange={async (evt) => onChange(!evt.target.checked)}
-          helperText={t(
-            "FeatureAttributes.FeatureAttributeIsSensitiveField.help",
-          )}
+          helperText={t(i18n.strings.help)}
         />
       )}
     />

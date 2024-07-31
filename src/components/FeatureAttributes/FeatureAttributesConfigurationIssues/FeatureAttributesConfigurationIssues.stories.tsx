@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FeatureAttributesConfigurationIssues } from "./FeatureAttributesConfigurationIssues";
 import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "./FeatureAttributesConfigurationIssues.i18n";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesConfigurationIssues> = {
@@ -26,10 +27,13 @@ export const Default: Story = {
   args: {
     issues: [
       {
-        translationKey: `FeatureAttributes.ConfigurationIssue.typeUndefined`,
+        translationKey:
+          FeatureAttributesConfigurationIssuesI18nBundle.strings.typeUndefined,
       },
       {
-        translationKey: `FeatureAttributes.ConfigurationIssue.sensitiveSubtypeUndefined`,
+        translationKey:
+          FeatureAttributesConfigurationIssuesI18nBundle.strings
+            .sensitiveSubtypeUndefined,
       },
     ],
   },

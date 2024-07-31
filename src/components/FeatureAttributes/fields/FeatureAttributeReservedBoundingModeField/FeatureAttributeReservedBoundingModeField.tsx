@@ -1,4 +1,3 @@
-import { useDefaultTranslation } from "@/hooks";
 import {
   FieldRadios,
   FieldRadiosProps,
@@ -6,9 +5,11 @@ import {
 import { FC, Fragment, useContext, useMemo } from "react";
 import { RegisterOptions } from "react-hook-form";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { options, translations } from "./constants";
+import { options } from "./constants";
 import { twMerge } from "tailwind-merge";
 import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributeReservedBoundingModeFieldI18nBundle as i18n } from "./FeatureAttributeReservedBoundingModeField.i18n";
+import { useTranslation } from "react-i18next";
 
 type FeatureAttributeReservedBoundingModeFieldProps =
   Partial<FieldRadiosProps> & {
@@ -18,7 +19,7 @@ type FeatureAttributeReservedBoundingModeFieldProps =
 export const FeatureAttributeReservedBoundingModeField: FC<
   FeatureAttributeReservedBoundingModeFieldProps
 > = ({ featureType, dataType, required = true, ...props }) => {
-  const { t } = useDefaultTranslation();
+  const { t } = useTranslation(i18n.namespace);
   const { fieldRadiosProps } = useContext(FeaturesAttributesContext);
 
   const registerOptions: RegisterOptions = useMemo(
@@ -44,7 +45,7 @@ export const FeatureAttributeReservedBoundingModeField: FC<
   return (
     <FieldRadios
       {...fieldRadiosProps}
-      label={t(translations.label)}
+      label={t(i18n.strings.label)}
       labelInline
       {...props}
       labelProps={{
@@ -58,7 +59,7 @@ export const FeatureAttributeReservedBoundingModeField: FC<
                 .map(({ value, translations }, index) => (
                   <Fragment key={value}>
                     <dt className={twMerge(index > 0 && "mt-2")}>
-                      {t(translations.label)}
+                      {t(i18n.strings.label)}
                     </dt>
                     <dd>{t(translations.help!)}</dd>
                   </Fragment>
