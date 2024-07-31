@@ -24,6 +24,8 @@ export default {
     // terser(), // minifies generated bundles
   ],
   external: [
+    "@howso/ui-internationalization-utils",
+    "flowbite-react",
     "react/jsx-runtime",
     "react-icons/hi",
     "jotai/react",
