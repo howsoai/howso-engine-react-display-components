@@ -16,7 +16,7 @@
     "prepare": "husky install",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "tsc --noEmit && jest --collect-coverage",
+    "test:coverage": "jest --collect-coverage",
     "storybook": "storybook dev -p 6006",
     "prepack": "npm run build"
   },
@@ -39,14 +39,12 @@
     "@howso/openapi-client": "^1.0.0",
     "@howso/react-tailwind-flowbite-components": "^5.0.1",
     "jotai": "^2.8.3",
-    "lodash": "^4.17.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-hook-form": "^7.51.5",
     "react-i18next": "^14.1.2",
     "react-icons": "^5.2.1",
-    "tailwind-merge": "^2.2.1",
-    "tslib": "^2.0.3"
+    "tailwind-merge": "^2.2.1"
   },
   "optionalDependencies": {
     "@rollup/rollup-linux-x64-gnu": "^4.9.6"
@@ -57,7 +55,7 @@
     "@hookform/error-message": "^2.0.1",
     "@howso/openapi-client": "^1.0.0",
     "@howso/react-tailwind-flowbite-components": "^5.0.1",
-    "@howso/ui-internationalization-utils": "^1.0.1",
+    "@howso/ui-internationalization-utils": "^1.0.2",
     "@rollup/plugin-typescript": "^11.1.6",
     "@storybook/addon-a11y": "^8.1.10",
     "@storybook/addon-actions": "^8.1.10",
@@ -85,7 +83,6 @@
     "jest-transform-stub": "^2.0.0",
     "jotai": "^2.8.3",
     "lint-staged": "^11.2.3",
-    "lodash": "^4.17.21",
     "postcss-nesting": "^12.1.5",
     "prettier": "^3.3.0",
     "react": "^18.2.0",
@@ -99,7 +96,6 @@
     "storybook": "^8.1.10",
     "tailwindcss": "^3.4.1",
     "ts-jest": "^29.1.1",
-    "tslib": "^2.0.3",
     "typescript": "^5.5.2",
     "vite": "^5.1.6",
     "vite-plugin-eslint": "^1.8.1"
