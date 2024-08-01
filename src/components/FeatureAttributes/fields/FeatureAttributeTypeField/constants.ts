@@ -2,7 +2,10 @@ import { FeatureAttributeTypeFieldI18nBundle as i18n } from "./FeatureAttributeT
 
 export const featureAttributeTypeName = "type";
 
-export const featureAttributeTypeLabel = i18n.strings.label;
+export const featureAttributeTypeLabel = [
+  i18n.namespace,
+  i18n.strings.label,
+].join(":");
 
 export const featureAttributeTypeOptions = {
   continuous: {
