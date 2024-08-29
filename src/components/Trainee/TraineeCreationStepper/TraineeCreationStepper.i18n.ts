@@ -1,8 +1,8 @@
-import { Languages } from "@/constants";
 import {
   getStringsForI18nBundleFromResource,
   type I18nBundle,
 } from "@howso/ui-internationalization-utils";
+import { Languages } from "../../../constants";
 
 const namespace = "TraineeCreationStepper";
 

@@ -1,25 +1,25 @@
+import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { type FC, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { useFormValues } from "../../../hooks";
 import {
-  FeatureAttributeTypeField,
-  FeatureAttributeUniqueField,
-  FeatureAttributeSubtypeField,
   FeatureAttributeDataTypeField,
+  FeatureAttributeDateTimeFormatField,
   FeatureAttributeIdFeatureField,
   FeatureAttributeIsSensitiveField,
   FeatureAttributeLocaleField,
-  FeatureAttributeDateTimeFormatField,
-  FeatureAttributeObservationalErrorField,
   FeatureAttributeNullIsDependentField,
+  FeatureAttributeObservationalErrorField,
+  FeatureAttributeSubtypeField,
+  FeatureAttributeTypeField,
+  FeatureAttributeUniqueField,
 } from "../fields";
 import {
-  FeatureAttributesContinuousNumbersGroup,
   FeatureAttributesBoundsGroup,
+  FeatureAttributesContinuousNumbersGroup,
   FeatureAttributesProgrammableGroup,
   FeatureAttributesTemporalityGroup,
 } from "../groups";
-import { useFormValues } from "@/hooks/useFormValues";
-import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { InferFeatureAttributeFormValues } from "../utils";
 
 export type FeatureAttributesConfigurationProps = {

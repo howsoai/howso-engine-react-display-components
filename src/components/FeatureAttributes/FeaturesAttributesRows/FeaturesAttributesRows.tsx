@@ -1,24 +1,4 @@
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { FeatureAttributes } from "@howso/openapi-client";
-import {
-  Table,
-  Button,
-  Radio,
-  Modal,
-  Alert,
-  getTheme,
-  Tooltip,
-} from "flowbite-react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FeatureAttributeSample } from "../FeatureAttributeSample";
-import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
-import {
-  FeatureAttributeTypeField,
-  featureAttributeTypeLabel,
-} from "../fields";
-import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
-import { twMerge } from "tailwind-merge";
-import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import {
   ErrorBoundary,
   FormModal,
@@ -27,26 +7,46 @@ import {
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
-  InferFeatureAttributeFormValues,
+  Alert,
+  Button,
+  getTheme,
+  Modal,
+  Radio,
+  Table,
+  Tooltip,
+} from "flowbite-react";
+import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
+import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
+import { MapDependentFeatureAttributesIcon } from "../../Icons";
+import { FeatureAttributeSample } from "../FeatureAttributeSample";
+import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
+import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
+import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
+import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
+import {
+  FeatureAttributeTypeField,
+  featureAttributeTypeLabel,
+} from "../fields";
+import {
+  type FeatureAttributesActiveFeatureAtom,
+  type FeatureAttributesOptionsAtom,
+  getFeatureAttributesFormDefaultValues,
+  type InferFeatureAttributesParamsAtom,
+  type InferFeatureAttributesParamsTimeFeatureAtom,
+  InferFeatureAttributesRunRequiredFieldsAtom,
+  useFeatureAttributesForm,
+} from "../hooks";
+import {
   getFeatureAttributeConfigurationIssues,
   getInferFeatureAttributeParamsFormValuesOnSubmit,
+  InferFeatureAttributeFormValues,
   setInferFeatureAttributeParamsFeatureAttributes,
   shouldInferAgain,
 } from "../utils";
-import { MapDependentFeatureAttributesIcon } from "@/components/Icons";
-import {
-  type FeatureAttributesActiveFeatureAtom,
-  type InferFeatureAttributesParamsAtom,
-  type FeatureAttributesOptionsAtom,
-  type InferFeatureAttributesParamsTimeFeatureAtom,
-  useFeatureAttributesForm,
-  getFeatureAttributesFormDefaultValues,
-  InferFeatureAttributesRunRequiredFieldsAtom,
-} from "../hooks";
-import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
-import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
 import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesRowsProps = {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;

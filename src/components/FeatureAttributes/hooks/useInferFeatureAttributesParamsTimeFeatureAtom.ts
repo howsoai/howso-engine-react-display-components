@@ -1,11 +1,11 @@
 import { FeatureAttributes, FeatureTimeSeries } from "@howso/openapi-client";
 import { atom } from "jotai";
+import { useMemo } from "react";
+import { isEmpty } from "../../../utils";
+import { InferFeatureAttributesParams } from "../types";
 import { ActiveFeature } from "./useFeatureAttributesActiveFeatureAtom";
 import { InferFeatureAttributesParamsAtom } from "./useInferFeatureAttributesParamsAtom";
 import { InferFeatureAttributesRunRequiredFieldsAtom } from "./useInferFeatureAttributesRunRequiredFields";
-import { useMemo } from "react";
-import { InferFeatureAttributesParams } from "../types";
-import { isEmpty } from "@/utils";
 
 export type GetInferFeatureAttributesParamsTimeFeatureAtom = {
   paramsAtom: InferFeatureAttributesParamsAtom;

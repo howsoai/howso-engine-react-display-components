@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FeatureAttributeDataTypeField } from "./FeatureAttributeDataTypeField";
-import { getFormProviderDecorator } from "@/storybook";
-import { InferFeatureAttributeFormValues } from "../../utils";
+import { getFormProviderDecorator } from "../../../../storybook";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { InferFeatureAttributeFormValues } from "../../utils";
+import { FeatureAttributeDataTypeField } from "./FeatureAttributeDataTypeField";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributeDataTypeField> = {

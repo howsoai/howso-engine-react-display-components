@@ -1,11 +1,14 @@
-import { TraineeDefineIcon, TraineeTrainIcon } from "@/components";
 import {
-  DatabaseIcon,
   Stepper,
   type StepperProps,
 } from "@howso/react-tailwind-flowbite-components";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
+import {
+  TraineeDefineIcon,
+  TraineeLoadIcon,
+  TraineeTrainIcon,
+} from "../../Icons";
 import { TraineeCreationStepperI18nBundle as i18n } from "./TraineeCreationStepper.i18n";
 
 export type TraineeCreationStepperProps = Pick<
@@ -24,7 +27,7 @@ const TraineeCreationStepperComponent: FC<TraineeCreationStepperProps> = ({
         position={0}
       >
         <Stepper.Icon>
-          <DatabaseIcon className={TraineeCreationStepper.classes.icon} />
+          <TraineeLoadIcon className={TraineeCreationStepper.classes.icon} />
         </Stepper.Icon>
         <Stepper.Content>
           <Stepper.Content.Heading

@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 import { FeatureAttributes } from "@howso/openapi-client";
+import type { Meta, StoryObj } from "@storybook/react";
+import { withPadding } from "../../../storybook";
 import {
-  getInferFeatureAttributesRunRequiredFields,
   getFeatureAttributesActiveFeatureAtom,
-  getInferFeatureAttributesParamsAtom,
   getFeatureAttributesOptionsAtom,
+  getInferFeatureAttributesParamsAtom,
   getInferFeatureAttributesParamsTimeFeatureAtom,
+  getInferFeatureAttributesRunRequiredFields,
 } from "../hooks";
-import { withPadding } from "@/storybook";
 import type { FeatureAttributesIndex } from "../types";
+import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesRows> = {

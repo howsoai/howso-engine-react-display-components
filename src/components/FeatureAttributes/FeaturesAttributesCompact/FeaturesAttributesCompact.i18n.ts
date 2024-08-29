@@ -2,7 +2,7 @@ import {
   getStringsForI18nBundleFromResource,
   type I18nBundle,
 } from "@howso/ui-internationalization-utils";
-import { Languages } from "@/constants";
+import { Languages } from "../../../constants";
 
 const namespace = "FeaturesAttributesCompact";
 

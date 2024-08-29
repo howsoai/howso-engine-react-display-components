@@ -1,5 +1,5 @@
 import { I18nBundle } from "@howso/ui-internationalization-utils";
-import { Languages } from "@/constants";
+import { Languages } from "../../../constants";
 import { FeatureAttributesBoundsGroupI18nBundle } from "./FeatureAttributesBoundsGroup";
 import { FeatureAttributesContinuousNumbersGroupI18nBundle } from "./FeatureAttributesContinuousNumbersGroup";
 import { FeatureAttributesGroupBaseI18nBundle } from "./FeatureAttributesGroupBase";
