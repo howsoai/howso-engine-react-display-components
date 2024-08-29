@@ -40,7 +40,7 @@ const TraineeCreationStepperComponent: FC<TraineeCreationStepperProps> = ({
         </Stepper.Content>
       </Stepper.Item>
 
-      <Stepper.Spacer />
+      {/* <Stepper.Spacer /> */}
 
       <Stepper.Item
         className={TraineeCreationStepper.classes.item}
@@ -63,7 +63,7 @@ const TraineeCreationStepperComponent: FC<TraineeCreationStepperProps> = ({
         </Stepper.Content>
       </Stepper.Item>
 
-      <Stepper.Spacer />
+      {/* <Stepper.Spacer /> */}
 
       <Stepper.Item
         className={TraineeCreationStepper.classes.item}
@@ -93,7 +93,7 @@ export const TraineeCreationStepper = Object.assign(
   TraineeCreationStepperComponent,
   {
     classes: {
-      item: "basis-1/3 sm:basis-auto",
+      item: "grow",
       icon: "",
       heading: "",
       description: "hidden md:block",
