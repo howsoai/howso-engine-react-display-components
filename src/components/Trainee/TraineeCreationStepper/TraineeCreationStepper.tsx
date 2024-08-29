@@ -11,10 +11,8 @@ import {
 } from "../../Icons";
 import { TraineeCreationStepperI18nBundle as i18n } from "./TraineeCreationStepper.i18n";
 
-export type TraineeCreationStepperProps = Pick<
-  StepperProps,
-  "vertical" | "step" | "marginBottom"
-> & {};
+export type TraineeCreationStepperProps = Pick<StepperProps, "step"> &
+  Partial<Pick<StepperProps, "vertical" | "marginBottom">> & {};
 const TraineeCreationStepperComponent: FC<TraineeCreationStepperProps> = ({
   ...props
 }) => {
