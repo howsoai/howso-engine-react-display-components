@@ -1,19 +1,19 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
-import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
+import { fireEvent, render, screen, within } from "@testing-library/react";
+import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 import {
-  getInferFeatureAttributesRunRequiredFields,
-  getInferFeatureAttributesParamsAtom,
-  getInferFeatureAttributesParamsTimeFeatureAtom,
   getFeatureAttributesActiveFeatureAtom,
   getFeatureAttributesOptionsAtom,
+  getInferFeatureAttributesParamsAtom,
+  getInferFeatureAttributesParamsTimeFeatureAtom,
+  getInferFeatureAttributesRunRequiredFields,
 } from "../hooks";
-import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
 import type {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
 } from "../types";
+import { FeaturesAttributesRows } from "./FeaturesAttributesRows";
+import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
 
 describe("FeaturesAttributesRows", () => {
   const featuresAttributes: FeatureAttributesIndex = {
