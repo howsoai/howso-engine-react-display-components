@@ -7,9 +7,6 @@ module.exports = {
   ],
   coverageReporters: ["text", "cobertura"],
   moduleFileExtensions: ["js", "ts", "tsx", "json"],
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
-  },
   rootDir: "src",
   setupFiles: [
     "<rootDir>/../jest/setup/i18n.js",

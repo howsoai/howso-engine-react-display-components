@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { FeatureAttributeAllowedValuesField } from "./FeatureAttributeAllowedValuesField";
-import { getFormProviderDecorator } from "@/storybook";
-import { FC, ReactNode } from "react";
-import { UseFormProps, useForm, FormProvider } from "react-hook-form";
 import { FeatureAttributes } from "@howso/openapi-client";
+import type { Meta, StoryObj } from "@storybook/react";
+import { FC, ReactNode } from "react";
+import { FormProvider, UseFormProps, useForm } from "react-hook-form";
+import { getFormProviderDecorator } from "../../../../storybook";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { FeatureAttributeAllowedValuesField } from "./FeatureAttributeAllowedValuesField";
 
 const defaultValues: FeatureAttributes = {
   type: "nominal",

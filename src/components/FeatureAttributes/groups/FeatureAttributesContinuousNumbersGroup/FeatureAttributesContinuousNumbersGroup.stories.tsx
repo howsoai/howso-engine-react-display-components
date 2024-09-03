@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { getFormProviderDecorator } from "@/storybook";
-import { FeatureAttributesContinuousNumbersGroup } from "./FeatureAttributesContinuousNumbersGroup";
+import { getFormProviderDecorator } from "../../../../storybook";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { FeatureAttributesContinuousNumbersGroup } from "./FeatureAttributesContinuousNumbersGroup";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeatureAttributesContinuousNumbersGroup> = {

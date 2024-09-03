@@ -1,24 +1,24 @@
 import { I18nBundle } from "@howso/ui-internationalization-utils";
-import { Languages } from "@/constants";
-import { FeatureAttributesFieldsI18nBundles } from "./fields";
-import { FeatureAttributesGroupsI18nBundles } from "./groups";
+import { Languages } from "../../constants";
 import { FeatureAttributeSampleI18nBundle } from "./FeatureAttributeSample";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "./FeatureAttributesConfigurationIssues";
 import { FeaturesAttributesCompactI18nBundle } from "./FeaturesAttributesCompact";
 import { FeaturesAttributesDependenciesI18nBundle } from "./FeaturesAttributesDependencies";
 import { FeaturesAttributesRowsI18nBundle } from "./FeaturesAttributesRows";
-import { FeatureAttributesConfigurationIssuesI18nBundle } from "./FeatureAttributesConfigurationIssues";
+import { FeatureAttributesFieldsI18nBundles } from "./fields";
+import { FeatureAttributesGroupsI18nBundles } from "./groups";
 
 export * from "./FeatureAttributeSample";
 export * from "./FeatureAttributesConfiguration";
 export * from "./FeatureAttributesConfigurationIssues";
-export * from "./FeaturesAttributesContext";
+export * from "./FeatureAttributesConfigurationIssues/FeatureAttributesConfigurationIssues.i18n";
 export * from "./FeaturesAttributesCompact";
+export * from "./FeaturesAttributesContext";
 export * from "./FeaturesAttributesDependencies";
 export * from "./FeaturesAttributesRows";
-export * from "./FeatureAttributesConfigurationIssues/FeatureAttributesConfigurationIssues.i18n";
-export * from "./hooks";
 export * from "./fields";
 export * from "./groups";
+export * from "./hooks";
 export * from "./types";
 export * from "./utils";
 

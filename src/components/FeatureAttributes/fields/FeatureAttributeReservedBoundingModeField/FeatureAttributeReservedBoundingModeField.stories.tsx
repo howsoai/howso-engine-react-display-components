@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { getFormProviderDecorator } from "@/storybook";
+import { getFormProviderDecorator } from "../../../../storybook";
 import { getFeaturesAttributesContextDecorator } from "../../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
 import { FeatureAttributeReservedBoundingModeField } from "./FeatureAttributeReservedBoundingModeField";
 

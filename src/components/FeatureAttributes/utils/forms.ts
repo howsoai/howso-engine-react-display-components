@@ -1,5 +1,5 @@
-import { isFormDataEmpty } from "@/utils/forms";
 import { type FeatureAttributes } from "@howso/openapi-client";
+import { isFormDataEmpty } from "../../../utils";
 import { InferFeatureAttributesParams } from "../types";
 import { getInferFeatureAttributeParamsWithFeatureBoundingMode } from "./state";
 

@@ -1,20 +1,20 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { act } from "react";
-import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
-import { FeaturesAttributesCompactI18nBundle as i18n } from "./FeaturesAttributesCompact.i18n";
+import { sleep } from "../../../utils";
+import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
+import { getFeatureAttributesAllowNullsFieldInContainer } from "../fields/FeatureAttributeAllowNullsField/FeatureAttributeAllowNullsField.test";
+import { getFeatureAttributeObservationalErrorFieldInElement } from "../fields/FeatureAttributeObservationalErrorField/FeatureAttributeObservationalErrorField.test";
+import { getFeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup/FeatureAttributesTemporalityGroup.test";
 import {
-  getInferFeatureAttributesRunRequiredFields,
+  getFeatureAttributesActiveFeatureAtom,
   getInferFeatureAttributesParamsAtom,
   getInferFeatureAttributesParamsTimeFeatureAtom,
-  getFeatureAttributesActiveFeatureAtom,
+  getInferFeatureAttributesRunRequiredFields,
 } from "../hooks";
-import { sleep } from "@/utils";
-import { expectFeatureAttributeConfigurationInContainer } from "../FeatureAttributesConfiguration/FeatureAttributesConfiguration.test";
-import { getFeatureAttributeObservationalErrorFieldInElement } from "../fields/FeatureAttributeObservationalErrorField/FeatureAttributeObservationalErrorField.test";
-import { getFeatureAttributesAllowNullsFieldInContainer } from "../fields/FeatureAttributeAllowNullsField/FeatureAttributeAllowNullsField.test";
 import { FeatureAttributesIndex, InferFeatureAttributesParams } from "../types";
-import { getFeatureAttributesTemporalityGroup } from "../groups/FeatureAttributesTemporalityGroup/FeatureAttributesTemporalityGroup.test";
+import { FeaturesAttributesCompact } from "./FeaturesAttributesCompact";
+import { FeaturesAttributesCompactI18nBundle as i18n } from "./FeaturesAttributesCompact.i18n";
 
 /* eslint jest/no-conditional-expect: "off" */
 

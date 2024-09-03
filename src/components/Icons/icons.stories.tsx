@@ -1,7 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { FC, ReactNode } from "react";
 import { IconBaseProps } from "react-icons";
-import { MapDependentFeatureAttributesIcon } from ".";
+import {
+  MapDependentFeatureAttributesIcon,
+  TraineeDefineIcon,
+  TraineeLoadIcon,
+  TraineeTrainIcon,
+} from ".";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<IconBaseProps> = {
@@ -19,7 +24,19 @@ const meta: Meta<IconBaseProps> = {
     <div className="flex gap-4">
       <IconWithLabel
         label={"MapDependentFeatureAttributesIcon"}
-        Icon={<MapDependentFeatureAttributesIcon />}
+        Icon={<MapDependentFeatureAttributesIcon {...args} />}
+      />
+      <IconWithLabel
+        label={"TraineeLoadIcon"}
+        Icon={<TraineeLoadIcon {...args} />}
+      />
+      <IconWithLabel
+        label={"TraineeDefineIcon"}
+        Icon={<TraineeDefineIcon {...args} />}
+      />
+      <IconWithLabel
+        label={"TraineeTrainIcon"}
+        Icon={<TraineeTrainIcon {...args} />}
       />
     </div>
   ),
