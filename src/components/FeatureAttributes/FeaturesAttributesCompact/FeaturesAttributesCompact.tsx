@@ -150,6 +150,7 @@ const Header: FC<HeaderProps> = ({
             labelInline
             sizing={"sm"}
             name="feature"
+            data-testid="FeatureAttributesCompact.feature"
             onChange={async (event) => {
               setActiveFeature(event.target.value);
             }}
