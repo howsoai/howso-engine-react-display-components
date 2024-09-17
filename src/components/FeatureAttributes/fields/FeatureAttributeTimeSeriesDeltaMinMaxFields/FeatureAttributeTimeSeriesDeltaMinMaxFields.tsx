@@ -1,13 +1,13 @@
-import { FC, useContext } from "react";
-import { HelperText } from "flowbite-react";
-import { type FeatureTimeSeriesTypeEnum } from "@howso/openapi-client";
+import { type FeatureTimeSeriesTypeEnum } from "@howso/engine";
 import {
   FieldTextList,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { HelperText } from "flowbite-react";
+import { FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeTimeSeriesDeltaMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeTimeSeriesDeltaMinMaxFields.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps =
   Partial<FieldTextProps> & {

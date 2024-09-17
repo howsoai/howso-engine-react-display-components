@@ -1,11 +1,11 @@
+import { FeatureAttributes } from "@howso/engine";
+import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { isFeatureAttributeSensitiveAttributeAvailable } from "./FeatureAttributeIsSensitiveField.utils";
-import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeIsSensitiveFieldI18nBundle as i18n } from "./FeatureAttributeIsSensitiveField.i18n";
-import { useTranslation } from "react-i18next";
+import { isFeatureAttributeSensitiveAttributeAvailable } from "./FeatureAttributeIsSensitiveField.utils";
 
 export type FeatureAttributeIsSensitiveFieldProps = {
   featureType: FeatureAttributes["type"] | undefined;

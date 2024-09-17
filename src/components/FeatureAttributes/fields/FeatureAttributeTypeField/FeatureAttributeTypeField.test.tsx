@@ -1,9 +1,9 @@
-import { within, screen } from "@testing-library/react";
+import { FeatureAttributes } from "@howso/engine";
+import { screen, within } from "@testing-library/react";
 import {
   featureAttributeTypeLabel,
   featureAttributeTypeOptions,
 } from "./constants";
-import { FeatureAttributes } from "@howso/openapi-client";
 
 const labelRegex = new RegExp(`^${featureAttributeTypeLabel}.*`);
 

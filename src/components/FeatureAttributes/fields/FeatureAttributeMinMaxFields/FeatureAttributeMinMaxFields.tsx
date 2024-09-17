@@ -1,16 +1,16 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { twMerge } from "tailwind-merge";
-import { InferFeatureAttributesBoundingMode } from "../../utils";
-import { FeatureAttributeMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeMinMaxFields.i18n";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
+import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
+import { FeatureAttributeMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeMinMaxFields.i18n";
 
 export type FeatureAttributeMinMaxFieldsProps = Partial<FieldTextProps> & {
   type: FeatureAttributes["type"] | undefined;

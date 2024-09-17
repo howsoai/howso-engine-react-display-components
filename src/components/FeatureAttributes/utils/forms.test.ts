@@ -1,10 +1,10 @@
-import type { FeatureAttributes } from "@howso/openapi-client";
+import type { FeatureAttributes } from "@howso/engine";
+import type { InferFeatureAttributesParams } from "../types";
 import {
   InferFeatureAttributeFormValues,
   getInferFeatureAttributeParamsFormValuesOnSubmit,
   getInferFeatureAttributesFromFormData,
 } from "./forms";
-import type { InferFeatureAttributesParams } from "../types";
 
 describe("getInferFeatureAttributeParamsFormValuesOnSubmit", () => {
   it("should not reset the time feature property on submit", () => {

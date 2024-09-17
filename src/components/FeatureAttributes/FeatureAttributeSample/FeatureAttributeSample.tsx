@@ -1,9 +1,9 @@
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import { Modal } from "flowbite-react";
 import { FC, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { FeatureAttributeSampleI18nBundle as i18n } from "./FeatureAttributeSample.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeSampleProps = {
   attributes: Pick<FeatureAttributes, "data_type" | "sample"> | undefined;

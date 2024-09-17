@@ -1,14 +1,14 @@
-import { within, screen, render } from "@testing-library/react";
+import { FeatureAttributes } from "@howso/engine";
 import "@testing-library/jest-dom";
+import { render, screen, within } from "@testing-library/react";
+import { FC, ReactNode } from "react";
+import { FormProvider, UseFormProps, useForm } from "react-hook-form";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 import {
   featureAttributeAllowedValuesFieldNominalLabel,
   featureAttributeAllowedValuesFieldOrdinalLabel,
 } from "./constants";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { FC, ReactNode } from "react";
-import { UseFormProps, useForm, FormProvider } from "react-hook-form";
 import { FeatureAttributeAllowedValuesField } from "./FeatureAttributeAllowedValuesField";
-import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 const nominalRegex = new RegExp(
   `^${featureAttributeAllowedValuesFieldNominalLabel}.*`,

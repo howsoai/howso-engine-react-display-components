@@ -1,4 +1,4 @@
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import type { Meta, StoryObj } from "@storybook/react";
 import { withPadding } from "../../../storybook";
 import {

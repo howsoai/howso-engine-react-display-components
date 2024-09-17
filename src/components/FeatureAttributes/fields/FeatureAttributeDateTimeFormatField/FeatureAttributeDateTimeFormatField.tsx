@@ -1,14 +1,14 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { Trans, useTranslation } from "react-i18next";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
   Link,
 } from "@howso/react-tailwind-flowbite-components";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { featureAttributeDateTimeFormatFieldPlaceholder } from "./constants";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { featureAttributeDateTimeFormatFieldPlaceholder } from "./constants";
 import { FeatureAttributeDateTimeFormatFieldI18nBundle as i18n } from "./FeatureAttributeDateTimeFormatField.i18n";
 
 export type FeatureAttributeDateTimeFormatProps = Partial<FieldTextProps> & {

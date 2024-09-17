@@ -1,14 +1,14 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { Trans, useTranslation } from "react-i18next";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
   Link,
 } from "@howso/react-tailwind-flowbite-components";
-import { featureAttributeLocaleFieldLabel } from "./constants";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { featureAttributeLocaleFieldLabel } from "./constants";
 import { FeatureAttributeLocaleFieldI18nBundle as i18n } from "./FeatureAttributeLocaleField.i18n";
 
 export type FeatureAttributeLocaleFieldProps = Partial<FieldTextProps> & {

@@ -1,13 +1,13 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeDecimalPlacesFieldI18nBundle as i18n } from "./FeatureAttributeDecimalPlacesField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeDecimalPlacesProps = Partial<FieldTextProps> & {
   featureType: FeatureAttributes["type"];

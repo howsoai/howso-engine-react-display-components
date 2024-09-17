@@ -1,15 +1,15 @@
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldRadios,
   FieldRadiosProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, Fragment, useContext, useMemo } from "react";
 import { RegisterOptions } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { options } from "./constants";
-import { twMerge } from "tailwind-merge";
-import { FeatureAttributes } from "@howso/openapi-client";
 import { FeatureAttributeReservedBoundingModeFieldI18nBundle as i18n } from "./FeatureAttributeReservedBoundingModeField.i18n";
-import { useTranslation } from "react-i18next";
 
 type FeatureAttributeReservedBoundingModeFieldProps =
   Partial<FieldRadiosProps> & {

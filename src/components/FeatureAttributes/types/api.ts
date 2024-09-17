@@ -1,4 +1,4 @@
-import type { FeatureAttributes } from "@howso/openapi-client";
+import type { FeatureAttributes } from "@howso/engine";
 
 export type FeatureAttributesIndex = Record<string, FeatureAttributes>;
 

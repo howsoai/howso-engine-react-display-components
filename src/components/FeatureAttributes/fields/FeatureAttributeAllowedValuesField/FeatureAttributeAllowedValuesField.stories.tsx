@@ -1,4 +1,4 @@
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import type { Meta, StoryObj } from "@storybook/react";
 import { FC, ReactNode } from "react";
 import { FormProvider, UseFormProps, useForm } from "react-hook-form";

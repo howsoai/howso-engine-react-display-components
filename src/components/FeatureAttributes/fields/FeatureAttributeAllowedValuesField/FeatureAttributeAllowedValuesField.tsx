@@ -1,3 +1,9 @@
+import { FeatureAttributes } from "@howso/engine";
+import {
+  FieldTextAreaList,
+  FieldTextAreaProps,
+} from "@howso/react-tailwind-flowbite-components";
+import { Textarea, TextareaProps } from "flowbite-react";
 import {
   ChangeEventHandler,
   FC,
@@ -5,20 +11,14 @@ import {
   useCallback,
   useContext,
 } from "react";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
 import {
   featureAttributeAllowedValuesFieldName,
   featureAttributeAllowedValuesFieldNominalLabel,
   featureAttributeAllowedValuesFieldOrdinalLabel,
 } from "./constants";
-import { featureAttributeDateTimeFormatFieldPlaceholder } from "../FeatureAttributeDateTimeFormatField";
-import {
-  FieldTextAreaList,
-  FieldTextAreaProps,
-} from "@howso/react-tailwind-flowbite-components";
-import { Textarea, TextareaProps } from "flowbite-react";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { useTranslation } from "react-i18next";
 import { FeatureAttributeAllowedValuesFieldI18nBundle as i18n } from "./FeatureAttributeAllowedValuesField.i18n";
 
 export type FeatureAttributeAllowedValuesFieldProps =

@@ -1,19 +1,19 @@
+import { FeatureAttributes } from "@howso/engine";
+import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { FC } from "react";
+import { useTranslation } from "react-i18next";
 import {
   FeatureAttributeAllowNullsField,
   FeatureAttributeAllowedValuesField,
-  FeatureAttributeReservedBoundingModeField,
   FeatureAttributeMinMaxFields,
+  FeatureAttributeReservedBoundingModeField,
 } from "../../fields";
+import { InferFeatureAttributesBoundingMode } from "../../utils";
 import {
   FeatureAttributesGroupBase,
   FeatureAttributesGroupBaseProps,
 } from "../FeatureAttributesGroupBase";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { InferFeatureAttributesBoundingMode } from "../../utils";
 import { FeatureAttributesBoundsGroupI18nBundle as i18n } from "./FeatureAttributesBoundsGroup.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesBoundsGroupProps = Omit<
   FeatureAttributesGroupBaseProps,

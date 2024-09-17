@@ -1,10 +1,10 @@
+import { FeatureAttributes } from "@howso/engine";
+import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeUniqueFieldI18nBundle as i18n } from "./FeatureAttributeUniqueField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeUniqueFieldProps = {
   featureType: FeatureAttributes["type"] | undefined;

@@ -1,13 +1,13 @@
-import { FC, ReactNode, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FC, ReactNode, useContext } from "react";
+import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeObservationalErrorFieldI18nBundle as i18n } from "./FeatureAttributeObservationalErrorField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeObservationalErrorFieldProps =
   Partial<FieldTextProps> & {
