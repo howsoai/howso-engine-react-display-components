@@ -344,7 +344,7 @@ const Form: FC<ConfigurationProps> = ({
             featuresHaveTimeFeature={!!timeFeature}
           />
         </ErrorBoundary>
-        <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
+        <div className="flex grow flex-nowrap items-center justify-end gap-4">
           <Button
             {...buttonProps}
             color="primary"

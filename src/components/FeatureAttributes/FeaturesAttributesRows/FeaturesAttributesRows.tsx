@@ -375,7 +375,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
           </ErrorBoundary>
         </Modal.Body>
         <Modal.Footer>
-          <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
+          <div className="flex grow flex-nowrap items-center justify-end gap-4">
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
               <span>{t(i18n.strings.actions.update)}</span>
