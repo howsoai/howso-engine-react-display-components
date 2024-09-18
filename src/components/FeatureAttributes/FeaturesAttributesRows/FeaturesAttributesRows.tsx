@@ -2,19 +2,13 @@ import { FeatureAttributes } from "@howso/engine";
 import {
   ErrorBoundary,
   FormModal,
+  Radio,
+  SecondaryButton,
   ToggleInput,
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
-import {
-  Alert,
-  Button,
-  getTheme,
-  Modal,
-  Radio,
-  Table,
-  Tooltip,
-} from "flowbite-react";
+import { Alert, Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -198,9 +192,9 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
       </Table.Cell>
       <Table.Cell className="w-[1%] whitespace-nowrap text-center">
         <div className="flex items-center">
-          <Button color={"light"} onClick={() => setActiveFeature(feature)}>
-            <span>{t(i18n.strings.actions.configure)}</span>
-          </Button>
+          <SecondaryButton onClick={() => setActiveFeature(feature)}>
+            {t(i18n.strings.actions.configure)}
+          </SecondaryButton>
 
           {issues && (
             <Tooltip
@@ -287,6 +281,7 @@ const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
   return (
     <Radio
       name="time_feature"
+      color="blue"
       onChange={() => {
         setTimeFeature(feature);
       }}
@@ -380,7 +375,7 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
           </ErrorBoundary>
         </Modal.Body>
         <Modal.Footer>
-          <div className="flex grow flex-nowrap items-center justify-end gap-4 overflow-hidden">
+          <div className="flex grow flex-nowrap items-center justify-end gap-4">
             <Button color="primary" onClick={form.handleSubmit(onSave)}>
               <UpdateIcon className="mr-1 h-5 w-5" />
               <span>{t(i18n.strings.actions.update)}</span>
@@ -441,10 +436,10 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
 
   return (
     <>
-      <Button color={"light"} onClick={onOpen} disabled={!features.length}>
+      <SecondaryButton onClick={onOpen} disabled={!features.length}>
         <MapDependentFeatureAttributesIcon className={"mr-1"} />
         {label}
-      </Button>
+      </SecondaryButton>
       {isOpen && (
         <FormModal dismissible show size={"4xl"} onClose={onClose}>
           <form noValidate aria-label={label}>

@@ -21,7 +21,7 @@ export default {
       minimize: true,
       modules: true,
     }),
-    // terser(), // minifies generated bundles
+    terser(), // minifies generated bundles
   ],
   external: [
     "@howso/ui-internationalization-utils",
@@ -36,7 +36,7 @@ export default {
   ],
   output: [
     {
-      file: "lib/index.cjs.js",
+      file: "lib/index.cjs",
       format: "cjs",
     },
     {
