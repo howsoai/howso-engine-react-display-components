@@ -52,7 +52,7 @@
     "@chromatic-com/storybook": "^1.5.0",
     "@fontsource/inter": "^5.0.5",
     "@hookform/error-message": "^2.0.1",
-    "@howso/engine": "file:../howso-engine-ts/howso-engine-0.0.0.tgz",
+    "@howso/engine": "^4.0.1",
     "@howso/react-tailwind-flowbite-components": "^5.6.1",
     "@howso/ui-internationalization-utils": "^1.0.2",
     "@rollup/plugin-typescript": "^11.1.6",
