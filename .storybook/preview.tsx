@@ -1,10 +1,10 @@
-import React, { Suspense } from "react";
-import type { Preview, StoryFn } from "@storybook/react";
-import { Await, RouterProvider, createMemoryRouter } from "react-router-dom";
-import { Flowbite, ThemeMode } from "flowbite-react";
-import i18n from "./i18next";
-import { useTranslation } from "react-i18next";
 import { standardFlowbiteTheme } from "@howso/react-tailwind-flowbite-components";
+import type { Preview, StoryFn } from "@storybook/react";
+import { Flowbite, ThemeMode } from "flowbite-react";
+import React, { Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import { Await, RouterProvider, createMemoryRouter } from "react-router-dom";
+import i18n from "./i18next";
 // CSS
 // import "@fontsource/inter";
 import "@fontsource/inter/500.css";
@@ -39,7 +39,9 @@ const preview: Preview = {
       },
     },
     i18n,
-    viewport: { defaultViewport: undefined },
+    initialGlobals: {
+      viewport: { value: undefined },
+    },
   },
   decorators: [
     (Story: StoryFn, context) => {

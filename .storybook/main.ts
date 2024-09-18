@@ -14,6 +14,9 @@ const config: StorybookConfig = {
   },
   docs: {},
   // staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
+  features: {
+    viewportStoryGlobals: true,
+  },
   refs: {
     "react-tailwind-flowbite-components": {
       title: "Howso components",
