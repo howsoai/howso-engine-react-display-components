@@ -1,25 +1,25 @@
-import { FC, Fragment, useContext, useMemo } from "react";
-import { RegisterOptions, useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
-import {
-  featureAttributeTypeLabel,
-  featureAttributeTypeName,
-  featureAttributeTypeOptions,
-} from "./constants";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldRadios,
   FieldSelect,
   FieldSelectProps,
   type FieldRadiosProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { FC, Fragment, useContext, useMemo } from "react";
+import { RegisterOptions, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import {
   InferFeatureAttributeFormValues,
   getFeatureAttributesForType,
 } from "../../utils";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { twMerge } from "tailwind-merge";
+import {
+  featureAttributeTypeLabel,
+  featureAttributeTypeName,
+  featureAttributeTypeOptions,
+} from "./constants";
 import { FeatureAttributeTypeFieldI18nBundle as i18n } from "./FeatureAttributeTypeField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTypeFieldProps =
   | ({ fieldType: "radios" } & Partial<FieldRadiosProps>)

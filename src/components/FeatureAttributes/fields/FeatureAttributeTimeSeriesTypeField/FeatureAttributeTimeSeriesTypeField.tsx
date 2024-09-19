@@ -1,12 +1,12 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldSelect,
   FieldSelectProps,
 } from "@howso/react-tailwind-flowbite-components";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeTimeSeriesTypeFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesTypeField.i18n";
 
 export type FeatureAttributeTimeSeriesTypeFieldProps =

@@ -8,6 +8,9 @@ pnpm-debug.log*
 lerna-debug.log*
 
 
+# Storybook
+/storybook-static
+
 # NPM
 *.tgz
 
@@ -111,7 +114,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 .DS_Store
-
 
 # Scratch files
 scratch/*

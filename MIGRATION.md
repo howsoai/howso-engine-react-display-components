@@ -98,7 +98,7 @@ render(
     setFeatureAttributesAtom={setFeatureAttributesAtom}
     setParamsAtom={setParamsAtom}
     timeFeatureAtom={timeFeatureAtom}
-  />
+  />,
 );
 ```
 
@@ -132,7 +132,7 @@ render(
     setFeatureAttributesAtom={setFeatureAttributesAtom}
     setParamsAtom={setParamsAtom}
     timeFeatureAtom={timeFeatureAtom}
-  />
+  />,
 );
 ```
 

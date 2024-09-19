@@ -1,13 +1,13 @@
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldCheckbox,
   FieldCheckboxProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { FeatureAttributeReservedTightTimeBoundFieldI18nBundle as i18n } from "./FeatureAttributeReservedTightTimeBoundField.i18n";
 import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FeatureAttributeReservedTightTimeBoundFieldI18nBundle as i18n } from "./FeatureAttributeReservedTightTimeBoundField.i18n";
 
 export type FeatureAttributeReservedTightTimeBoundFieldProps =
   Partial<FieldCheckboxProps> & {

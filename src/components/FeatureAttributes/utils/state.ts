@@ -1,15 +1,12 @@
-import type {
-  FeatureAttributes,
-  FeatureOriginalType,
-} from "@howso/openapi-client";
+import type { FeatureAttributes, FeatureOriginalType } from "@howso/engine";
+import { FeatureAttributesConfigurationIssuesI18nBundle } from "../FeatureAttributesConfigurationIssues";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
+import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
 import type {
   FeatureAttributesIndex,
   InferFeatureAttributesParams,
 } from "../types";
-import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
 import { InferFeatureAttributesBoundingMode } from "./forms";
-import { FeatureAttributesConfigurationIssuesI18nBundle } from "../FeatureAttributesConfigurationIssues";
 
 export type FeatureAttributesConfigurationIssuesIndex = Record<
   string,

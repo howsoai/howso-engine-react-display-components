@@ -1,4 +1,4 @@
-import { FeatureAttributes, FeatureTimeSeries } from "@howso/openapi-client";
+import { FeatureAttributes, FeatureTimeSeries } from "@howso/engine";
 import { atom } from "jotai";
 import { useMemo } from "react";
 import { isEmpty } from "../../../utils";

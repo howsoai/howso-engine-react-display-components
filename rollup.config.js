@@ -21,7 +21,7 @@ export default {
       minimize: true,
       modules: true,
     }),
-    // terser(), // minifies generated bundles
+    terser(), // minifies generated bundles
   ],
   external: [
     "@howso/ui-internationalization-utils",

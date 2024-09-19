@@ -1,8 +1,7 @@
+import { FeatureAttributes, FeatureTimeSeriesTypeEnum } from "@howso/engine";
+import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { FC } from "react";
-import {
-  FeatureAttributesGroupBase,
-  FeatureAttributesGroupBaseProps,
-} from "../FeatureAttributesGroupBase";
+import { useTranslation } from "react-i18next";
 import {
   FeatureAttributeTimeSeriesDeltaMinMaxFields,
   FeatureAttributeTimeSeriesDerivedOrdersField,
@@ -15,13 +14,11 @@ import {
   FeatureAttributeTimeSeriesTypeField,
 } from "../../fields";
 import {
-  FeatureAttributes,
-  FeatureTimeSeriesTypeEnum,
-} from "@howso/openapi-client";
-import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+  FeatureAttributesGroupBase,
+  FeatureAttributesGroupBaseProps,
+} from "../FeatureAttributesGroupBase";
 import { testId } from "./constants";
 import { FeatureAttributesTemporalityGroupI18nBundle as i18n } from "./FeatureAttributesTemporalityGroup.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesTemporalityGroupProps = Omit<
   FeatureAttributesGroupBaseProps,

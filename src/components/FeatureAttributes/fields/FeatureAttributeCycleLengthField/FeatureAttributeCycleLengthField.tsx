@@ -1,12 +1,12 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeCycleLengthFieldI18nBundle as i18n } from "./FeatureAttributeCycleLengthField.i18n";
 
 export type FeatureAttributeCycleLengthProps = Partial<FieldTextProps> & {

@@ -1,16 +1,16 @@
+import { FeatureAttributes } from "@howso/engine";
+import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { FC } from "react";
-import {
-  FeatureAttributesGroupBase,
-  FeatureAttributesGroupBaseProps,
-} from "../FeatureAttributesGroupBase";
+import { useTranslation } from "react-i18next";
 import {
   FeatureAttributeCycleLengthField,
   FeatureAttributeDecimalPlacesField,
   FeatureAttributeSignificantDigitsField,
 } from "../../fields";
-import { FeatureAttributes } from "@howso/openapi-client";
-import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { useTranslation } from "react-i18next";
+import {
+  FeatureAttributesGroupBase,
+  FeatureAttributesGroupBaseProps,
+} from "../FeatureAttributesGroupBase";
 import { FeatureAttributesContinuousNumbersGroupI18nBundle as i18n } from "./FeatureAttributesContinuousNumbersGroup.i18n";
 
 export type FeatureAttributesContinuousNumbersGroupProps = Omit<

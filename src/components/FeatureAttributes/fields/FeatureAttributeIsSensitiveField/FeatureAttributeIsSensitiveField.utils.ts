@@ -1,4 +1,4 @@
-import { FeatureAttributes } from "@howso/openapi-client";
+import { FeatureAttributes } from "@howso/engine";
 
 export const isFeatureAttributeSensitiveAttributeAvailable = (
   attributes:
