@@ -1,3 +1,4 @@
+import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import postcss from "rollup-plugin-postcss";
@@ -24,10 +25,12 @@ export default {
     terser(), // minifies generated bundles
   ],
   external: [
-    "@howso/ui-internationalization-utils",
     "flowbite-react",
     "react/jsx-runtime",
     "react-icons/hi",
+    "react-icons/si",
+    "react-icons/fa6",
+    "react-icons/hi2",
     "jotai/react",
     "jotai/utils",
     ...Object.keys(pkg.dependencies || {}),

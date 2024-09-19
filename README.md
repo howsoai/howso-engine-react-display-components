@@ -6,15 +6,6 @@ A set of display components composed with business logic to support specific How
 
 To use this package in your application install it via npm.
 
-### Prerequisites
-
-Your home directory must contain a `.npmrc` file pointing to the Azure DevOps artifact feed:
-
-```text
-@howso:registry = https://dpbuild.jfrog.io/artifactory/api/npm/npm-virtual/
-//dpbuild.jfrog.io/artifactory/api/npm/npm-virtual/:_auth=...
-```
-
 ### Installation
 
 Standard package installation makes imports available:
@@ -93,8 +84,6 @@ npm run storybook
 ```
 
 ## Publishing
-
-This package is published into a private npm registery.
 
 Documentation changes do not require a version publishing.
 For functional changes, follow [SemVer](https://semver.org/)
