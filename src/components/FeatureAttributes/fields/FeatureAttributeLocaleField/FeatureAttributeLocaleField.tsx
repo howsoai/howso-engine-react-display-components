@@ -27,13 +27,14 @@ export const FeatureAttributeLocaleField: FC<
   FeatureAttributeLocaleFieldProps
 > = ({ dataType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
-  const required = false;
 
-  if (dataType !== "formatted_date_time") {
+  if (dataType !== "formatted_date_time" || !purposes.includes("synthesis")) {
     return null;
   }
+
+  const required = false;
 
   return (
     <FieldText

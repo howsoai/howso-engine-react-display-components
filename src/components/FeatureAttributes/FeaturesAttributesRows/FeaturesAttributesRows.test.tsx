@@ -69,6 +69,7 @@ describe("FeaturesAttributesRows", () => {
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={inferFeatureAttributesParamsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
@@ -101,6 +102,7 @@ describe("FeaturesAttributesRows", () => {
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         optionsAtom={getFeatureAttributesOptionsAtom({})}
         paramsAtom={inferFeatureAttributesParamsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,

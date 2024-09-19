@@ -1,11 +1,12 @@
 import {
   ErrorBoundary,
+  FieldCheckboxProps,
   FieldRadiosProps,
   FieldSelectProps,
   FieldTextAreaProps,
   FieldTextProps,
-  FieldCheckboxProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { ButtonProps } from "flowbite-react";
 import {
   ComponentProps,
   Context,
@@ -16,9 +17,9 @@ import {
 } from "react";
 import { twMerge } from "tailwind-merge";
 import { FeatureAttributesGroupBaseProps } from "../groups";
-import { ButtonProps } from "flowbite-react";
+import { IFeatureAttributePurposes } from "../types";
 
-export type IFeaturesAttributesContext = {
+export type IFeaturesAttributesContext = IFeatureAttributePurposes & {
   buttonProps?: Partial<ButtonProps>;
   fieldCheckboxProps?: Partial<FieldCheckboxProps>;
   fieldRadiosProps?: Pick<FieldRadiosProps, "labelInline" | "labelProps">;
@@ -34,16 +35,18 @@ export type IFeaturesAttributesContext = {
   >;
 };
 
+const defaultContext = { purposes: ["core"] } as IFeaturesAttributesContext;
 export const FeaturesAttributesContext: Context<IFeaturesAttributesContext> =
-  createContext({});
+  createContext(defaultContext);
 
-export type FeaturesAttributesContextProviderProps = {
-  children: ReactNode;
-  compact?: boolean;
-};
+export type FeaturesAttributesContextProviderProps =
+  IFeatureAttributePurposes & {
+    children: ReactNode;
+    compact?: boolean;
+  };
 export const FeaturesAttributesContextProvider: FC<
   FeaturesAttributesContextProviderProps
-> = ({ children, compact }) => {
+> = ({ children, compact, purposes }) => {
   const buttonProps: IFeaturesAttributesContext["buttonProps"] = useMemo(
     () => ({ size: compact ? "sm" : undefined }),
     [compact],
@@ -138,6 +141,7 @@ export const FeaturesAttributesContextProvider: FC<
         fieldStackProps,
         fieldTextAreaProps,
         groupBaseProps,
+        purposes,
       }}
     >
       <ErrorBoundary>{children}</ErrorBoundary>

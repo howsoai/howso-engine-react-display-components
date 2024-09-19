@@ -71,6 +71,7 @@ describe("FeaturesAttributesCompact", () => {
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         paramsAtom={paramsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
@@ -100,6 +101,7 @@ describe("FeaturesAttributesCompact", () => {
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom(firstFeature)}
         paramsAtom={paramsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
@@ -143,6 +145,7 @@ describe("FeaturesAttributesCompact", () => {
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         paramsAtom={paramsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,
@@ -195,6 +198,7 @@ describe("FeaturesAttributesCompact", () => {
       <FeaturesAttributesCompact
         activeFeatureAtom={getFeatureAttributesActiveFeatureAtom()}
         paramsAtom={paramsAtom}
+        purposes={["core", "synthesis"]}
         runRequiredAtom={runRequiredAtom}
         timeFeatureAtom={timeFeatureAtom}
       />,

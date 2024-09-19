@@ -1,12 +1,12 @@
+import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import {
   featureAttributeAllowNullsFieldLabel,
   featureAttributeAllowNullsFieldName,
 } from "./constants";
-import { FieldCheckbox } from "@howso/react-tailwind-flowbite-components";
-import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
-import { useTranslation } from "react-i18next";
 import { FeatureAttributeAllowNullsFieldI18nBundle as i18n } from "./FeatureAttributeAllowNullsField.i18n";
 
 export type FeatureAttributeAllowNullsFieldProps = Record<string, unknown>;
@@ -19,8 +19,14 @@ export const FeatureAttributeAllowNullsField: FC<
   FeatureAttributeAllowNullsFieldProps
 > = () => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
+  const { fieldCheckboxProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
   const form = useFormContext();
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <Controller

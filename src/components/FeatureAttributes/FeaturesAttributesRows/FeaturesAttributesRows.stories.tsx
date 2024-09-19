@@ -23,7 +23,9 @@ const meta: Meta<typeof FeaturesAttributesRows> = {
   decorators: [withPadding],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
-  args: {},
+  args: {
+    purposes: ["core"],
+  },
 };
 
 const sampleFeatureAttributesIndex: FeatureAttributesIndex = {
@@ -165,6 +167,24 @@ Default.args!.timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
   paramsAtom: Default.args!.paramsAtom!,
   runRequiredAtom: defaultRunRequiredAtom,
 });
+
+const synthesisRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+export const Synthesis: Story = {
+  args: {
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
+    paramsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeatureAttributesIndex,
+    }),
+    purposes: ["core", "synthesis"],
+    runRequiredAtom: synthesisRunRequiredAtom,
+  },
+};
+Synthesis.args!.timeFeatureAtom =
+  getInferFeatureAttributesParamsTimeFeatureAtom({
+    paramsAtom: Synthesis.args!.paramsAtom!,
+    runRequiredAtom: synthesisRunRequiredAtom,
+  });
 
 const noFeaturesRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
 export const NoFeatures: Story = {

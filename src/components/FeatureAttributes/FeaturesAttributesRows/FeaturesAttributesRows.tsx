@@ -10,7 +10,14 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { Alert, Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
@@ -18,7 +25,10 @@ import { MapDependentFeatureAttributesIcon } from "../../Icons";
 import { FeatureAttributeSample } from "../FeatureAttributeSample";
 import { FeatureAttributesConfiguration } from "../FeatureAttributesConfiguration";
 import { FeatureAttributesConfigurationIssues } from "../FeatureAttributesConfigurationIssues";
-import { FeaturesAttributesContextProvider } from "../FeaturesAttributesContext";
+import {
+  FeaturesAttributesContext,
+  FeaturesAttributesContextProvider,
+} from "../FeaturesAttributesContext";
 import { FeaturesAttributesDependencies } from "../FeaturesAttributesDependencies";
 import {
   FeatureAttributeTypeField,
@@ -33,6 +43,7 @@ import {
   InferFeatureAttributesRunRequiredFieldsAtom,
   useFeatureAttributesForm,
 } from "../hooks";
+import { IFeatureAttributePurposes } from "../types";
 import {
   getFeatureAttributeConfigurationIssues,
   getInferFeatureAttributeParamsFormValuesOnSubmit,
@@ -42,7 +53,7 @@ import {
 } from "../utils";
 import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRows.i18n";
 
-export type FeaturesAttributesRowsProps = {
+export type FeaturesAttributesRowsProps = IFeatureAttributePurposes & {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
   paramsAtom: InferFeatureAttributesParamsAtom;
@@ -55,9 +66,10 @@ export type FeaturesAttributesRowsProps = {
  *
  * ⚠️ This component relies heavily on Modal components, and is unsuited to Jupyter Notebook integrations.
  **/
-export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
-  props,
-) => {
+export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = ({
+  purposes,
+  ...props
+}) => {
   const { t } = useTranslation(i18n.namespace);
   const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
@@ -74,7 +86,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = (
   };
 
   return (
-    <FeaturesAttributesContextProvider>
+    <FeaturesAttributesContextProvider purposes={purposes}>
       <div className="relative overflow-x-auto rounded-lg shadow-md">
         <Table striped>
           <Table.Head>
@@ -144,6 +156,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
 }) => {
   const { t } = useTranslation(i18n.namespace);
   const theme = getTheme();
+  const { purposes } = useContext(FeaturesAttributesContext);
   const setActiveFeature = useSetAtom(activeFeatureAtom);
   const setRunRequired = useSetAtom(runRequiredAtom);
   const [params, setParams] = useAtom(paramsAtom);
@@ -162,7 +175,9 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
     },
     [setRunRequired, setParams, params, feature],
   );
-  const issues = getFeatureAttributeConfigurationIssues(attributes);
+  const issues = getFeatureAttributeConfigurationIssues(attributes, {
+    purposes,
+  });
 
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">

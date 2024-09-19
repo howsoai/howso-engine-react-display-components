@@ -30,14 +30,15 @@ export const FeatureAttributeSignificantDigitsField: FC<
   FeatureAttributeSignificantDigitsFieldProps
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
   if (
     !allowedFeatureTypes.includes(featureType) ||
-    !allowedDataTypes.includes(dataType)
+    !allowedDataTypes.includes(dataType) ||
+    !purposes.includes("core")
   ) {
     return null;
   }

@@ -1,5 +1,10 @@
 import type { FeatureAttributes } from "@howso/engine";
 
+export type FeatureAttributePurposes = "core" | "synthesis";
+export interface IFeatureAttributePurposes {
+  purposes: FeatureAttributePurposes[];
+}
+
 export type FeatureAttributesIndex = Record<string, FeatureAttributes>;
 
 /** Options available to the InferFeatureAttributes call in the platform API */

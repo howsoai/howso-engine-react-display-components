@@ -21,9 +21,9 @@ export const FeatureAttributeTimeSeriesDeltaMinMaxFields: FC<
   FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
 
-  if (timeSeriesType !== "delta") {
+  if (timeSeriesType !== "delta" || !purposes.includes("core")) {
     return null;
   }
 

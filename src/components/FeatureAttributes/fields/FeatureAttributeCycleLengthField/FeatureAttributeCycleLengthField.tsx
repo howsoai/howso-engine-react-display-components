@@ -27,14 +27,15 @@ export const FeatureAttributeCycleLengthField: FC<
   FeatureAttributeCycleLengthProps
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["continuous"];
   const allowedDataTypes: FeatureAttributes["data_type"][] = ["number"];
   if (
     !allowedFeatureTypes.includes(featureType) ||
-    !allowedDataTypes.includes(dataType)
+    !allowedDataTypes.includes(dataType) ||
+    !purposes.includes("core")
   ) {
     return null;
   }

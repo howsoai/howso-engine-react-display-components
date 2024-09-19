@@ -29,14 +29,19 @@ export const FeatureAttributeIsSensitiveField: FC<
   FeatureAttributeIsSensitiveFieldProps
 > = ({ featureType, dataType }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
+  const { fieldCheckboxProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
   const form = useFormContext();
 
   if (
-    !isFeatureAttributeSensitiveAttributeAvailable({
-      type: featureType,
-      data_type: dataType,
-    })
+    !isFeatureAttributeSensitiveAttributeAvailable(
+      {
+        type: featureType,
+        data_type: dataType,
+      },
+      { purposes },
+    )
   ) {
     return null;
   }

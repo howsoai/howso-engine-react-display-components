@@ -41,7 +41,10 @@ export const FeatureAttributeAllowedValuesField: FC<
   ...props
 }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextAreaProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
+
   const allowedFeatureTypes: FeatureAttributes["type"][] = [
     "nominal",
     "ordinal",
@@ -54,7 +57,8 @@ export const FeatureAttributeAllowedValuesField: FC<
   if (
     !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
-    !allowedDataTypes.includes(dataType)
+    !allowedDataTypes.includes(dataType) ||
+    !purposes.includes("core")
   ) {
     return null;
   }

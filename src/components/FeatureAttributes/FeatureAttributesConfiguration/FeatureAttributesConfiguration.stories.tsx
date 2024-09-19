@@ -15,7 +15,7 @@ const meta: Meta<typeof FeatureAttributesConfiguration> = {
   },
   decorators: [
     getFormProviderDecorator<InferFeatureAttributeFormValues>(),
-    getFeaturesAttributesContextDecorator(),
+    getFeaturesAttributesContextDecorator({ purposes: ["core", "synthesis"] }),
     withPadding,
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
