@@ -27,7 +27,7 @@ export const FeatureAttributeDerivedFeatureCodeField: FC<
   );
   const form = useFormContext();
 
-  if (!purposes.includes("synthesis")) {
+  if (!purposes.includes("core")) {
     return null;
   }
 
