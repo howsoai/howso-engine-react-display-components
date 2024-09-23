@@ -22,8 +22,12 @@ export const FeatureAttributeTimeSeriesTypeField: FC<
   FeatureAttributeTimeSeriesTypeFieldProps
 > = ({ featureType, isTimeFeature, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldSelectProps } = useContext(FeaturesAttributesContext);
+  const { fieldSelectProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+  if (!purposes.includes("core")) {
+    return null;
+  }
+
   const required = false;
 
   const rateTypes: FeatureAttributes["type"][] = ["continuous", "ordinal"];

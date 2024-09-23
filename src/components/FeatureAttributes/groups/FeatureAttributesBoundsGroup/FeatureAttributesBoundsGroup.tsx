@@ -1,7 +1,8 @@
 import { FeatureAttributes } from "@howso/engine";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import {
   FeatureAttributeAllowNullsField,
   FeatureAttributeAllowedValuesField,
@@ -40,6 +41,11 @@ export const FeatureAttributesBoundsGroup: FC<
   ...props
 }) => {
   const { t } = useTranslation(i18n.namespace);
+  const { purposes } = useContext(FeaturesAttributesContext);
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <FeatureAttributesGroupBase

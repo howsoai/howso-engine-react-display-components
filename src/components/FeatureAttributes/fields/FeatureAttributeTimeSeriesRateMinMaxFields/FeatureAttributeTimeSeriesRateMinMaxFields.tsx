@@ -1,12 +1,12 @@
-import { FC, useContext } from "react";
-import { HelperText } from "flowbite-react";
 import {
   FieldTextList,
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
+import { HelperText } from "flowbite-react";
+import { FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeTimeSeriesRateMinMaxFieldsI18nBundle as i18n } from "./FeatureAttributeTimeSeriesRateMinMaxFields.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesRateMinMaxFieldsProps =
   Partial<FieldTextProps> & {
@@ -20,9 +20,9 @@ export const FeatureAttributeTimeSeriesRateMinMaxFields: FC<
   FeatureAttributeTimeSeriesRateMinMaxFieldsProps
 > = ({ timeSeriesType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
 
-  if (timeSeriesType !== "rate") {
+  if (timeSeriesType !== "rate" || !purposes.includes("core")) {
     return null;
   }
 

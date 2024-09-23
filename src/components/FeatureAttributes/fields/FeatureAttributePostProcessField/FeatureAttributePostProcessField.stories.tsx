@@ -14,7 +14,7 @@ const meta: Meta<typeof FeatureAttributePostProcessField> = {
   },
   decorators: [
     getFormProviderDecorator(),
-    getFeaturesAttributesContextDecorator(),
+    getFeaturesAttributesContextDecorator({ purposes: ["core", "synthesis"] }),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

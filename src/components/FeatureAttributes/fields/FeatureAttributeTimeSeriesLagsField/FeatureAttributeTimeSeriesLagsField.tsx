@@ -3,9 +3,9 @@ import {
   FieldTextProps,
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeTimeSeriesLagsFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesLagsField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesLagsFieldProps = Partial<FieldTextProps>;
 /**
@@ -15,7 +15,11 @@ export const FeatureAttributeTimeSeriesLagsField: FC<
   FeatureAttributeTimeSeriesLagsFieldProps
 > = (props) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <FieldTextList

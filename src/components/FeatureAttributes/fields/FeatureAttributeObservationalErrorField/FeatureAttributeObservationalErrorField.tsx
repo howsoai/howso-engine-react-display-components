@@ -23,8 +23,12 @@ export const FeatureAttributeObservationalErrorField: FC<
   FeatureAttributeObservationalErrorFieldProps
 > = ({ featureType, dataType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   const max = featureType === "nominal" ? 1 : undefined;
 

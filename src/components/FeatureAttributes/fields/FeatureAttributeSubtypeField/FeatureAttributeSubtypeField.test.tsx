@@ -1,11 +1,11 @@
-import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { FC, ReactNode } from "react";
+import { FormProvider, useForm, UseFormProps } from "react-hook-form";
 import {
   FeatureAttributeSubtypeField,
   featureAttributeSubtypeFieldLabel,
 } from "..";
-import { useForm, FormProvider, UseFormProps } from "react-hook-form";
-import { FC, ReactNode } from "react";
 import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 import { InferFeatureAttributeFormValues } from "../../utils";
 
@@ -172,7 +172,7 @@ const Wrapper: FC<{
 }> = ({ children, formProps }) => {
   const form = useForm<InferFeatureAttributeFormValues>(formProps);
   return (
-    <FeaturesAttributesContextProvider>
+    <FeaturesAttributesContextProvider purposes={["core", "synthesis"]}>
       <FormProvider {...form}>
         {children}
         <FeatureAttributeSubtypeField

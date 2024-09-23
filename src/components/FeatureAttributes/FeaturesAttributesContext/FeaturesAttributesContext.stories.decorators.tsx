@@ -5,10 +5,12 @@ import {
 } from "./FeaturesAttributesContext";
 
 export const getFeaturesAttributesContextDecorator =
-  (props?: FeaturesAttributesContextProviderProps): Decorator =>
+  (
+    props?: Omit<FeaturesAttributesContextProviderProps, "children">,
+  ): Decorator =>
   (Story) => {
     return (
-      <FeaturesAttributesContextProvider {...props}>
+      <FeaturesAttributesContextProvider purposes={["core"]} {...props}>
         <Story />
       </FeaturesAttributesContextProvider>
     );

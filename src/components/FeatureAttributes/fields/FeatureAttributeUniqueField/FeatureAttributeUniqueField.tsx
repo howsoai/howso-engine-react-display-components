@@ -23,8 +23,9 @@ export const FeatureAttributeUniqueField: FC<
   FeatureAttributeUniqueFieldProps
 > = ({ featureType, dataType }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
-
+  const { fieldCheckboxProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
   const form = useFormContext();
 
   const allowedFeatureTypes: FeatureAttributes["type"][] = ["nominal"];
@@ -32,7 +33,8 @@ export const FeatureAttributeUniqueField: FC<
   if (
     !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
-    unAllowedDataTypes.includes(dataType)
+    unAllowedDataTypes.includes(dataType) ||
+    !purposes.includes("synthesis")
   ) {
     return null;
   }

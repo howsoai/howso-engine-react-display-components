@@ -119,7 +119,7 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
 }) => {
   const form = useForm(formProps);
   return (
-    <FeaturesAttributesContextProvider>
+    <FeaturesAttributesContextProvider purposes={["core"]}>
       <FormProvider {...form}>{children}</FormProvider>
     </FeaturesAttributesContextProvider>
   );

@@ -16,10 +16,12 @@ export const FeatureAttributeNullIsDependentField: FC<
   FeatureAttributeNullIsDependentFieldProps
 > = ({ dependentFeatures }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldCheckboxProps } = useContext(FeaturesAttributesContext);
+  const { fieldCheckboxProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
   const form = useFormContext();
 
-  if (!dependentFeatures?.length) {
+  if (!dependentFeatures?.length || !purposes.includes("core")) {
     return null;
   }
 

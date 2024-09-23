@@ -36,6 +36,7 @@ import {
   InferFeatureAttributesRunRequiredFieldsAtom,
   useFeatureAttributesForm,
 } from "../hooks";
+import { IFeatureAttributePurposes } from "../types";
 import {
   getFeatureAttributeConfigurationIssues,
   getInferFeatureAttributeParamsFormValuesOnSubmit,
@@ -44,7 +45,7 @@ import {
 } from "../utils";
 import { FeaturesAttributesCompactI18nBundle as i18n } from "./FeaturesAttributesCompact.i18n";
 
-export type FeaturesAttributesCompactProps = {
+export type FeaturesAttributesCompactProps = IFeatureAttributePurposes & {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
   paramsAtom: InferFeatureAttributesParamsAtom;
   runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
@@ -56,9 +57,10 @@ export type FeaturesAttributesCompactProps = {
  *
  * ⚠️ This component relies heavily on Modal components, and is unsuited to Jupyter Notebook integrations.
  **/
-export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
-  props,
-) => {
+export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = ({
+  purposes,
+  ...props
+}) => {
   const { t } = useTranslation(i18n.namespace);
   const { activeFeatureAtom, paramsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
@@ -70,7 +72,7 @@ export const FeaturesAttributesCompact: FC<FeaturesAttributesCompactProps> = (
   const [isCompact, setIsCompact] = useState(true);
 
   return (
-    <FeaturesAttributesContextProvider compact={isCompact}>
+    <FeaturesAttributesContextProvider compact={isCompact} purposes={purposes}>
       <Header
         activeFeatureAtom={activeFeatureAtom}
         areConfigurationsDirty={areConfigurationsDirty}
@@ -225,6 +227,7 @@ const Configuration: FC<ConfigurationProps> = (props) => {
 
   const { t } = useTranslation(i18n.namespace);
   const theme = getTheme();
+  const { purposes } = useContext(FeaturesAttributesContext);
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(inferFeatureAttributesParamsAtom);
   const attributes = activeFeature
@@ -233,7 +236,9 @@ const Configuration: FC<ConfigurationProps> = (props) => {
   if (!attributes) {
     throw new Error(`attributes are not defined for ${activeFeature}`);
   }
-  const issues = getFeatureAttributeConfigurationIssues(attributes);
+  const issues = getFeatureAttributeConfigurationIssues(attributes, {
+    purposes,
+  });
 
   return (
     <section data-testid="configuration-container">

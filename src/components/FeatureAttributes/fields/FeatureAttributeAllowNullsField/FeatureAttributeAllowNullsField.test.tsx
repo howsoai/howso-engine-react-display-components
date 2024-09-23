@@ -1,10 +1,10 @@
-import { render, screen, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { render, screen, within } from "@testing-library/react";
+import { FC, ReactNode } from "react";
+import { FormProvider, useForm, UseFormProps } from "react-hook-form";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 import { FeatureAttributeAllowNullsField } from "./FeatureAttributeAllowNullsField";
 import { featureAttributeAllowNullsFieldName } from "./constants";
-import { useForm, FormProvider, UseFormProps } from "react-hook-form";
-import { FC, ReactNode } from "react";
-import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 describe("AllowNullsField", () => {
   it("should be rendered with a default value of true if not in form context", async () => {
@@ -58,7 +58,7 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
 }) => {
   const form = useForm(formProps);
   return (
-    <FeaturesAttributesContextProvider>
+    <FeaturesAttributesContextProvider purposes={["core"]}>
       <FormProvider {...form}>{children}</FormProvider>
     </FeaturesAttributesContextProvider>
   );

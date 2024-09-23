@@ -39,10 +39,10 @@ export const FeatureAttributeMinMaxFields: FC<
   ...props
 }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldStackProps } = useContext(FeaturesAttributesContext);
+  const { fieldStackProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
-  if (boundingMode !== "userDefined") {
+  if (!purposes.includes("core") || boundingMode !== "userDefined") {
     return null;
   }
 

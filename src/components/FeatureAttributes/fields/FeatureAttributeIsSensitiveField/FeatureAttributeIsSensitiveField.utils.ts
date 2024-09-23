@@ -1,10 +1,16 @@
 import { FeatureAttributes } from "@howso/engine";
+import { IFeatureAttributePurposes } from "../../types";
 
 export const isFeatureAttributeSensitiveAttributeAvailable = (
   attributes:
     | Partial<Pick<FeatureAttributes, "type" | "data_type">>
     | undefined,
+  params: IFeatureAttributePurposes,
 ): boolean => {
+  if (!params.purposes.includes("synthesis")) {
+    return false;
+  }
+
   if (!attributes) {
     return false;
   }

@@ -1,7 +1,8 @@
 import { FeatureAttributes, FeatureTimeSeriesTypeEnum } from "@howso/engine";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
-import { FC } from "react";
+import { FC, useContext } from "react";
 import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import {
   FeatureAttributeTimeSeriesDeltaMinMaxFields,
   FeatureAttributeTimeSeriesDerivedOrdersField,
@@ -47,8 +48,9 @@ export const FeatureAttributesTemporalityGroup: FC<
   ...props
 }) => {
   const { t } = useTranslation(i18n.namespace);
+  const { purposes } = useContext(FeaturesAttributesContext);
 
-  if (!featuresHaveTimeFeature) {
+  if (!featuresHaveTimeFeature || !purposes.includes("core")) {
     return null;
   }
 

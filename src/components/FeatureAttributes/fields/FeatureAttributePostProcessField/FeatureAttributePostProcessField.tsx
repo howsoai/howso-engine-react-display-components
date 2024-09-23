@@ -1,11 +1,11 @@
-import { FC, useContext } from "react";
-import { useFormContext } from "react-hook-form";
-import { Trans, useTranslation } from "react-i18next";
 import {
   FieldTextArea,
   FieldTextAreaProps,
   Link,
 } from "@howso/react-tailwind-flowbite-components";
+import { FC, useContext } from "react";
+import { useFormContext } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributePostProcessFieldI18nBundle as i18n } from "./FeatureAttributePostProcessField.i18n";
@@ -20,8 +20,14 @@ export const FeatureAttributePostProcessField: FC<
   FeatureAttributePostProcessProps
 > = (props) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextAreaProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextAreaProps, purposes } = useContext(
+    FeaturesAttributesContext,
+  );
   const form = useFormContext();
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <FieldTextArea

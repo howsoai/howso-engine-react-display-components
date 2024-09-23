@@ -14,7 +14,7 @@ const meta: Meta<typeof FeatureAttributesProgrammableGroup> = {
   },
   decorators: [
     getFormProviderDecorator(),
-    getFeaturesAttributesContextDecorator(),
+    getFeaturesAttributesContextDecorator({ purposes: ["core"] }),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

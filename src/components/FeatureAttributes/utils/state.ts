@@ -4,6 +4,7 @@ import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/Feature
 import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
 import type {
   FeatureAttributesIndex,
+  IFeatureAttributePurposes,
   InferFeatureAttributesParams,
 } from "../types";
 import { InferFeatureAttributesBoundingMode } from "./forms";
@@ -14,10 +15,11 @@ export type FeatureAttributesConfigurationIssuesIndex = Record<
 >;
 export const getAllFeatureAttributeConfigurationIssues = (
   featuresAttributesIndex: FeatureAttributesIndex,
+  params: IFeatureAttributePurposes,
 ): FeatureAttributesConfigurationIssuesIndex | undefined => {
   const issuesIndex = Object.entries(featuresAttributesIndex).reduce(
     (issuesIndex, [feature, attributes]) => {
-      const issues = getFeatureAttributeConfigurationIssues(attributes);
+      const issues = getFeatureAttributeConfigurationIssues(attributes, params);
       if (issues) {
         issuesIndex[feature] = issues;
       }
@@ -32,10 +34,11 @@ export const getAllFeatureAttributeConfigurationIssues = (
 
 export const areAllFeatureAttributesValid = (
   featuresAttributesIndex: FeatureAttributesIndex,
+  params: IFeatureAttributePurposes,
 ): boolean => {
   const hasInvalid = Object.values(featuresAttributesIndex).some(
     (attributes) => {
-      const issues = getFeatureAttributeConfigurationIssues(attributes);
+      const issues = getFeatureAttributeConfigurationIssues(attributes, params);
       return issues !== undefined;
     },
   );
@@ -72,6 +75,7 @@ const featureAttributeIssues: Record<
 
 export const getFeatureAttributeConfigurationIssues = (
   featureAttributes: FeatureAttributes | undefined,
+  params: IFeatureAttributePurposes,
 ): FeatureAttributesConfigurationIssue[] | undefined => {
   const issues: FeatureAttributesConfigurationIssue[] = [];
 
@@ -83,7 +87,9 @@ export const getFeatureAttributeConfigurationIssues = (
     issues.push(featureAttributeIssues.dataTypeUndefined);
   }
 
-  if (isFeatureAttributeSensitiveAttributeAvailable(featureAttributes)) {
+  if (
+    isFeatureAttributeSensitiveAttributeAvailable(featureAttributes, params)
+  ) {
     const isSensitive = !featureAttributes?.non_sensitive;
     if (isSensitive && !featureAttributes?.subtype) {
       issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);

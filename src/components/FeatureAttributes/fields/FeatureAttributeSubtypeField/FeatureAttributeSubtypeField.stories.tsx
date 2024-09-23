@@ -15,7 +15,7 @@ const meta: Meta<typeof FeatureAttributeSubtypeField> = {
   },
   decorators: [
     getFormProviderDecorator<InferFeatureAttributeFormValues>(),
-    getFeaturesAttributesContextDecorator(),
+    getFeaturesAttributesContextDecorator({ purposes: ["core", "synthesis"] }),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
@@ -47,7 +47,7 @@ export const CustomSubtype: Story = {
     getFormProviderDecorator<InferFeatureAttributeFormValues>({
       defaultValues: { subtype: "My custom subtype " },
     }),
-    getFeaturesAttributesContextDecorator(),
+    getFeaturesAttributesContextDecorator({ purposes: ["core", "synthesis"] }),
   ],
   args: {
     dataType: "string",

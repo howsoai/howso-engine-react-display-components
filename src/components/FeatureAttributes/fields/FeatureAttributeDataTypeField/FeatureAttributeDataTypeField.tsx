@@ -24,8 +24,13 @@ export const FeatureAttributeDataTypeField: FC<
   FeatureAttributeDataTypeFieldProps
 > = ({ featureType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldSelectProps } = useContext(FeaturesAttributesContext);
+  const { fieldSelectProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
+
   const dataType = form.getValues("data_type");
   const required = true;
 

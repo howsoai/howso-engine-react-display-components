@@ -26,13 +26,13 @@ export const FeatureAttributeDateTimeFormatField: FC<
   FeatureAttributeDateTimeFormatProps
 > = ({ dataType, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
   const allowedDataTypes: FeatureAttributes["data_type"][] = [
     "formatted_date_time",
   ];
-  if (!allowedDataTypes.includes(dataType)) {
+  if (!allowedDataTypes.includes(dataType) || !purposes.includes("core")) {
     return null;
   }
 

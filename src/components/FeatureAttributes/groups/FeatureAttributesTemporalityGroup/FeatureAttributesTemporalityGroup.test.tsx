@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { FC, ReactNode } from "react";
+import { FormProvider, UseFormProps, useForm } from "react-hook-form";
+import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 import { testId } from "./constants";
 import { FeatureAttributesTemporalityGroup } from "./FeatureAttributesTemporalityGroup";
-import { FC, ReactNode } from "react";
-import { UseFormProps, useForm, FormProvider } from "react-hook-form";
-import { FeaturesAttributesContextProvider } from "../../FeaturesAttributesContext";
 
 describe("FeatureAttributesTemporalityGroup", () => {
   it("should include the temporality group", async () => {
@@ -35,7 +35,7 @@ const Wrapper: FC<{ children: ReactNode; formProps?: UseFormProps }> = ({
 }) => {
   const form = useForm(formProps);
   return (
-    <FeaturesAttributesContextProvider>
+    <FeaturesAttributesContextProvider purposes={["core"]}>
       <FormProvider {...form}>{children}</FormProvider>
     </FeaturesAttributesContextProvider>
   );

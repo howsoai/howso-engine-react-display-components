@@ -4,9 +4,9 @@ import {
 } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeTimeSeriesDerivedOrdersFieldI18nBundle as i18n } from "./FeatureAttributeTimeSeriesDerivedOrdersField.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributeTimeSeriesDerivedOrdersFieldProps =
   Partial<FieldTextProps> & {
@@ -19,8 +19,12 @@ export const FeatureAttributeTimeSeriesDerivedOrdersField: FC<
   FeatureAttributeTimeSeriesDerivedOrdersFieldProps
 > = ({ timeSeriesOrder, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <FieldText

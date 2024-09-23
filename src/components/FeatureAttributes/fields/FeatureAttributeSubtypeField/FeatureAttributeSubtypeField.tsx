@@ -42,13 +42,18 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   ...props
 }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldTextProps } = useContext(FeaturesAttributesContext);
+  const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
-  const subtype = form.getValues("subtype");
 
-  if (featureType === "continuous" || nonSensitive) {
+  if (
+    featureType === "continuous" ||
+    nonSensitive ||
+    !purposes.includes("synthesis")
+  ) {
     return null;
   }
+
+  const subtype = form.getValues("subtype");
 
   const required = true;
   const isSubtypeValueInOptions =

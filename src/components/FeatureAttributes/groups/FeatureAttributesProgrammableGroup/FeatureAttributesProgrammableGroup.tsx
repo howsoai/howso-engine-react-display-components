@@ -1,15 +1,16 @@
-import { FC } from "react";
-import {
-  FeatureAttributesGroupBase,
-  FeatureAttributesGroupBaseProps,
-} from "../FeatureAttributesGroupBase";
+import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import { FC, useContext } from "react";
+import { useTranslation } from "react-i18next";
+import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import {
   FeatureAttributeDerivedFeatureCodeField,
   FeatureAttributePostProcessField,
 } from "../../fields";
-import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
+import {
+  FeatureAttributesGroupBase,
+  FeatureAttributesGroupBaseProps,
+} from "../FeatureAttributesGroupBase";
 import { FeatureAttributesProgrammableGroupI18nBundle as i18n } from "./FeatureAttributesProgrammableGroup.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeatureAttributesProgrammableGroupProps = Omit<
   FeatureAttributesGroupBaseProps,
@@ -19,6 +20,11 @@ export const FeatureAttributesProgrammableGroup: FC<
   FeatureAttributesProgrammableGroupProps
 > = ({ ...props }) => {
   const { t } = useTranslation(i18n.namespace);
+  const { purposes } = useContext(FeaturesAttributesContext);
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   return (
     <FeatureAttributesGroupBase

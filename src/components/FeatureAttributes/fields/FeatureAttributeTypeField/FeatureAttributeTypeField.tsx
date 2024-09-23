@@ -35,6 +35,7 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
   required,
   ...props
 }) => {
+  const { purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext<InferFeatureAttributeFormValues>();
   const registerOptions: RegisterOptions = useMemo(
     () => ({
@@ -56,6 +57,10 @@ export const FeatureAttributeTypeField: FC<FeatureAttributeTypeFieldProps> = ({
     }),
     [form, required, onChange],
   );
+
+  if (!purposes.includes("core")) {
+    return null;
+  }
 
   switch (fieldType) {
     case "radios":

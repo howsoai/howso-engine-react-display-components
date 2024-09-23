@@ -20,7 +20,7 @@ export const FeatureAttributeReservedBoundingModeField: FC<
   FeatureAttributeReservedBoundingModeFieldProps
 > = ({ featureType, dataType, required = true, ...props }) => {
   const { t } = useTranslation(i18n.namespace);
-  const { fieldRadiosProps } = useContext(FeaturesAttributesContext);
+  const { fieldRadiosProps, purposes } = useContext(FeaturesAttributesContext);
 
   const registerOptions: RegisterOptions = useMemo(
     () => ({
@@ -37,7 +37,8 @@ export const FeatureAttributeReservedBoundingModeField: FC<
   if (
     !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
-    !allowedDataTypes.includes(dataType)
+    !allowedDataTypes.includes(dataType) ||
+    !purposes.includes("core")
   ) {
     return null;
   }
