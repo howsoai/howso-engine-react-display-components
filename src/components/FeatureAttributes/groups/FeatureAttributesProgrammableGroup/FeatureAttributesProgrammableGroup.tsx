@@ -22,7 +22,7 @@ export const FeatureAttributesProgrammableGroup: FC<
   const { t } = useTranslation(i18n.namespace);
   const { purposes } = useContext(FeaturesAttributesContext);
 
-  if (!purposes.includes("synthesis")) {
+  if (!purposes.includes("core")) {
     return null;
   }
 
