@@ -25,7 +25,7 @@ export const FeatureAttributePostProcessField: FC<
   );
   const form = useFormContext();
 
-  if (!purposes.includes("synthesis")) {
+  if (!purposes.includes("core")) {
     return null;
   }
 
