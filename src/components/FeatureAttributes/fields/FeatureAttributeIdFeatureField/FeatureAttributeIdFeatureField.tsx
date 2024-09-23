@@ -35,7 +35,7 @@ export const FeatureAttributeIdFeatureField: FC<
     !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
     !allowedDataTypes.includes(dataType) ||
-    !purposes.includes("synthesis")
+    !purposes.includes("core")
   ) {
     return null;
   }
