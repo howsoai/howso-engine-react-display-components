@@ -14,7 +14,7 @@ const meta: Meta<typeof FeatureAttributeReservedBoundingModeField> = {
   },
   decorators: [
     getFormProviderDecorator(),
-    getFeaturesAttributesContextDecorator({ purposes: ["core", "synthesis"] }),
+    getFeaturesAttributesContextDecorator({ purposes: ["core"] }),
   ],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

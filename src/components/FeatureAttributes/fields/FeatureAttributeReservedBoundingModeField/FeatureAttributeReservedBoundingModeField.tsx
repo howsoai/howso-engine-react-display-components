@@ -38,7 +38,7 @@ export const FeatureAttributeReservedBoundingModeField: FC<
     !featureType ||
     !allowedFeatureTypes.includes(featureType) ||
     !allowedDataTypes.includes(dataType) ||
-    !purposes.includes("synthesis")
+    !purposes.includes("core")
   ) {
     return null;
   }
