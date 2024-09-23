@@ -30,7 +30,7 @@ export const FeatureAttributeLocaleField: FC<
   const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
 
-  if (dataType !== "formatted_date_time" || !purposes.includes("synthesis")) {
+  if (dataType !== "formatted_date_time" || !purposes.includes("core")) {
     return null;
   }
 
