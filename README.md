@@ -23,9 +23,18 @@ import "@howso/howso-engine-react-display-components/lib/styles.css";
 Modify your `tailwind.config.js` configuration to include:
 
 ```js
+import twContainerQueries from "@tailwindcss/container-queries";
+import flowbite from "flowbite-react/tailwind";
+
 module.exports = {
   content: [
     "node_modules/@howso/howso-engine-react-display-components/lib/index.esm.js",
+    flowbite.content(),
+    // ...
+  ],
+  plugins: [
+    flowbite.plugin({ charts: true }),
+    twContainerQueries,
     // ...
   ],
 };

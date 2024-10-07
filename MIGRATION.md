@@ -1,5 +1,22 @@
 # Migration guide
 
+## 4.x
+
+### Tailwind configuration
+
+Introduced `@tailwindcss/container-queries`. Update your Tailwind configuration to include the plugin:
+
+```js
+import twContainerQueries from "@tailwindcss/container-queries";
+
+module.exports = {
+  plugins: [
+    twContainerQueries,
+    // ...
+  ],
+};
+```
+
 ## 3.x
 
 Refactored translation system to use `@howso/ui-internationalization-utils` `I18nBundle`s.
@@ -98,7 +115,7 @@ render(
     setFeatureAttributesAtom={setFeatureAttributesAtom}
     setParamsAtom={setParamsAtom}
     timeFeatureAtom={timeFeatureAtom}
-  />,
+  />
 );
 ```
 
@@ -132,7 +149,7 @@ render(
     setFeatureAttributesAtom={setFeatureAttributesAtom}
     setParamsAtom={setParamsAtom}
     timeFeatureAtom={timeFeatureAtom}
-  />,
+  />
 );
 ```
 
