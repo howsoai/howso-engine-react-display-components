@@ -1,5 +1,6 @@
-import flowbite from "flowbite-react/tailwind";
 import { standardTailwindConfigThemeExtend } from "@howso/react-tailwind-flowbite-components";
+import twContainerQueries from "@tailwindcss/container-queries";
+import flowbite from "flowbite-react/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -9,7 +10,7 @@ export default {
     "./storybook/**/*.{jsx,tsx,html}",
     "./node_modules/@howso/react-tailwind-flowbite-components/lib/index.esm.js",
   ],
-  plugins: [flowbite.plugin({ charts: true })],
+  plugins: [flowbite.plugin({ charts: true }), twContainerQueries],
   theme: {
     extend: standardTailwindConfigThemeExtend,
   },
