@@ -1,4 +1,4 @@
-import { type FeatureTimeSeriesTypeEnum } from "@howso/engine";
+import { FeatureAttributes } from "@howso/engine";
 import {
   FieldTextList,
   FieldTextProps,
@@ -11,7 +11,9 @@ import { FeatureAttributeTimeSeriesDeltaMinMaxFieldsI18nBundle as i18n } from ".
 
 export type FeatureAttributeTimeSeriesDeltaMinMaxFieldsProps =
   Partial<FieldTextProps> & {
-    timeSeriesType: FeatureTimeSeriesTypeEnum | undefined;
+    timeSeriesType:
+      | NonNullable<FeatureAttributes["time_series"]>["type"]
+      | undefined;
   };
 /**
  * @see https://documentation.howso.com/en/latest/openapi/types/FeatureTimeSeries.html#howso.openapi.models.FeatureTimeSeries.delta_min

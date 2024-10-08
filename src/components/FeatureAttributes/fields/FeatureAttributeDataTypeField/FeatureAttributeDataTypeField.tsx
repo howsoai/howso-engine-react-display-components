@@ -1,7 +1,4 @@
-import {
-  FeatureAttributesDataTypeEnum,
-  FeatureAttributesTypeEnum,
-} from "@howso/engine";
+import type { FeatureAttributes } from "@howso/engine";
 import {
   FieldSelect,
   FieldSelectProps,
@@ -13,7 +10,7 @@ import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeDataTypeFieldI18nBundle as i18n } from "./FeatureAttributeDataTypeField.i18n";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
-  featureType: FeatureAttributesTypeEnum | undefined;
+  featureType: FeatureAttributes["type"] | undefined;
 };
 /**
  * Specify the data type for features with a type of nominal or continuous.
@@ -75,7 +72,7 @@ export const FeatureAttributeDataTypeField: FC<
 };
 
 const HelperText: FC<{
-  dataType: FeatureAttributesDataTypeEnum | undefined;
+  dataType: FeatureAttributes["data_type"] | undefined;
 }> = ({ dataType }): ReactNode => {
   const { t } = useTranslation(i18n.namespace);
 
