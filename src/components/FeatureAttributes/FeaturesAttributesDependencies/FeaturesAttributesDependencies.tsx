@@ -1,13 +1,3 @@
-import { type FC, useState, type MouseEvent } from "react";
-import { useAtom } from "jotai";
-import {
-  Alert,
-  ButtonProps,
-  Checkbox,
-  HelperText,
-  Table,
-  Tooltip,
-} from "flowbite-react";
 import {
   ExpandCollapseControl,
   PrimaryButton,
@@ -16,11 +6,28 @@ import {
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
+import {
+  Alert,
+  ButtonProps,
+  Checkbox,
+  HelperText,
+  Table,
+  Tooltip,
+} from "flowbite-react";
+import { useAtom } from "jotai";
+import {
+  memo,
+  useState,
+  type Dispatch,
+  type FC,
+  type MouseEvent,
+  type SetStateAction,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
-import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesDependenciesI18nBundle as i18n } from "./FeaturesAttributesDependencies.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesDependenciesProps = {
   paramsAtom: InferFeatureAttributesParamsAtom;
@@ -118,29 +125,14 @@ export const FeaturesAttributesDependencies: FC<
                           ? `${featureB}:${featureA}`
                           : `${featureA}:${featureB}`;
                       return (
-                        <Table.Cell
-                          key={featureB}
-                          className="p-1 text-center *:mx-auto"
-                        >
-                          {featureA !== featureB && (
-                            <Tooltip
-                              content={[featureA, featureB].join(" and ")}
-                            >
-                              <Checkbox
-                                onChange={(event) => {
-                                  setDependencies((dependencies) => ({
-                                    ...dependencies,
-                                    [key]: event.target.checked,
-                                  }));
-                                }}
-                                color={"blue"}
-                                checked={dependencies[key]}
-                                data-feature-a={featureA}
-                                data-feature-b={featureB}
-                              />
-                            </Tooltip>
-                          )}
-                        </Table.Cell>
+                        <Cell
+                          key={key}
+                          dependenciesKey={key}
+                          checked={dependencies[key]}
+                          featureA={featureA}
+                          featureB={featureB}
+                          setDependencies={setDependencies}
+                        />
                       );
                     })}
                   </Table.Row>
@@ -219,3 +211,35 @@ const getDependencies = (
     return dependencies;
   }, {} as DependenciesIndex);
 };
+
+type CellProps = {
+  checked: boolean;
+  featureA: string;
+  featureB: string;
+  dependenciesKey: string;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+};
+const Cell: FC<CellProps> = memo(
+  ({ checked, featureA, featureB, dependenciesKey, setDependencies }) => {
+    return (
+      <Table.Cell key={featureB} className="p-1 text-center *:mx-auto">
+        {featureA !== featureB && (
+          <Tooltip content={[featureA, featureB].join(" and ")}>
+            <Checkbox
+              onChange={(event) => {
+                setDependencies((dependencies) => ({
+                  ...dependencies,
+                  [dependenciesKey]: event.target.checked,
+                }));
+              }}
+              color={"blue"}
+              checked={checked}
+              data-feature-a={featureA}
+              data-feature-b={featureB}
+            />
+          </Tooltip>
+        )}
+      </Table.Cell>
+    );
+  },
+);
