@@ -150,22 +150,21 @@ export const NoFeatures: Story = {
   },
 };
 
-// TODO Goals
-// const hundredFeaturesAttributes: FeatureAttributesIndex = new Array(100)
-//   .fill(0)
-//   .reduce((features, _, index) => {
-//     features[index] = {
-//       type: "continuous",
-//       data_type: "number",
-//       decimal_places: 0,
-//       sample: index,
-//     };
-//     return features;
-//   }, {});
-// export const HundredFeatures: Story = {
-//   args: {
-//     paramsAtom: getInferFeatureAttributesParamsAtom({
-//       features: hundredFeaturesAttributes,
-//     }),
-//   },
-// };
+const hundredFeaturesAttributes: FeatureAttributesIndex = new Array(100)
+  .fill(0)
+  .reduce((features, _, index) => {
+    features["Index: " + index] = {
+      type: "continuous",
+      data_type: "number",
+      decimal_places: 0,
+      sample: index,
+    };
+    return features;
+  }, {});
+export const HundredFeatures: Story = {
+  args: {
+    paramsAtom: getInferFeatureAttributesParamsAtom({
+      features: hundredFeaturesAttributes,
+    }),
+  },
+};

@@ -1,9 +1,13 @@
 import {
   ExpandCollapseControl,
+  FieldCheckbox,
+  FieldSelect,
   PrimaryButton,
   ReadabilityConstraint,
   TableHeadCell,
   UpdateIcon,
+  useFormValues,
+  UX,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
 import {
@@ -23,6 +27,7 @@ import {
   type MouseEvent,
   type SetStateAction,
 } from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { twMerge } from "tailwind-merge";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
@@ -93,52 +98,19 @@ export const FeaturesAttributesDependencies: FC<
       {features.length > 0 ? (
         <>
           <div className="mb-2 overflow-x-auto">
-            <Table
-              className="mx-auto w-auto text-gray-700 dark:text-gray-400"
-              striped
-            >
-              <Table.Head className="text-sm text-inherit">
-                <TableHeadCell as="td" />
-                {features.map((feature) => (
-                  <Table.HeadCell
-                    key={feature}
-                    className="w-[1lh] p-1 align-bottom normal-case"
-                  >
-                    <div className="ml-1 max-h-16 max-w-16 truncate [writing-mode:vertical-rl]">
-                      {feature}
-                    </div>
-                  </Table.HeadCell>
-                ))}
-              </Table.Head>
-              <Table.Body>
-                {features.map((featureA, indexA) => (
-                  <Table.Row key={featureA}>
-                    <TableHeadCell
-                      as="th"
-                      className="p-1 text-right text-sm  text-inherit"
-                    >
-                      <div className="max-w-30 truncate">{featureA}</div>
-                    </TableHeadCell>
-                    {features.map((featureB, indexB) => {
-                      const key: DependenciesIndexKey =
-                        indexB < indexA
-                          ? `${featureB}:${featureA}`
-                          : `${featureA}:${featureB}`;
-                      return (
-                        <Cell
-                          key={key}
-                          dependenciesKey={key}
-                          checked={dependencies[key]}
-                          featureA={featureA}
-                          featureB={featureB}
-                          setDependencies={setDependencies}
-                        />
-                      );
-                    })}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
+            {features.length <= 30 ? (
+              <Matrix
+                dependencies={dependencies}
+                setDependencies={setDependencies}
+                features={features}
+              />
+            ) : (
+              <List
+                dependencies={dependencies}
+                setDependencies={setDependencies}
+                features={features}
+              />
+            )}
           </div>
           <ReadabilityConstraint className="mx-auto">
             <div className="flex justify-between mb-4">
@@ -212,14 +184,71 @@ const getDependencies = (
   }, {} as DependenciesIndex);
 };
 
-type CellProps = {
+type MatrixProps = {
+  dependencies: DependenciesIndex;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+  features: string[];
+};
+const Matrix: FC<MatrixProps> = ({
+  dependencies,
+  setDependencies,
+  features,
+}) => {
+  return (
+    <Table className="mx-auto w-auto text-gray-700 dark:text-gray-400" striped>
+      <Table.Head className="text-sm text-inherit">
+        <TableHeadCell as="td" />
+        {features.map((feature) => (
+          <Table.HeadCell
+            key={feature}
+            className="w-[1lh] p-1 align-bottom normal-case"
+          >
+            <div className="ml-1 max-h-16 max-w-16 truncate [writing-mode:vertical-rl]">
+              {feature}
+            </div>
+          </Table.HeadCell>
+        ))}
+      </Table.Head>
+      <Table.Body>
+        {features.map((featureA, indexA) => (
+          <Table.Row key={featureA}>
+            <TableHeadCell
+              as="th"
+              className="p-1 text-right text-sm  text-inherit"
+            >
+              <div className="max-w-30 truncate">{featureA}</div>
+            </TableHeadCell>
+            {features.map((featureB, indexB) => {
+              const key: DependenciesIndexKey =
+                indexB < indexA
+                  ? `${featureB}:${featureA}`
+                  : `${featureA}:${featureB}`;
+              return (
+                <MatrixCell
+                  key={key}
+                  dependenciesKey={key}
+                  checked={dependencies[key]}
+                  featureA={featureA}
+                  featureB={featureB}
+                  setDependencies={setDependencies}
+                />
+              );
+            })}
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+type MatrixCellProps = {
   checked: boolean;
   featureA: string;
   featureB: string;
   dependenciesKey: string;
   setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
 };
-const Cell: FC<CellProps> = memo(
+const MatrixCell: FC<MatrixCellProps> = memo(
   ({ checked, featureA, featureB, dependenciesKey, setDependencies }) => {
     return (
       <Table.Cell key={featureB} className="p-1 text-center *:mx-auto">
@@ -243,3 +272,73 @@ const Cell: FC<CellProps> = memo(
     );
   },
 );
+
+type ListProps = {
+  dependencies: DependenciesIndex;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+  features: string[];
+};
+const List: FC<ListProps> = (props) => {
+  const form = useForm({
+    values: {
+      feature: "",
+    },
+  });
+
+  return (
+    <FormProvider {...form}>
+      <ListForm {...props} />
+    </FormProvider>
+  );
+};
+
+const ListForm: FC<ListProps> = ({
+  dependencies,
+  setDependencies,
+  features,
+}) => {
+  const { register } = useFormContext();
+  const values = useFormValues();
+
+  return (
+    <>
+      <FieldSelect
+        className={UX.classes.marginBottom}
+        label={"Feature"}
+        {...register("feature")}
+      >
+        <option value="">Select a feature</option>
+        {features.map((feature) => (
+          <option key={feature} value={feature}>
+            {feature}
+          </option>
+        ))}
+      </FieldSelect>
+      {/* <p>{JSON.stringify(values)}</p> */}
+
+      <div className="max-h-96 overflow-x-auto">
+        {features.map((featureB) => {
+          const key: DependenciesIndexKey = `${values.feature}:${featureB}`;
+
+          return (
+            <FieldCheckbox
+              key={featureB}
+              label={featureB}
+              // color={"blue"}
+              checked={!!dependencies[key]}
+              {...register(key, {
+                onChange: (event) => {
+                  setDependencies((dependencies) => ({
+                    ...dependencies,
+                    [key]: event.target.checked,
+                  }));
+                },
+                disabled: values.feature === featureB,
+              })}
+            />
+          );
+        })}
+      </div>
+    </>
+  );
+};
