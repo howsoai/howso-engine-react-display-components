@@ -1,7 +1,8 @@
 import {
   ExpandCollapseControl,
-  FieldCheckbox,
+  FieldLabel,
   FieldSelect,
+  FieldText,
   PrimaryButton,
   ReadabilityConstraint,
   TableHeadCell,
@@ -35,6 +36,8 @@ import { FeatureAttributesIndex } from "../types";
 import { FeaturesAttributesDependenciesI18nBundle as i18n } from "./FeaturesAttributesDependencies.i18n";
 
 export type FeaturesAttributesDependenciesProps = {
+  /** A feature to preselect when rendering in list view */
+  initialFeature?: string;
   paramsAtom: InferFeatureAttributesParamsAtom;
   /** A function to be called update operations */
   onUpdate?: (event: MouseEvent) => void;
@@ -97,8 +100,8 @@ export const FeaturesAttributesDependencies: FC<
       </ReadabilityConstraint>
       {features.length > 0 ? (
         <>
-          <div className="mb-2 overflow-x-auto">
-            {features.length <= 30 ? (
+          <div className="mb-2">
+            {features.length <= 20 ? (
               <Matrix
                 dependencies={dependencies}
                 setDependencies={setDependencies}
@@ -109,6 +112,7 @@ export const FeaturesAttributesDependencies: FC<
                 dependencies={dependencies}
                 setDependencies={setDependencies}
                 features={features}
+                initialFeature={props.initialFeature}
               />
             )}
           </div>
@@ -277,28 +281,29 @@ type ListProps = {
   dependencies: DependenciesIndex;
   setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
   features: string[];
+  /** A feature to preselect when rendering in list view */
+  initialFeature?: string;
 };
 const List: FC<ListProps> = (props) => {
-  const form = useForm({
-    values: {
-      feature: "",
-    },
+  const featureSelectForm = useForm({
+    values: { feature: props.initialFeature || "", filter: "" },
   });
 
   return (
-    <FormProvider {...form}>
-      <ListForm {...props} />
+    <FormProvider {...featureSelectForm}>
+      <ListFeatureSelect {...props} />
     </FormProvider>
   );
 };
 
-const ListForm: FC<ListProps> = ({
+const ListFeatureSelect: FC<ListProps> = ({
   dependencies,
-  setDependencies,
   features,
+  setDependencies,
 }) => {
   const { register } = useFormContext();
-  const values = useFormValues();
+  const { feature, filter } = useFormValues();
+  const lowerFilter = filter?.toLowerCase();
 
   return (
     <>
@@ -314,31 +319,81 @@ const ListForm: FC<ListProps> = ({
           </option>
         ))}
       </FieldSelect>
-      {/* <p>{JSON.stringify(values)}</p> */}
+      <div className="ml-4">
+        <FieldText
+          label={null}
+          sizing={"sm"}
+          placeholder={
+            feature
+              ? `Filter ${features.length - 1} features`
+              : `Filter features`
+          }
+          {...register("filter", { disabled: !feature })}
+          className={"mb-2"}
+        />
+        <div className="space-y-1 max-h-40 overflow-auto pl-1">
+          {features.map((featureA, indexA) => {
+            return (
+              featureA === feature &&
+              features.map((featureB, indexB) => {
+                const key: DependenciesIndexKey =
+                  indexB < indexA
+                    ? `${featureB}:${featureA}`
+                    : `${featureA}:${featureB}`;
+                const isNotFiltered =
+                  !filter || featureB.toLowerCase().includes(lowerFilter);
 
-      <div className="max-h-96 overflow-x-auto">
-        {features.map((featureB) => {
-          const key: DependenciesIndexKey = `${values.feature}:${featureB}`;
-
-          return (
-            <FieldCheckbox
-              key={featureB}
-              label={featureB}
-              // color={"blue"}
-              checked={!!dependencies[key]}
-              {...register(key, {
-                onChange: (event) => {
-                  setDependencies((dependencies) => ({
-                    ...dependencies,
-                    [key]: event.target.checked,
-                  }));
-                },
-                disabled: values.feature === featureB,
-              })}
-            />
-          );
-        })}
+                return (
+                  isNotFiltered && (
+                    <ListItem
+                      key={key}
+                      dependenciesKey={key}
+                      checked={dependencies[key]}
+                      featureA={featureA}
+                      featureB={featureB}
+                      setDependencies={setDependencies}
+                    />
+                  )
+                );
+              })
+            );
+          })}
+        </div>
       </div>
     </>
   );
 };
+
+type ListItemProps = {
+  checked: boolean;
+  featureA: string;
+  featureB: string;
+  dependenciesKey: string;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+};
+const ListItem: FC<ListItemProps> = memo(
+  ({ checked, featureA, featureB, dependenciesKey, setDependencies }) => {
+    return (
+      <>
+        {featureA !== featureB && (
+          <FieldLabel>
+            <Checkbox
+              onChange={(event) => {
+                setDependencies((dependencies) => ({
+                  ...dependencies,
+                  [dependenciesKey]: event.target.checked,
+                }));
+              }}
+              color={"blue"}
+              checked={checked}
+              data-feature-a={featureA}
+              data-feature-b={featureB}
+              className="mr-2"
+            />
+            {featureB}
+          </FieldLabel>
+        )}
+      </>
+    );
+  },
+);

@@ -153,7 +153,7 @@ export const NoFeatures: Story = {
 const hundredFeaturesAttributes: FeatureAttributesIndex = new Array(100)
   .fill(0)
   .reduce((features, _, index) => {
-    features["Index: " + index] = {
+    features["feature-" + index] = {
       type: "continuous",
       data_type: "number",
       decimal_places: 0,
@@ -166,5 +166,6 @@ export const HundredFeatures: Story = {
     paramsAtom: getInferFeatureAttributesParamsAtom({
       features: hundredFeaturesAttributes,
     }),
+    initialFeature: Object.keys(hundredFeaturesAttributes).at(0),
   },
 };
