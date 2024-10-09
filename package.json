@@ -33,7 +33,7 @@
   ],
   "peerDependencies": {
     "@hookform/error-message": "^2.0.1",
-    "@howso/react-tailwind-flowbite-components": "^6.0.0",
+    "@howso/react-tailwind-flowbite-components": "^6.0.1",
     "@howso/ui-internationalization-utils": "^1.0.5",
     "jotai": "^2.8.3",
     "react": "^18.0.0",
@@ -51,7 +51,7 @@
     "@fontsource/inter": "^5.0.5",
     "@hookform/error-message": "^2.0.1",
     "@howso/engine": "^4.0.2",
-    "@howso/react-tailwind-flowbite-components": "^6.0.0",
+    "@howso/react-tailwind-flowbite-components": "^6.0.1",
     "@howso/ui-internationalization-utils": "^1.0.5",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
