@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
-import { FeaturesAttributesDependencies } from "./FeaturesAttributesDependencies";
-import { getInferFeatureAttributesParamsAtom } from "../hooks";
 import { getFeaturesAttributesContextDecorator } from "../FeaturesAttributesContext/FeaturesAttributesContext.stories.decorators";
+import { getInferFeatureAttributesParamsAtom } from "../hooks";
 import type { FeatureAttributesIndex } from "../types";
+import { FeaturesAttributesDependencies } from "./FeaturesAttributesDependencies";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof FeaturesAttributesDependencies> = {
@@ -149,3 +149,23 @@ export const NoFeatures: Story = {
     paramsAtom: getInferFeatureAttributesParamsAtom({}),
   },
 };
+
+// TODO Goals
+// const hundredFeaturesAttributes: FeatureAttributesIndex = new Array(100)
+//   .fill(0)
+//   .reduce((features, _, index) => {
+//     features[index] = {
+//       type: "continuous",
+//       data_type: "number",
+//       decimal_places: 0,
+//       sample: index,
+//     };
+//     return features;
+//   }, {});
+// export const HundredFeatures: Story = {
+//   args: {
+//     paramsAtom: getInferFeatureAttributesParamsAtom({
+//       features: hundredFeaturesAttributes,
+//     }),
+//   },
+// };
