@@ -1,5 +1,16 @@
-import { type FC, useState, type MouseEvent } from "react";
-import { useAtom } from "jotai";
+import {
+  ExpandCollapseControl,
+  FieldLabel,
+  FieldSelect,
+  FieldText,
+  PrimaryButton,
+  ReadabilityConstraint,
+  TableHeadCell,
+  UpdateIcon,
+  useFormValues,
+  UX,
+  WarningIcon,
+} from "@howso/react-tailwind-flowbite-components";
 import {
   Alert,
   ButtonProps,
@@ -8,21 +19,25 @@ import {
   Table,
   Tooltip,
 } from "flowbite-react";
+import { useAtom } from "jotai";
 import {
-  ExpandCollapseControl,
-  PrimaryButton,
-  ReadabilityConstraint,
-  TableHeadCell,
-  UpdateIcon,
-  WarningIcon,
-} from "@howso/react-tailwind-flowbite-components";
+  memo,
+  useState,
+  type Dispatch,
+  type FC,
+  type MouseEvent,
+  type SetStateAction,
+} from "react";
+import { FormProvider, useForm, useFormContext } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { twMerge } from "tailwind-merge";
 import { type InferFeatureAttributesParamsAtom } from "../hooks";
 import { FeatureAttributesIndex } from "../types";
-import { twMerge } from "tailwind-merge";
 import { FeaturesAttributesDependenciesI18nBundle as i18n } from "./FeaturesAttributesDependencies.i18n";
-import { useTranslation } from "react-i18next";
 
 export type FeaturesAttributesDependenciesProps = {
+  /** A feature to preselect when rendering in list view */
+  initialFeature?: string;
   paramsAtom: InferFeatureAttributesParamsAtom;
   /** A function to be called update operations */
   onUpdate?: (event: MouseEvent) => void;
@@ -85,68 +100,21 @@ export const FeaturesAttributesDependencies: FC<
       </ReadabilityConstraint>
       {features.length > 0 ? (
         <>
-          <div className="mb-2 overflow-x-auto">
-            <Table
-              className="mx-auto w-auto text-gray-700 dark:text-gray-400"
-              striped
-            >
-              <Table.Head className="text-sm text-inherit">
-                <TableHeadCell as="td" />
-                {features.map((feature) => (
-                  <Table.HeadCell
-                    key={feature}
-                    className="w-[1lh] p-1 align-bottom normal-case"
-                  >
-                    <div className="ml-1 max-h-16 max-w-16 truncate [writing-mode:vertical-rl]">
-                      {feature}
-                    </div>
-                  </Table.HeadCell>
-                ))}
-              </Table.Head>
-              <Table.Body>
-                {features.map((featureA, indexA) => (
-                  <Table.Row key={featureA}>
-                    <TableHeadCell
-                      as="th"
-                      className="p-1 text-right text-sm  text-inherit"
-                    >
-                      <div className="max-w-30 truncate">{featureA}</div>
-                    </TableHeadCell>
-                    {features.map((featureB, indexB) => {
-                      const key: DependenciesIndexKey =
-                        indexB < indexA
-                          ? `${featureB}:${featureA}`
-                          : `${featureA}:${featureB}`;
-                      return (
-                        <Table.Cell
-                          key={featureB}
-                          className="p-1 text-center *:mx-auto"
-                        >
-                          {featureA !== featureB && (
-                            <Tooltip
-                              content={[featureA, featureB].join(" and ")}
-                            >
-                              <Checkbox
-                                onChange={(event) => {
-                                  setDependencies((dependencies) => ({
-                                    ...dependencies,
-                                    [key]: event.target.checked,
-                                  }));
-                                }}
-                                color={"blue"}
-                                checked={dependencies[key]}
-                                data-feature-a={featureA}
-                                data-feature-b={featureB}
-                              />
-                            </Tooltip>
-                          )}
-                        </Table.Cell>
-                      );
-                    })}
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
+          <div className="mb-2">
+            {features.length <= 20 ? (
+              <Matrix
+                dependencies={dependencies}
+                setDependencies={setDependencies}
+                features={features}
+              />
+            ) : (
+              <List
+                dependencies={dependencies}
+                setDependencies={setDependencies}
+                features={features}
+                initialFeature={props.initialFeature}
+              />
+            )}
           </div>
           <ReadabilityConstraint className="mx-auto">
             <div className="flex justify-between mb-4">
@@ -219,3 +187,213 @@ const getDependencies = (
     return dependencies;
   }, {} as DependenciesIndex);
 };
+
+type MatrixProps = {
+  dependencies: DependenciesIndex;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+  features: string[];
+};
+const Matrix: FC<MatrixProps> = ({
+  dependencies,
+  setDependencies,
+  features,
+}) => {
+  return (
+    <Table className="mx-auto w-auto text-gray-700 dark:text-gray-400" striped>
+      <Table.Head className="text-sm text-inherit">
+        <TableHeadCell as="td" />
+        {features.map((feature) => (
+          <Table.HeadCell
+            key={feature}
+            className="w-[1lh] p-1 align-bottom normal-case"
+          >
+            <div className="ml-1 max-h-16 max-w-16 truncate [writing-mode:vertical-rl]">
+              {feature}
+            </div>
+          </Table.HeadCell>
+        ))}
+      </Table.Head>
+      <Table.Body>
+        {features.map((featureA, indexA) => (
+          <Table.Row key={featureA}>
+            <TableHeadCell
+              as="th"
+              className="p-1 text-right text-sm  text-inherit"
+            >
+              <div className="max-w-30 truncate">{featureA}</div>
+            </TableHeadCell>
+            {features.map((featureB, indexB) => {
+              const key: DependenciesIndexKey =
+                indexB < indexA
+                  ? `${featureB}:${featureA}`
+                  : `${featureA}:${featureB}`;
+              return (
+                <MatrixCell
+                  key={key}
+                  dependenciesKey={key}
+                  checked={dependencies[key]}
+                  featureA={featureA}
+                  featureB={featureB}
+                  setDependencies={setDependencies}
+                />
+              );
+            })}
+          </Table.Row>
+        ))}
+      </Table.Body>
+    </Table>
+  );
+};
+
+type MatrixCellProps = {
+  checked: boolean;
+  featureA: string;
+  featureB: string;
+  dependenciesKey: string;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+};
+const MatrixCell: FC<MatrixCellProps> = memo(
+  ({ checked, featureA, featureB, dependenciesKey, setDependencies }) => {
+    return (
+      <Table.Cell key={featureB} className="p-1 text-center *:mx-auto">
+        {featureA !== featureB && (
+          <Tooltip content={[featureA, featureB].join(" and ")}>
+            <Checkbox
+              onChange={(event) => {
+                setDependencies((dependencies) => ({
+                  ...dependencies,
+                  [dependenciesKey]: event.target.checked,
+                }));
+              }}
+              color={"blue"}
+              checked={checked}
+              data-feature-a={featureA}
+              data-feature-b={featureB}
+            />
+          </Tooltip>
+        )}
+      </Table.Cell>
+    );
+  },
+);
+
+type ListProps = {
+  dependencies: DependenciesIndex;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+  features: string[];
+  /** A feature to preselect when rendering in list view */
+  initialFeature?: string;
+};
+const List: FC<ListProps> = (props) => {
+  const featureSelectForm = useForm({
+    values: { feature: props.initialFeature || "", filter: "" },
+  });
+
+  return (
+    <FormProvider {...featureSelectForm}>
+      <ListFeatureSelect {...props} />
+    </FormProvider>
+  );
+};
+
+const ListFeatureSelect: FC<ListProps> = ({
+  dependencies,
+  features,
+  setDependencies,
+}) => {
+  const { register } = useFormContext();
+  const { feature, filter } = useFormValues();
+  const lowerFilter = filter?.toLowerCase();
+
+  return (
+    <>
+      <FieldSelect
+        className={UX.classes.marginBottom}
+        label={"Feature"}
+        {...register("feature")}
+      >
+        <option value="">Select a feature</option>
+        {features.map((feature) => (
+          <option key={feature} value={feature}>
+            {feature}
+          </option>
+        ))}
+      </FieldSelect>
+      <div className="ml-4">
+        <FieldText
+          label={null}
+          sizing={"sm"}
+          placeholder={
+            feature
+              ? `Filter ${features.length - 1} features`
+              : `Filter features`
+          }
+          {...register("filter", { disabled: !feature })}
+          className={"mb-2"}
+        />
+        <div className="space-y-1 max-h-40 overflow-auto pl-1">
+          {features.map((featureA, indexA) => {
+            return (
+              featureA === feature &&
+              features.map((featureB, indexB) => {
+                const key: DependenciesIndexKey =
+                  indexB < indexA
+                    ? `${featureB}:${featureA}`
+                    : `${featureA}:${featureB}`;
+                const isNotFiltered =
+                  !filter || featureB.toLowerCase().includes(lowerFilter);
+
+                return (
+                  isNotFiltered && (
+                    <ListItem
+                      key={key}
+                      dependenciesKey={key}
+                      checked={dependencies[key]}
+                      featureA={featureA}
+                      featureB={featureB}
+                      setDependencies={setDependencies}
+                    />
+                  )
+                );
+              })
+            );
+          })}
+        </div>
+      </div>
+    </>
+  );
+};
+
+type ListItemProps = {
+  checked: boolean;
+  featureA: string;
+  featureB: string;
+  dependenciesKey: string;
+  setDependencies: Dispatch<SetStateAction<DependenciesIndex>>;
+};
+const ListItem: FC<ListItemProps> = memo(
+  ({ checked, featureA, featureB, dependenciesKey, setDependencies }) => {
+    return (
+      <>
+        {featureA !== featureB && (
+          <FieldLabel>
+            <Checkbox
+              onChange={(event) => {
+                setDependencies((dependencies) => ({
+                  ...dependencies,
+                  [dependenciesKey]: event.target.checked,
+                }));
+              }}
+              color={"blue"}
+              checked={checked}
+              data-feature-a={featureA}
+              data-feature-b={featureB}
+              className="mr-2"
+            />
+            {featureB}
+          </FieldLabel>
+        )}
+      </>
+    );
+  },
+);
