@@ -1,4 +1,4 @@
-import { FeatureAttributes, FeatureTimeSeries } from "@howso/engine";
+import { FeatureAttributes } from "@howso/engine";
 import { atom } from "jotai";
 import { useMemo } from "react";
 import { isEmpty } from "../../../utils";
@@ -83,14 +83,14 @@ const setTimeFeature = ({
   setParams,
   setRunRequired,
 }: SetTimeFeatureParams) => {
-  const features = { ...params?.features } || {};
+  const features = { ...params.features };
   for (const name of Object.keys(params?.features || {})) {
     const attributes = { ...features[name] };
     if (name === featureName) {
       attributes.time_series = {
         ...attributes.time_series,
         time_feature: true,
-      } as FeatureTimeSeries;
+      } as FeatureAttributes["time_series"];
     } else {
       // Only one time feature is allowed at a time
       delete attributes.time_series?.time_feature;

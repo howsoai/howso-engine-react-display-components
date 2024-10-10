@@ -1,16 +1,17 @@
-import type { FeatureAttributes } from "@howso/engine";
+import type { FeatureAttributesIndex as EngineFeatureAttributesIndex } from "@howso/engine";
 
 export type FeatureAttributePurposes = "core" | "synthesis";
 export interface IFeatureAttributePurposes {
   purposes: FeatureAttributePurposes[];
 }
 
-export type FeatureAttributesIndex = Record<string, FeatureAttributes>;
+/** @deprecated Use @howso/engine FeatureAttributesIndex */
+export type FeatureAttributesIndex = EngineFeatureAttributesIndex;
 
 /** Options available to the InferFeatureAttributes call in the platform API */
 export interface InferFeatureAttributesParams {
   // Initial feature attributes to build onto.
-  features?: FeatureAttributesIndex;
+  features?: EngineFeatureAttributesIndex;
   // Defaults to true, set to false to disable inferring bounds.
   infer_bounds?: boolean;
   // Use tight min and max bounds for the features specified.
