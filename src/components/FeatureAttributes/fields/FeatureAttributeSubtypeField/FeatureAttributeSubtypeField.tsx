@@ -125,6 +125,7 @@ const subtypes: Record<FeatureDataType, string[]> = {
   yaml: ["int-id"],
   json: ["int-id"],
   formatted_date_time: ["int-id"],
+  formatted_time: ["int-id"],
   string_mixable: ["int-id"],
   // A TS typing requirement, wont' actually be used.
   boolean: ["int-id"],
