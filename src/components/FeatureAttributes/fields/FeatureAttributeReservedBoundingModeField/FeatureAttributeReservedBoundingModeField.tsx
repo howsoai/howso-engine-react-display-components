@@ -33,6 +33,7 @@ export const FeatureAttributeReservedBoundingModeField: FC<
   const allowedDataTypes: FeatureAttributes["data_type"][] = [
     "number",
     "formatted_date_time",
+    "formatted_time",
   ];
   if (
     !featureType ||

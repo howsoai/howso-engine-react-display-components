@@ -1,4 +1,4 @@
-import { FeatureAttributes } from "@howso/engine";
+import { FeatureAttributes, FeatureDataType } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
@@ -41,14 +41,17 @@ export const FeatureAttributeMinMaxFields: FC<
   const { t } = useTranslation(i18n.namespace);
   const { fieldStackProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
-
   if (!purposes.includes("core") || boundingMode !== "userDefined") {
     return null;
   }
 
   const isContinuousNumber = type === "continuous" && dataType === "number";
+  const allowedTypes: FeatureDataType[] = [
+    "formatted_date_time",
+    "formatted_time",
+  ];
   const isContinuousDateTime =
-    type === "continuous" && dataType === "formatted_date_time";
+    type === "continuous" && dataType && allowedTypes.includes(dataType);
 
   if (!isContinuousNumber && !isContinuousDateTime) {
     return null;

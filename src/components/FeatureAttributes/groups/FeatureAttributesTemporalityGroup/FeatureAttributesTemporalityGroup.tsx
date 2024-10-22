@@ -1,4 +1,4 @@
-import { FeatureAttributes, FeatureTimeSeriesTypeEnum } from "@howso/engine";
+import type { FeatureAttributes, FeatureType } from "@howso/engine";
 import { formSpacingYDefault } from "@howso/react-tailwind-flowbite-components";
 import { FC, useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,13 +27,15 @@ export type FeatureAttributesTemporalityGroupProps = Omit<
 > & {
   /** If any feature in the data has a time feature */
   featuresHaveTimeFeature: boolean;
-  featureType: FeatureAttributes["type"] | undefined;
+  featureType: FeatureType | undefined;
   isIdFeature: boolean | undefined;
   /** time_series.time_feature */
   isTimeFeature: boolean | undefined;
   timeSeriesLags: number[] | undefined;
   timeSeriesOrder: number | undefined;
-  timeSeriesType: FeatureTimeSeriesTypeEnum | undefined;
+  timeSeriesType:
+    | NonNullable<FeatureAttributes["time_series"]>["type"]
+    | undefined;
 };
 export const FeatureAttributesTemporalityGroup: FC<
   FeatureAttributesTemporalityGroupProps

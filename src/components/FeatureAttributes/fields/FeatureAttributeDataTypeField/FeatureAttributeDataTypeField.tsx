@@ -1,7 +1,4 @@
-import {
-  FeatureAttributesDataTypeEnum,
-  FeatureAttributesTypeEnum,
-} from "@howso/engine";
+import type { FeatureDataType, FeatureType } from "@howso/engine";
 import {
   FieldSelect,
   FieldSelectProps,
@@ -13,7 +10,7 @@ import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeDataTypeFieldI18nBundle as i18n } from "./FeatureAttributeDataTypeField.i18n";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
-  featureType: FeatureAttributesTypeEnum | undefined;
+  featureType: FeatureType | undefined;
 };
 /**
  * Specify the data type for features with a type of nominal or continuous.
@@ -49,6 +46,9 @@ export const FeatureAttributeDataTypeField: FC<
       <option value="formatted_date_time">
         {t(i18n.strings.options.formattedDateTime)}
       </option>
+      <option value="formatted_time">
+        {t(i18n.strings.options.formattedTime)}
+      </option>
       <option value="json" disabled={featureType === "ordinal"}>
         {t(i18n.strings.options.json)}
       </option>
@@ -75,13 +75,15 @@ export const FeatureAttributeDataTypeField: FC<
 };
 
 const HelperText: FC<{
-  dataType: FeatureAttributesDataTypeEnum | undefined;
+  dataType: FeatureDataType | undefined;
 }> = ({ dataType }): ReactNode => {
   const { t } = useTranslation(i18n.namespace);
 
   switch (dataType) {
     case "formatted_date_time":
       return t(i18n.strings.help.formattedDateTime);
+    case "formatted_time":
+      return t(i18n.strings.help.formattedTime);
     default:
       return null;
   }

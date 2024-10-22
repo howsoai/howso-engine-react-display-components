@@ -31,6 +31,7 @@ export const FeatureAttributeDateTimeFormatField: FC<
 
   const allowedDataTypes: FeatureAttributes["data_type"][] = [
     "formatted_date_time",
+    "formatted_time",
   ];
   if (!allowedDataTypes.includes(dataType) || !purposes.includes("core")) {
     return null;

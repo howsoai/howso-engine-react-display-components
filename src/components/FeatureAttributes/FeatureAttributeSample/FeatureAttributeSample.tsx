@@ -68,6 +68,7 @@ export const FeatureAttributeSample: FC<FeatureAttributeSampleProps> = ({
     case attributes.data_type === "string":
     case attributes.data_type === "string_mixable":
     case attributes.data_type === "formatted_date_time":
+    case attributes.data_type === "formatted_time":
       return <code>"{attributes.sample}"</code>;
     default:
       return <code>{attributes.sample}</code>;

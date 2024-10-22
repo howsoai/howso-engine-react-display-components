@@ -77,6 +77,21 @@ export const ContinuousFormattedDateTime: Story = {
   },
 };
 
+export const ContinuousFormattedTime: Story = {
+  decorators: [
+    getFormProviderDecorator<InferFeatureAttributeFormValues>({
+      defaultValues: {
+        type: "continuous",
+        data_type: "formatted_time",
+        date_time_format: "hh/mm/ss",
+      },
+    }),
+  ],
+  args: {
+    featuresHaveTimeFeature: true,
+  },
+};
+
 export const ContinuousComplex: Story = {
   decorators: [
     getFormProviderDecorator<InferFeatureAttributeFormValues>({

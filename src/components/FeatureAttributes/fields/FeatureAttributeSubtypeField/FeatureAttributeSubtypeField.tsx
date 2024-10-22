@@ -1,7 +1,4 @@
-import {
-  FeatureAttributes,
-  FeatureAttributesDataTypeEnum,
-} from "@howso/engine";
+import type { FeatureAttributes, FeatureDataType } from "@howso/engine";
 import {
   FieldSelect,
   FieldSelectProps,
@@ -80,7 +77,7 @@ export const FeatureAttributeSubtypeField: FC<FeatureAttributeSubtypeProps> = ({
   );
 };
 
-const subtypes: Record<FeatureAttributesDataTypeEnum, string[]> = {
+const subtypes: Record<FeatureDataType, string[]> = {
   number: [
     "int-id",
     "integer", // TODO nominal_substitution_config
@@ -128,6 +125,7 @@ const subtypes: Record<FeatureAttributesDataTypeEnum, string[]> = {
   yaml: ["int-id"],
   json: ["int-id"],
   formatted_date_time: ["int-id"],
+  formatted_time: ["int-id"],
   string_mixable: ["int-id"],
   // A TS typing requirement, wont' actually be used.
   boolean: ["int-id"],
