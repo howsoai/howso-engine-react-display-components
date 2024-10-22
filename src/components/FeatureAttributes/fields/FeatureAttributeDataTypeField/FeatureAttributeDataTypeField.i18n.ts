@@ -11,7 +11,7 @@ const en = {
     formattedDateTime:
       "Formatted date time supports string based features such as ISO 8601 or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number.",
     formattedTime:
-      "Formatted time supports string based features such as ISO 8601 partials or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number.",
+      "Formatted time supports string based features such as ISO 8601 partials or your own custom formats. For numeric times such as epoch numbers, use a Continuous Number.",
   },
   label: "Data Type",
   options: {
