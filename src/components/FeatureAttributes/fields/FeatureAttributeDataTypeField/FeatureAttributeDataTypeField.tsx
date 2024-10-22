@@ -1,4 +1,4 @@
-import type { FeatureAttributes } from "@howso/engine";
+import type { FeatureDataType, FeatureType } from "@howso/engine";
 import {
   FieldSelect,
   FieldSelectProps,
@@ -10,7 +10,7 @@ import { FeaturesAttributesContext } from "../../FeaturesAttributesContext";
 import { FeatureAttributeDataTypeFieldI18nBundle as i18n } from "./FeatureAttributeDataTypeField.i18n";
 
 export type FeatureAttributeDataTypeFieldProps = Partial<FieldSelectProps> & {
-  featureType: FeatureAttributes["type"] | undefined;
+  featureType: FeatureType | undefined;
 };
 /**
  * Specify the data type for features with a type of nominal or continuous.
@@ -75,7 +75,7 @@ export const FeatureAttributeDataTypeField: FC<
 };
 
 const HelperText: FC<{
-  dataType: FeatureAttributes["data_type"] | undefined;
+  dataType: FeatureDataType | undefined;
 }> = ({ dataType }): ReactNode => {
   const { t } = useTranslation(i18n.namespace);
 
