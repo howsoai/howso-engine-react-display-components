@@ -1,4 +1,8 @@
-import type { FeatureAttributes, FeatureOriginalType } from "@howso/engine";
+import type {
+  FeatureAttributes,
+  FeatureDataType,
+  FeatureOriginalType,
+} from "@howso/engine";
 import { FeatureAttributesConfigurationIssuesI18nBundle } from "../FeatureAttributesConfigurationIssues";
 import { isFeatureAttributeSensitiveAttributeAvailable } from "../fields/FeatureAttributeIsSensitiveField";
 import { type InferFeatureAttributesRunRequiredFields } from "../hooks";
@@ -96,11 +100,16 @@ export const getFeatureAttributeConfigurationIssues = (
     }
   }
 
+  const allowedTypes: FeatureDataType[] = [
+    "formatted_date_time",
+    "formatted_time",
+  ];
   if (
-    featureAttributes?.data_type === "formatted_date_time" &&
+    featureAttributes?.data_type &&
+    allowedTypes.includes(featureAttributes?.data_type) &&
     !featureAttributes?.date_time_format
   ) {
-    issues.push(featureAttributeIssues.sensitiveSubtypeUndefined);
+    issues.push(featureAttributeIssues.dateTimeFormatUndefined);
   }
 
   return issues.length ? issues : undefined;

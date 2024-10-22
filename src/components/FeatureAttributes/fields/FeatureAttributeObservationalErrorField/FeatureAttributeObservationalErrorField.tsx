@@ -67,6 +67,7 @@ const HelperText: FC<FeatureAttributeObservationalErrorFieldProps> = ({
       "json",
       "yaml",
       "formatted_date_time",
+      "formatted_time",
     ].includes(dataType || ""):
       return t(i18n.strings.help.string);
     default:

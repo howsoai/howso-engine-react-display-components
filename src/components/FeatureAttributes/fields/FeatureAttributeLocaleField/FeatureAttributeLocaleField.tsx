@@ -1,4 +1,4 @@
-import { FeatureAttributes } from "@howso/engine";
+import { FeatureAttributes, FeatureDataType } from "@howso/engine";
 import {
   FieldText,
   FieldTextProps,
@@ -29,8 +29,16 @@ export const FeatureAttributeLocaleField: FC<
   const { t } = useTranslation(i18n.namespace);
   const { fieldTextProps, purposes } = useContext(FeaturesAttributesContext);
   const form = useFormContext();
+  const allowedTypes: FeatureDataType[] = [
+    "formatted_date_time",
+    "formatted_time",
+  ];
 
-  if (dataType !== "formatted_date_time" || !purposes.includes("core")) {
+  if (
+    !dataType ||
+    allowedTypes.includes(dataType) ||
+    !purposes.includes("core")
+  ) {
     return null;
   }
 

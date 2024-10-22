@@ -9,13 +9,16 @@ const namespace = "FeatureAttributeDataTypeField";
 const en = {
   help: {
     formattedDateTime:
-      "Formatted Date Time supports string based features such as ISO 8601 or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number.",
+      "Formatted date time supports string based features such as ISO 8601 or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number.",
+    formattedTime:
+      "Formatted time supports string based features such as ISO 8601 partials or your own custom formats. For numeric date times such as epoch numbers, use a Continuous Number.",
   },
   label: "Data Type",
   options: {
     amalgam: "Amalgam",
     boolean: "Boolean",
-    formattedDateTime: "Formatted Date Time",
+    formattedDateTime: "Formatted date time",
+    formattedTime: "Formatted time",
     groups: {
       continuous: "Continuous",
       nominal: "Nominal",
@@ -23,7 +26,7 @@ const en = {
     json: "JSON",
     number: "Number",
     string: "String",
-    stringMixable: "String Mixable",
+    stringMixable: "String mixable",
     yaml: "YAML",
   },
 };

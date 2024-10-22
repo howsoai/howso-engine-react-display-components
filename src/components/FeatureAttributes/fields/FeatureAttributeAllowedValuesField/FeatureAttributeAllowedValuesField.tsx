@@ -53,6 +53,7 @@ export const FeatureAttributeAllowedValuesField: FC<
     "string",
     "number",
     "formatted_date_time",
+    "formatted_time",
   ];
   if (
     !featureType ||
@@ -96,6 +97,7 @@ const getPlaceholder = ({
 >): string => {
   switch (true) {
     case dataType === "formatted_date_time":
+    case dataType === "formatted_time":
       return `${dateTimeFormat}
 ${dateTimeFormat}
 ${dateTimeFormat}

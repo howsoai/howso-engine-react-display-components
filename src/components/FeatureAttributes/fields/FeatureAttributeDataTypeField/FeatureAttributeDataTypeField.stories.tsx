@@ -39,3 +39,12 @@ export const FormattedDateTime: Story = {
   ],
   args: {},
 };
+
+export const FormattedTime: Story = {
+  decorators: [
+    getFormProviderDecorator<InferFeatureAttributeFormValues>({
+      defaultValues: { data_type: "formatted_time" },
+    }),
+  ],
+  args: {},
+};

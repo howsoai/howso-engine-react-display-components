@@ -46,6 +46,9 @@ export const FeatureAttributeDataTypeField: FC<
       <option value="formatted_date_time">
         {t(i18n.strings.options.formattedDateTime)}
       </option>
+      <option value="formatted_time">
+        {t(i18n.strings.options.formattedTime)}
+      </option>
       <option value="json" disabled={featureType === "ordinal"}>
         {t(i18n.strings.options.json)}
       </option>
@@ -79,6 +82,8 @@ const HelperText: FC<{
   switch (dataType) {
     case "formatted_date_time":
       return t(i18n.strings.help.formattedDateTime);
+    case "formatted_time":
+      return t(i18n.strings.help.formattedTime);
     default:
       return null;
   }
