@@ -3,8 +3,8 @@ import { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 
 export type TraineeIdentifiersProps = ComponentProps<"div"> & {
-  id?: string;
-  name?: string;
+  id?: string | null;
+  name?: string | null;
   loading?: boolean;
 };
 export const TraineeIdentifiers: FC<TraineeIdentifiersProps> = ({
