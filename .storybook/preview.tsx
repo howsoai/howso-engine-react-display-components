@@ -43,6 +43,7 @@ const preview: Preview = {
       viewport: { value: undefined },
     },
   },
+
   decorators: [
     (Story: StoryFn, context) => {
       const mode: ThemeMode =
@@ -80,6 +81,8 @@ const preview: Preview = {
       />
     ),
   ],
+
+  tags: ["autodocs"]
 };
 export default preview;
 ``;
