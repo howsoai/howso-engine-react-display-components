@@ -1,6 +1,7 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+
   addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
@@ -8,15 +9,19 @@ const config: StorybookConfig = {
     "@storybook/addon-a11y",
     "@chromatic-com/storybook",
   ],
+
   framework: {
     name: "@storybook/react-vite",
     options: {},
   },
+
   docs: {},
+
   // staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
   features: {
     viewportStoryGlobals: true,
   },
+
   refs: {
     "react-tailwind-flowbite-components": {
       title: "Howso components",
@@ -29,5 +34,9 @@ const config: StorybookConfig = {
       expanded: false, // Optional, true by default
     },
   },
+
+  typescript: {
+    reactDocgen: "react-docgen-typescript"
+  }
 };
 export default config;
