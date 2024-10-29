@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { TraineeCreationStepper } from ".";
+import { withPadding } from "../../../storybook";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 const meta: Meta<typeof TraineeCreationStepper> = {
@@ -8,8 +9,9 @@ const meta: Meta<typeof TraineeCreationStepper> = {
   tags: ["autodocs"],
   parameters: {
     // More on Story layout: https://storybook.js.org/docs/react/configure/story-layout
-    layout: "centered",
+    layout: "fullscreen",
   },
+  decorators: [withPadding],
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {
