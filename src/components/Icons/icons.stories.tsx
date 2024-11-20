@@ -4,6 +4,7 @@ import { IconBaseProps } from "react-icons";
 import {
   MapDependentFeatureAttributesIcon,
   TraineeDefineIcon,
+  TraineeIcon,
   TraineeLoadIcon,
   TraineeTrainIcon,
 } from ".";
@@ -22,22 +23,27 @@ const meta: Meta<IconBaseProps> = {
   args: {},
   render: (args) => (
     <div className="flex gap-4">
-      <IconWithLabel
-        label={"MapDependentFeatureAttributesIcon"}
-        Icon={<MapDependentFeatureAttributesIcon {...args} />}
-      />
-      <IconWithLabel
-        label={"TraineeLoadIcon"}
-        Icon={<TraineeLoadIcon {...args} />}
-      />
-      <IconWithLabel
-        label={"TraineeDefineIcon"}
-        Icon={<TraineeDefineIcon {...args} />}
-      />
-      <IconWithLabel
-        label={"TraineeTrainIcon"}
-        Icon={<TraineeTrainIcon {...args} />}
-      />
+      <Section title="Action">
+        <IconWithLabel
+          label={"MapDependentFeatureAttributesIcon"}
+          Icon={<MapDependentFeatureAttributesIcon {...args} />}
+        />
+        <IconWithLabel
+          label={"TraineeLoadIcon"}
+          Icon={<TraineeLoadIcon {...args} />}
+        />
+        <IconWithLabel
+          label={"TraineeDefineIcon"}
+          Icon={<TraineeDefineIcon {...args} />}
+        />
+        <IconWithLabel
+          label={"TraineeTrainIcon"}
+          Icon={<TraineeTrainIcon {...args} />}
+        />
+      </Section>
+      <Section title="Concepts">
+        <IconWithLabel label={"TraineeIcon"} Icon={<TraineeIcon {...args} />} />
+      </Section>
     </div>
   ),
 };
@@ -49,6 +55,21 @@ type Story = StoryObj<IconBaseProps>;
 export const Default: Story = {
   // More on args: https://storybook.js.org/docs/react/writing-stories/args
   args: {},
+};
+
+type SectionProps = {
+  title: ReactNode;
+  children: ReactNode;
+};
+const Section: FC<SectionProps> = ({ title, children }) => {
+  return (
+    <section className="my-3">
+      <header>
+        <h2 className="text-lg font-semibold">{title}</h2>
+      </header>
+      <div className="flex flex-wrap items-start gap-4">{children}</div>
+    </section>
+  );
 };
 
 type IconWithLabelProps = { label: string; Icon: ReactNode };
