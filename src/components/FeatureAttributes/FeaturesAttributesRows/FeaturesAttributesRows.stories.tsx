@@ -24,6 +24,7 @@ const meta: Meta<typeof FeaturesAttributesRows> = {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
   args: {
+    loading: false,
     purposes: ["core"],
   },
 };
@@ -185,6 +186,23 @@ Synthesis.args!.timeFeatureAtom =
     paramsAtom: Synthesis.args!.paramsAtom!,
     runRequiredAtom: synthesisRunRequiredAtom,
   });
+
+const loadingRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
+export const Loading: Story = {
+  args: {
+    loading: true,
+    activeFeatureAtom: getFeatureAttributesActiveFeatureAtom(),
+    optionsAtom: getFeatureAttributesOptionsAtom({}),
+    paramsAtom: getInferFeatureAttributesParamsAtom({
+      features: sampleFeatureAttributesIndex,
+    }),
+    runRequiredAtom: loadingRunRequiredAtom,
+  },
+};
+Default.args!.timeFeatureAtom = getInferFeatureAttributesParamsTimeFeatureAtom({
+  paramsAtom: Default.args!.paramsAtom!,
+  runRequiredAtom: loadingRunRequiredAtom,
+});
 
 const noFeaturesRunRequiredAtom = getInferFeatureAttributesRunRequiredFields();
 export const NoFeatures: Story = {

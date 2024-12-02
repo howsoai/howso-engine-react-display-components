@@ -76,7 +76,10 @@ describe("FeaturesAttributesRows", () => {
     );
 
     const table = screen.getByRole("table");
-    const featureRows = within(table).getAllByRole("row").slice(1);
+    const featureRows = within(table)
+      .getAllByRole("row")
+      // Remove the header row
+      .slice(1);
     expect(featureRows.length).toBe(features.length);
     features.forEach((feature) => {
       within(table).getByText(feature);
