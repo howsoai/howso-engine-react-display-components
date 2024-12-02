@@ -12,11 +12,15 @@ import {
 import { TraineeCreationStepperI18nBundle as i18n } from "./TraineeCreationStepper.i18n";
 
 export type TraineeCreationStepperProps = Pick<StepperProps, "step"> &
-  Partial<Pick<StepperProps, "vertical" | "marginBottom">> & {};
+  Partial<Pick<StepperProps, "vertical" | "marginBottom">> & {
+    /** A namespace to use instead of the default for this component. */
+    i18nNamespace?: string;
+  };
 const TraineeCreationStepperComponent: FC<TraineeCreationStepperProps> = ({
+  i18nNamespace,
   ...props
 }) => {
-  const { t } = useTranslation(i18n.namespace);
+  const { t } = useTranslation(i18nNamespace || i18n.namespace);
 
   return (
     <Stepper steps={3} {...props}>
