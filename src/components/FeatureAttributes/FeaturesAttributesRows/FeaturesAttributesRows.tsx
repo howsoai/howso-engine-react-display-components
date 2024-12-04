@@ -3,6 +3,7 @@ import {
   ErrorBoundary,
   FieldSelectProps,
   FormModal,
+  NoResultsAlert,
   Radio,
   SecondaryButton,
   Skeleton,
@@ -10,7 +11,7 @@ import {
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
-import { Alert, Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
+import { Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import {
   ChangeEvent,
@@ -111,11 +112,7 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = ({
           </Table.Body>
         </Table>
       </div>
-      {!features.length && (
-        <Alert color="warning" icon={WarningIcon}>
-          {t(i18n.strings.state.empty)}
-        </Alert>
-      )}
+      {!props.loading && !features.length && <NoResultsAlert />}
       <Controls {...props} containerProps={{ className: "mt-4" }} />
       {activeFeature && <ConfigureModal {...props} />}
     </FeaturesAttributesContextProvider>
