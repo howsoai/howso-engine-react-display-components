@@ -1,14 +1,17 @@
 import { FeatureAttributes } from "@howso/engine";
 import {
   ErrorBoundary,
+  FieldSelectProps,
   FormModal,
+  NoResultsAlert,
   Radio,
   SecondaryButton,
+  Skeleton,
   ToggleInput,
   UpdateIcon,
   WarningIcon,
 } from "@howso/react-tailwind-flowbite-components";
-import { Alert, Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
+import { Button, getTheme, Modal, Table, Tooltip } from "flowbite-react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai/react";
 import {
   ChangeEvent,
@@ -55,9 +58,10 @@ import { FeaturesAttributesRowsI18nBundle as i18n } from "./FeaturesAttributesRo
 
 export type FeaturesAttributesRowsProps = IFeatureAttributePurposes & {
   activeFeatureAtom: FeatureAttributesActiveFeatureAtom;
-  runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
-  paramsAtom: InferFeatureAttributesParamsAtom;
+  loading?: boolean;
   optionsAtom: FeatureAttributesOptionsAtom;
+  paramsAtom: InferFeatureAttributesParamsAtom;
+  runRequiredAtom: InferFeatureAttributesRunRequiredFieldsAtom;
   timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
 };
 /**
@@ -70,14 +74,61 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = ({
   purposes,
   ...props
 }) => {
-  const { t } = useTranslation(i18n.namespace);
   const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(paramsAtom);
-  const [options, setOptions] = useAtom(optionsAtom);
-  const setTimeFeature = useSetAtom(timeFeatureAtom);
 
   const features = Object.keys(params.features || {});
+
+  return (
+    <FeaturesAttributesContextProvider purposes={purposes}>
+      <div className="relative overflow-x-auto rounded-lg shadow-md">
+        <Table striped>
+          <Table.Head>
+            <TableHeadCells
+              optionsAtom={optionsAtom}
+              timeFeatureAtom={timeFeatureAtom}
+            />
+          </Table.Head>
+          <Table.Body className="divide-y">
+            {props.loading
+              ? new Array(10)
+                  .fill(0)
+                  .map((_, index) => (
+                    <FeatureFields
+                      key={`loading:${index}`}
+                      feature={undefined}
+                      {...props}
+                    />
+                  ))
+              : features.map((featureName) => (
+                  <FeatureFields
+                    key={featureName}
+                    feature={featureName}
+                    {...props}
+                  />
+                ))}
+          </Table.Body>
+        </Table>
+      </div>
+      {!props.loading && !features.length && <NoResultsAlert />}
+      <Controls {...props} containerProps={{ className: "mt-4" }} />
+      {activeFeature && <ConfigureModal {...props} />}
+    </FeaturesAttributesContextProvider>
+  );
+};
+
+type TableHeadCellsProps = {
+  optionsAtom: FeatureAttributesOptionsAtom;
+  timeFeatureAtom: InferFeatureAttributesParamsTimeFeatureAtom;
+};
+const TableHeadCells: FC<TableHeadCellsProps> = ({
+  optionsAtom,
+  timeFeatureAtom,
+}) => {
+  const { t } = useTranslation(i18n.namespace);
+  const [options, setOptions] = useAtom(optionsAtom);
+  const setTimeFeature = useSetAtom(timeFeatureAtom);
 
   // Toggle time series
   const onChangeTimeSeries = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -86,72 +137,52 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = ({
   };
 
   return (
-    <FeaturesAttributesContextProvider purposes={purposes}>
-      <div className="relative overflow-x-auto rounded-lg shadow-md">
-        <Table striped>
-          <Table.Head>
-            <Table.HeadCell className="whitespace-nowrap">
-              {t(i18n.strings.headings.feature)}
-            </Table.HeadCell>
-            <Table.HeadCell className="whitespace-nowrap">
-              {t(i18n.strings.headings.sample)}
-            </Table.HeadCell>
-            <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
-              {t(featureAttributeTypeLabel)}
-            </Table.HeadCell>
-            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-              <div className="flex items-center gap-2">
-                {options.time_series
-                  ? t(i18n.strings.headings.timeFeature)
-                  : t(i18n.strings.headings.timeSeries)}
-                <ToggleInput
-                  onChange={onChangeTimeSeries}
-                  checked={options.time_series || false}
-                />
-              </div>
-            </Table.HeadCell>
-            <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
-              {t(i18n.strings.headings.configuration)}
-            </Table.HeadCell>
-          </Table.Head>
-          <Table.Body className="divide-y">
-            {features.map((featureName) => (
-              <FeatureFields
-                key={featureName}
-                feature={featureName}
-                {...props}
-              />
-            ))}
-          </Table.Body>
-        </Table>
-      </div>
-      {!features.length && (
-        <Alert color="warning" icon={WarningIcon}>
-          {t(i18n.strings.state.empty)}
-        </Alert>
-      )}
-      <Controls {...props} containerProps={{ className: "mt-4" }} />
-      {activeFeature && <ConfigureModal {...props} />}
-    </FeaturesAttributesContextProvider>
+    <>
+      <Table.HeadCell className="whitespace-nowrap">
+        {t(i18n.strings.headings.feature)}
+      </Table.HeadCell>
+      <Table.HeadCell className="whitespace-nowrap">
+        {t(i18n.strings.headings.sample)}
+      </Table.HeadCell>
+      <Table.HeadCell className="w-48 min-w-48 whitespace-nowrap">
+        {t(featureAttributeTypeLabel)}
+      </Table.HeadCell>
+      <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+        <div className="flex items-center gap-2">
+          {options.time_series
+            ? t(i18n.strings.headings.timeFeature)
+            : t(i18n.strings.headings.timeSeries)}
+          <ToggleInput
+            onChange={onChangeTimeSeries}
+            checked={options.time_series || false}
+          />
+        </div>
+      </Table.HeadCell>
+      <Table.HeadCell className="w-[1%] whitespace-nowrap text-center">
+        {t(i18n.strings.headings.configuration)}
+      </Table.HeadCell>
+    </>
   );
 };
 
 type FeatureFieldsProps = {
-  feature: string;
+  feature: string | undefined;
 } & Pick<
   FeaturesAttributesRowsProps,
   | "activeFeatureAtom"
-  | "paramsAtom"
+  | "loading"
   | "optionsAtom"
+  | "paramsAtom"
   | "runRequiredAtom"
   | "timeFeatureAtom"
 >;
 const FeatureFields: FC<FeatureFieldsProps> = ({
   activeFeatureAtom,
-  runRequiredAtom,
-  paramsAtom,
   feature,
+  loading,
   optionsAtom,
+  paramsAtom,
+  runRequiredAtom,
   timeFeatureAtom,
 }) => {
   const { t } = useTranslation(i18n.namespace);
@@ -162,9 +193,13 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
   const [params, setParams] = useAtom(paramsAtom);
   const options = useAtomValue(optionsAtom);
 
-  const attributes = params.features?.[feature];
+  const attributes = feature ? params.features?.[feature] : undefined;
   const setFeatureType = useCallback(
     (attributes: FeatureAttributes) => {
+      if (!feature) {
+        return;
+      }
+
       const newParams = setInferFeatureAttributeParamsFeatureAttributes(
         params,
         feature,
@@ -175,18 +210,26 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
     },
     [setRunRequired, setParams, params, feature],
   );
-  const issues = getFeatureAttributeConfigurationIssues(attributes, {
-    purposes,
-  });
+  const issues =
+    attributes &&
+    getFeatureAttributeConfigurationIssues(attributes, {
+      purposes,
+    });
 
   return (
     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
       <Table.Cell className="min-w-32 text-gray-900 [overflow-wrap:anywhere] dark:text-white">
-        <span>{feature}</span>
+        <span>
+          {loading ? <Skeleton variant="text" className="w-32" /> : feature}
+        </span>
       </Table.Cell>
       <Table.Cell className="whitespace-nowrap">
         <div className="max-w-52 truncate">
-          <FeatureAttributeSample attributes={attributes} />
+          {loading ? (
+            <Skeleton variant="text" className="w-24" />
+          ) : (
+            <FeatureAttributeSample attributes={attributes} />
+          )}
         </div>
       </Table.Cell>
       <Table.Cell className="w-48">
@@ -194,6 +237,7 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
           attributes={attributes}
           feature={feature}
           setAttributes={setFeatureType}
+          disabled={loading}
         />
       </Table.Cell>
       <Table.Cell className="w-[1%] text-center">
@@ -207,7 +251,10 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
       </Table.Cell>
       <Table.Cell className="w-[1%] whitespace-nowrap text-center">
         <div className="flex items-center">
-          <SecondaryButton onClick={() => setActiveFeature(feature)}>
+          <SecondaryButton
+            onClick={() => setActiveFeature(feature || "")}
+            disabled={loading}
+          >
             {t(i18n.strings.actions.configure)}
           </SecondaryButton>
 
@@ -230,9 +277,12 @@ const FeatureFields: FC<FeatureFieldsProps> = ({
 };
 
 type InlineInputProps = {
-  feature: string;
+  feature?: string;
 };
-type AttributeProps = {
+type AttributeProps = Omit<
+  FieldSelectProps,
+  "fieldType" | "label" | "helperText" | "onChange"
+> & {
   attributes: FeatureAttributes | undefined;
   setAttributes: (attributes: FeatureAttributes) => void;
 };
@@ -242,6 +292,7 @@ type FeatureTypeControlProps = InlineInputProps & AttributeProps;
 const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
   attributes,
   setAttributes,
+  ...props
 }) => {
   const form = useForm<FeatureAttributes>({ defaultValues: attributes });
 
@@ -269,6 +320,7 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
         onChange={onChange}
         label={undefined}
         helperText={undefined}
+        {...props}
       />
     </FormProvider>
   );
@@ -277,10 +329,14 @@ const FeatureTypeControl: FC<FeatureTypeControlProps> = ({
 // Table row time feature radio
 type TimeFeatureControlProps = InlineInputProps &
   Pick<FeaturesAttributesRowsProps, "timeFeatureAtom"> &
-  Pick<AttributeProps, "attributes"> & { disabled?: boolean };
+  Pick<AttributeProps, "attributes"> & {
+    loading?: boolean;
+    disabled?: boolean;
+  };
 const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
   attributes,
   disabled,
+  loading,
   feature,
   timeFeatureAtom,
 }) => {
@@ -301,7 +357,7 @@ const TimeFeatureControl: FC<TimeFeatureControlProps> = ({
         setTimeFeature(feature);
       }}
       checked={attributes?.time_series?.time_feature ?? false}
-      disabled={disabled}
+      disabled={loading || disabled}
     />
   );
 };
@@ -415,25 +471,35 @@ const Form: FC<ConfigureModalProps & { onClose: () => void }> = ({
   );
 };
 
-type ControlsProps = Pick<FeaturesAttributesRowsProps, "paramsAtom"> & {
+type ControlsProps = Pick<
+  FeaturesAttributesRowsProps,
+  "loading" | "paramsAtom"
+> & {
   containerProps: React.HTMLProps<HTMLDivElement>;
 };
-const Controls: FC<ControlsProps> = ({ paramsAtom, containerProps }) => {
+const Controls: FC<ControlsProps> = ({
+  loading,
+  paramsAtom,
+  containerProps,
+}) => {
   return (
     <footer
       {...containerProps}
       className={twMerge(containerProps.className, "flex gap-2")}
     >
-      <MapDependenciesControl paramsAtom={paramsAtom} />
+      <MapDependenciesControl loading={loading} paramsAtom={paramsAtom} />
     </footer>
   );
 };
 
 type MapDependenciesControlProps = Pick<
   FeaturesAttributesRowsProps,
-  "paramsAtom"
+  "loading" | "paramsAtom"
 >;
-const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
+const MapDependenciesControl: FC<MapDependenciesControlProps> = ({
+  loading,
+  ...props
+}) => {
   const { t } = useTranslation(i18n.namespace);
   const params = useAtomValue(props.paramsAtom);
   const featuresAttributes = params.features || {};
@@ -451,7 +517,7 @@ const MapDependenciesControl: FC<MapDependenciesControlProps> = (props) => {
 
   return (
     <>
-      <SecondaryButton onClick={onOpen} disabled={!features.length}>
+      <SecondaryButton onClick={onOpen} disabled={loading || !features.length}>
         <MapDependentFeatureAttributesIcon className={"mr-1"} />
         {label}
       </SecondaryButton>

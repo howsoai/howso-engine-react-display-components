@@ -3,6 +3,7 @@ import { FC, ReactNode } from "react";
 import { IconBaseProps } from "react-icons";
 import {
   MapDependentFeatureAttributesIcon,
+  ProjectsIcon,
   TraineeDefineIcon,
   TraineeIcon,
   TraineeLoadIcon,
@@ -42,6 +43,10 @@ const meta: Meta<IconBaseProps> = {
         />
       </Section>
       <Section title="Concepts">
+        <IconWithLabel
+          label={"ProjectsIcon"}
+          Icon={<ProjectsIcon {...args} />}
+        />
         <IconWithLabel label={"TraineeIcon"} Icon={<TraineeIcon {...args} />} />
       </Section>
     </div>

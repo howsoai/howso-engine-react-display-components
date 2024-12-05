@@ -25,9 +25,6 @@ const en = {
     timeSeries: "Time series",
     type: "Type",
   },
-  state: {
-    empty: "No features were found in the dataset.",
-  },
 };
 
 type Resource = typeof en;
