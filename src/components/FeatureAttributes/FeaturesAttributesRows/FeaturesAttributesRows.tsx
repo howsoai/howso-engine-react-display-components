@@ -74,7 +74,6 @@ export const FeaturesAttributesRows: FC<FeaturesAttributesRowsProps> = ({
   purposes,
   ...props
 }) => {
-  const { t } = useTranslation(i18n.namespace);
   const { activeFeatureAtom, paramsAtom, optionsAtom, timeFeatureAtom } = props;
   const activeFeature = useAtomValue(activeFeatureAtom);
   const params = useAtomValue(paramsAtom);
