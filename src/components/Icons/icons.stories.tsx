@@ -2,8 +2,10 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { FC, ReactNode } from "react";
 import { IconBaseProps } from "react-icons";
 import {
+  InsightsIcon,
   MapDependentFeatureAttributesIcon,
   ProjectsIcon,
+  SynthesisIcon,
   TraineeDefineIcon,
   TraineeIcon,
   TraineeLoadIcon,
@@ -26,28 +28,27 @@ const meta: Meta<IconBaseProps> = {
     <div className="flex gap-4">
       <Section title="Action">
         <IconWithLabel
-          label={"MapDependentFeatureAttributesIcon"}
+          label={"MapDependentFeatureAttributes"}
           Icon={<MapDependentFeatureAttributesIcon {...args} />}
         />
         <IconWithLabel
-          label={"TraineeLoadIcon"}
+          label={"TraineeLoad"}
           Icon={<TraineeLoadIcon {...args} />}
         />
         <IconWithLabel
-          label={"TraineeDefineIcon"}
+          label={"TraineeDefine"}
           Icon={<TraineeDefineIcon {...args} />}
         />
         <IconWithLabel
-          label={"TraineeTrainIcon"}
+          label={"TraineeTrain"}
           Icon={<TraineeTrainIcon {...args} />}
         />
       </Section>
       <Section title="Concepts">
-        <IconWithLabel
-          label={"ProjectsIcon"}
-          Icon={<ProjectsIcon {...args} />}
-        />
-        <IconWithLabel label={"TraineeIcon"} Icon={<TraineeIcon {...args} />} />
+        <IconWithLabel label={"Insights"} Icon={<InsightsIcon {...args} />} />
+        <IconWithLabel label={"Projects"} Icon={<ProjectsIcon {...args} />} />
+        <IconWithLabel label={"Synthesis"} Icon={<SynthesisIcon {...args} />} />
+        <IconWithLabel label={"Trainee"} Icon={<TraineeIcon {...args} />} />
       </Section>
     </div>
   ),
