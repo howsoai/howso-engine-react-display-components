@@ -49,6 +49,7 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.6",
+    "@fontsource-variable/inter": "^5.2.5",
     "@fontsource/inter": "^5.0.5",
     "@hookform/error-message": "^2.0.1",
     "@howso/engine": "^6.0.0",
